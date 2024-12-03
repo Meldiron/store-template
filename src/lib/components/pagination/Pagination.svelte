@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { selectedCategory } from '../../../routes/store';
 
 	export let currentPage: number;
 	export let totalPages: number;
 
-	const goToPage = (page: number | string) => goto(`?page=${page}`);
+	const goToPage = (page: number | string) => {
+		const category = $selectedCategory !== 'All Products' ? `&category=${$selectedCategory}` : '';
+		goto(`?page=${page}${category}`);
+	};
 
 	const getVisiblePages = (currentPage: number, totalPages: number) => {
 		const visiblePages: (number | string)[] = [];

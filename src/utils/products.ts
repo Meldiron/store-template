@@ -182,8 +182,9 @@ export const baseProducts: Product[] = [
 ];
 
 // Generate 45 Products by Multiplying Base Array
-export const products: Product[] = Array.from({ length: 4 }).flatMap(() =>
+export const products: Product[] = Array.from({ length: 4 }).flatMap((_, index) =>
 	baseProducts.map((product) => ({
-		...product
+		...product,
+		name: `${product.name} #${index}`
 	}))
 );

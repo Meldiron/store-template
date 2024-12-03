@@ -37,7 +37,7 @@
 <div id="navigation" class="mt-[88px] w-full px-8">
 	<div
 		bind:this={container}
-		class="flex w-full overflow-x-auto whitespace-nowrap lg:justify-center"
+		class="flex w-full overflow-x-auto whitespace-nowrap sm:justify-start md:justify-center"
 	>
 		<!-- Categories -->
 		{#each categories as category}

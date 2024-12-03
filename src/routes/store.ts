@@ -1,5 +1,5 @@
 import { page } from '$app/stores';
-import { derived } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
 export const selectedCategory = derived(
 	page,
@@ -10,3 +10,5 @@ export const currentPage = derived(
 	page,
 	($page) => Number($page.url.searchParams.get('page')) || 1
 );
+
+export const cartValue = writable(0);

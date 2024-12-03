@@ -22,6 +22,7 @@
 <style>
 	.item {
 		display: flex;
+		position: relative;
 		padding: 0 var(--space-4, 8px);
 		flex-direction: column;
 		justify-content: center;
@@ -30,9 +31,28 @@
 		text-decoration: none;
 	}
 
+	.item::after {
+		width: 90%;
+		content: '';
+		left: 50%;
+		bottom: -4px;
+		height: 1.2px;
+		position: absolute;
+		transform-origin: center;
+		transform: translateX(-50%) scaleX(0);
+		background-color: transparent;
+		transition:
+			background-color 0.3s ease,
+			transform 0.3s ease;
+	}
+
 	.is-selected {
 		font-weight: 500;
 		color: var(--color-fgColor-neutral-primary, #2d2d31);
-		border-bottom: solid 1px var(--color-fgColor-neutral-primary, #2d2d31);
+	}
+
+	.is-selected::after {
+		transform: translateX(-50%) scaleX(1);
+		background-color: var(--color-fgColor-neutral-primary, #2d2d31);
 	}
 </style>

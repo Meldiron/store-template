@@ -3,11 +3,9 @@
 	import SiteHeader from '$lib/components/header/SiteHeader.svelte';
 
 	let { children } = $props();
-
-	let cartCount = 2;
 </script>
 
-<SiteHeader {cartCount} />
+<SiteHeader />
 
 <main>
 	{@render children()}

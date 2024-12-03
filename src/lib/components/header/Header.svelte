@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let cartCount: number = 0;
+	import { cartValue } from '../../../routes/store';
 
 	let isScrolled = false;
 
@@ -20,13 +20,18 @@
 			<rect width="40" height="40" rx="8" fill="black" />
 			<circle cx="19.5" cy="20" r="7" fill="white" />
 		</svg>
-		<span class="text-xl text-[#19191C]">StoreZilla</span>
+		<a class="text-xl text-[#19191C]" href="/">StoreZilla</a>
 	</div>
 
 	<!-- Cart Section -->
-	<div class="flex items-center gap-2">
+	<button
+		class="flex items-center gap-2"
+		on:click={() => {
+			cartValue.update((n) => n + 1);
+		}}
+	>
 		<!-- Cart Icon -->
-		<div class="flex items-center gap-1">
+		<div class:cart-text={$cartValue} class="flex items-center gap-1">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="20"
@@ -46,10 +51,29 @@
 		</div>
 
 		<!-- Cart Value -->
-		<div
-			class="flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-[#56565C]"
-		>
-			{cartCount}
-		</div>
-	</div>
+		{#if $cartValue}
+			<div
+				class="cart-value flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-[#56565C]"
+			>
+				{$cartValue}
+			</div>
+		{/if}
+	</button>
 </div>
+
+<style>
+	.cart-text,
+	.cart-value {
+		transform: translateX(10px);
+		animation: slideIn 0.3s forwards;
+	}
+
+	@keyframes slideIn {
+		0% {
+			transform: translateX(10px);
+		}
+		100% {
+			transform: translateX(0);
+		}
+	}
+</style>

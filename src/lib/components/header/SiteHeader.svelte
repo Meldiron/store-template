@@ -1,11 +1,9 @@
 <script lang="ts">
 	import Header from '$lib/components/header/Header.svelte';
 	import Navigation from '$lib/components/header/Navigation.svelte';
-
-	export let cartCount: number = 0;
 </script>
 
-<Header {cartCount} />
+<Header />
 
 <div class="mx-auto mt-16 flex w-[572px] flex-col items-center justify-center gap-8">
 	<div class="mx-auto flex flex-col items-center justify-center">

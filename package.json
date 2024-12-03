@@ -37,6 +37,8 @@
 	"dependencies": {
 		"blurhash": "^2.0.5",
 		"@tailwindcss/forms": "^0.5.9",
-		"@tailwindcss/typography": "^0.5.15"
+		"@tailwindcss/typography": "^0.5.15",
+		"blurhash": "^2.0.5",
+		"unlazy": "^0.12.0"
 	}
 }

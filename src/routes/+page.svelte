@@ -2,6 +2,8 @@
 	import StaggeredGrid from '$lib/components/grid/StaggeredGrid.svelte';
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
 	import { currentPage, selectedCategory } from './store';
+	import { browser } from '$app/environment';
+	import { tick } from 'svelte';
 
 	export let data;
 
@@ -23,9 +25,19 @@
 
 	let totalPages = 1;
 	$: totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+	$: if ($currentPage > 1 && browser) {
+		const navigation = document.getElementById('navigation');
+		if (navigation) {
+			tick().then(() => {
+				navigation.scrollIntoView({ behavior: 'smooth' });
+			});
+		}
+	}
 </script>
 
-<div class="mx-auto mb-16 mt-[72px] flex w-full max-w-6xl flex-col gap-8 px-16">
+<div
+	class="mx-auto mb-16 mt-[54px] flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-8 lg:mt-[72px] lg:px-16"
+>
 	<h1 class="text-[40px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C]">
 		{$selectedCategory}
 	</h1>
@@ -33,7 +45,9 @@
 	{#if paginatedProducts.length > 0}
 		<StaggeredGrid products={paginatedProducts} />
 	{:else}
-		<p class="text-center text-gray-500">No products found for this category.</p>
+		<p class="mt-12 min-h-[125px] text-center text-gray-500">
+			No products found for this category.
+		</p>
 	{/if}
 
 	{#if paginatedProducts.length > 0}

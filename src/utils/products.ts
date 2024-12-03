@@ -24,7 +24,7 @@ export const baseProducts: Product[] = [
 		sizes: ['S', 'M', 'L', 'XL'],
 		images: {
 			blur: 'L6Pj0^oL~qIA?dS%M{t7~qWCogR*',
-			urls: ['products/heavy-tshirt.avif']
+			urls: ['products/heavy-tshirt.png']
 		},
 		categories: ['Tops'],
 		variations: [],
@@ -37,7 +37,7 @@ export const baseProducts: Product[] = [
 		sizes: ['S', 'M', 'L', 'XL'],
 		images: {
 			blur: 'LGF5]+oL?wI9~pIUogM|?ZoeR*oL',
-			urls: ['products/top.avif']
+			urls: ['products/top.png']
 		},
 		categories: ['Tops'],
 		variations: [],
@@ -50,7 +50,7 @@ export const baseProducts: Product[] = [
 		sizes: ['S', 'M', 'L', 'XL'],
 		images: {
 			blur: 'LGI5E_~q?wRj_NxuogkCE2j[V@Rj',
-			urls: ['products/multiple-tshirts.avif']
+			urls: ['products/multiple-tshirts.png']
 		},
 		categories: ['Tops'],
 		variations: [],
@@ -65,7 +65,7 @@ export const baseProducts: Product[] = [
 		sizes: ['S', 'M', 'L', 'XL'],
 		images: {
 			blur: 'LGI5E_~q?wRj_NxuogkCE2j[V@Rj',
-			urls: ['products/sweatshirts.avif']
+			urls: ['products/sweatshirts.png']
 		},
 		categories: ['Sweaters'],
 		variations: [],
@@ -80,7 +80,7 @@ export const baseProducts: Product[] = [
 		sizes: ['6', '7', '8', '9', '10'],
 		images: {
 			blur: 'LGF5]+oL?wI9~pIUogM|?ZoeR*oL',
-			urls: ['products/gray-shoes.avif']
+			urls: ['products/gray-shoes.png']
 		},
 		categories: ['Shoes'],
 		variations: [],
@@ -93,7 +93,7 @@ export const baseProducts: Product[] = [
 		sizes: ['6', '7', '8', '9', '10'],
 		images: {
 			blur: 'LGF5]+oL?wI9~pIUogM|?ZoeR*oL',
-			urls: ['products/shoes-black.avif']
+			urls: ['products/shoes-black.png']
 		},
 		categories: ['Shoes'],
 		variations: [],
@@ -106,7 +106,7 @@ export const baseProducts: Product[] = [
 		sizes: ['6', '7', '8', '9', '10'],
 		images: {
 			blur: 'LGI5E_~q?wRj_NxuogkCE2j[V@Rj',
-			urls: ['products/hanging-shoes.avif']
+			urls: ['products/hanging-shoes.png']
 		},
 		categories: ['Shoes'],
 		variations: [],
@@ -119,7 +119,7 @@ export const baseProducts: Product[] = [
 		sizes: ['6', '7', '8', '9', '10'],
 		images: {
 			blur: 'L6Pj0^oL~qIA?dS%M{t7~qWCogR*',
-			urls: ['products/shoes.avif']
+			urls: ['products/shoes.png']
 		},
 		categories: ['Shoes'],
 		variations: [],
@@ -134,7 +134,7 @@ export const baseProducts: Product[] = [
 		sizes: ['onesize'],
 		images: {
 			blur: 'L6Pj0^oL~qIA?dS%M{t7~qWCogR*',
-			urls: ['products/sunglasses-black.avif']
+			urls: ['products/sunglasses-black.png']
 		},
 		categories: ['Accessories'],
 		variations: [],
@@ -147,7 +147,7 @@ export const baseProducts: Product[] = [
 		sizes: ['onesize'],
 		images: {
 			blur: 'LGF5]+oL?wI9~pIUogM|?ZoeR*oL',
-			urls: ['products/sunglasses-aviator.avif']
+			urls: ['products/sunglasses-aviator.png']
 		},
 		categories: ['Accessories'],
 		variations: [],
@@ -160,7 +160,7 @@ export const baseProducts: Product[] = [
 		sizes: ['onesize'],
 		images: {
 			blur: 'LGF5]+oL?wI9~pIUogM|?ZoeR*oL',
-			urls: ['products/sunglasses.avif']
+			urls: ['products/sunglasses.png']
 		},
 		categories: ['Accessories'],
 		variations: [],
@@ -173,7 +173,7 @@ export const baseProducts: Product[] = [
 		sizes: ['onesize'],
 		images: {
 			blur: 'LGI5E_~q?wRj_NxuogkCE2j[V@Rj',
-			urls: ['products/watch.avif']
+			urls: ['products/watch.png']
 		},
 		categories: ['Accessories'],
 		variations: [],

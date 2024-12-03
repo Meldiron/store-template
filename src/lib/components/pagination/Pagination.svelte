@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	export let currentPage: number;
 	export let totalPages: number;
 
-	const goToPage = (page: number) => {
-		window.location.search = `?page=${page}`;
-	};
+	const goToPage = (page: number | string) => goto(`?page=${page}`);
 
 	const getVisiblePages = (currentPage: number, totalPages: number) => {
 		const visiblePages: (number | string)[] = [];

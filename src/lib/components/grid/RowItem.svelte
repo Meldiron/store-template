@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { decode } from 'blurhash';
-	import type { Product } from '../../../utils/store-data';
+	import type { Product } from '../../../utils/products';
 
 	export let large = false;
 	export let vertical = false;
@@ -71,6 +71,11 @@
 
 	.large-card {
 		height: 672px;
+
+		@media (max-width: 640px) {
+			height: 316px;
+			align-self: stretch;
+		}
 	}
 
 	.card-image {
@@ -84,6 +89,10 @@
 
 	.large-card .card-image {
 		height: 565px;
+
+		@media (max-width: 640px) {
+			height: 210px;
+		}
 	}
 
 	.product-image {

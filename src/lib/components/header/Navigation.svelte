@@ -4,19 +4,53 @@
 	const categories = ['All Products', 'Tops', 'Sweaters', 'Socks', 'Shoes', 'Accessories'];
 
 	$: selectedCategory = $page.url.searchParams.get('category') || 'All Products';
+
+	let container: HTMLDivElement;
+
+	function scrollToSelectedItem() {
+		const selectedElement = document.querySelector('.is-selected');
+		if (selectedElement && container) {
+			const { left, right } = selectedElement.getBoundingClientRect();
+			const { left: containerLeft, right: containerRight } = container.getBoundingClientRect();
+
+			if (left < containerLeft || right > containerRight) {
+				selectedElement.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
+			}
+		}
+	}
+
+	// Observe changes to the is-selected class
+	function observeSelection() {
+		const observer = new MutationObserver(scrollToSelectedItem);
+		observer.observe(container, {
+			subtree: true,
+			attributes: true,
+			attributeFilter: ['class']
+		});
+	}
+
+	$: {
+		if (container) observeSelection();
+	}
 </script>
 
-<div class="mx-auto mt-[88px] flex w-full items-center justify-center gap-[12px]">
-	{#each categories as category}
-		<a
-			data-sveltekit-noscroll
-			href={`?category=${category}`}
-			class="item cursor-pointer font-inter text-[14px] leading-[19.6px] tracking-[-0.063px] text-[#56565C]"
-			class:is-selected={selectedCategory === category}
-		>
-			{category}
-		</a>
-	{/each}
+<div id="navigation" class="mt-[88px] w-full px-8">
+	<div
+		bind:this={container}
+		class="flex w-full overflow-x-auto whitespace-nowrap lg:justify-center"
+	>
+		<!-- Categories -->
+		{#each categories as category}
+			<a
+				data-sveltekit-noscroll
+				href={`?category=${category}`}
+				class="item cursor-pointer font-inter text-[14px] leading-[19.6px] tracking-[-0.063px] text-[#56565C]"
+				class:is-selected={selectedCategory === category}
+			>
+				{category}
+			</a>
+		{/each}
+	</div>
 </div>
 
 <style>
@@ -34,16 +68,16 @@
 	.item::after {
 		width: 90%;
 		content: '';
-		left: 50%;
-		bottom: -4px;
-		height: 1.2px;
 		position: absolute;
-		transform-origin: center;
+		bottom: -4px;
+		left: 50%;
 		transform: translateX(-50%) scaleX(0);
+		height: 1.2px;
 		background-color: transparent;
+		transform-origin: center;
 		transition:
-			background-color 0.3s ease,
-			transform 0.3s ease;
+			transform 0.3s ease,
+			background-color 0.3s ease;
 	}
 
 	.is-selected {
@@ -54,5 +88,18 @@
 	.is-selected::after {
 		transform: translateX(-50%) scaleX(1);
 		background-color: var(--color-fgColor-neutral-primary, #2d2d31);
+	}
+
+	.overflow-x-auto::-webkit-scrollbar {
+		display: none;
+	}
+
+	.overflow-x-auto {
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	.whitespace-nowrap {
+		padding-bottom: 8px;
 	}
 </style>

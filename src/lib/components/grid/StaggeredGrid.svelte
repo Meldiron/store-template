@@ -1,6 +1,6 @@
 <script lang="ts">
 	import RowItem from '$lib/components/grid/RowItem.svelte';
-	import type { Product } from '../../../utils/store-data';
+	import type { Product } from '../../../utils/products';
 
 	export let products: Array<Product> = [];
 </script>
@@ -10,7 +10,7 @@
 		{#each products as product, index (`${product.slug} + ${index}`)}
 			{#if index % 12 === 0 && index + 3 <= products.length}
 				<!-- Section 1: 3 horizontal -->
-				<div class="grid grid-cols-3 gap-8">
+				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
 					{#each products.slice(index, index + 3) as horizontalProduct}
 						<RowItem product={horizontalProduct} />
 					{/each}
@@ -19,14 +19,14 @@
 
 			{#if index % 12 === 3 && index + 3 <= products.length}
 				<!-- Section 2: 2 vertical + 1 horizontal -->
-				<div class="grid grid-cols-3 gap-8">
-					<div class="flex h-full flex-col gap-8">
+				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
+					<div class="flex flex-col gap-8">
 						{#each products.slice(index, index + 2) as verticalProduct}
 							<RowItem product={verticalProduct} vertical />
 						{/each}
 					</div>
 					{#if products[index + 2]}
-						<div class="col-span-2 h-full overflow-hidden rounded-lg bg-cover bg-center">
+						<div class="col-span-1 sm:col-span-2">
 							<RowItem product={products[index + 2]} large />
 						</div>
 					{/if}
@@ -35,13 +35,13 @@
 
 			{#if index % 12 === 6 && index + 3 <= products.length}
 				<!-- Section 3: 1 horizontal + 2 vertical -->
-				<div class="grid grid-cols-3 gap-8">
+				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
 					{#if products[index]}
-						<div class="col-span-2 h-full overflow-hidden rounded-lg bg-cover bg-center">
+						<div class="col-span-1 sm:col-span-2">
 							<RowItem product={products[index]} large />
 						</div>
 					{/if}
-					<div class="flex h-full flex-col gap-8">
+					<div class="flex flex-col gap-8">
 						{#each products.slice(index + 1, index + 3) as verticalProduct}
 							<RowItem product={verticalProduct} vertical />
 						{/each}
@@ -51,7 +51,7 @@
 
 			{#if index % 12 === 9 && index + 3 <= products.length}
 				<!-- Section 4: 3 horizontal -->
-				<div class="grid grid-cols-3 gap-8">
+				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
 					{#each products.slice(index, index + 3) as horizontalProduct}
 						<RowItem product={horizontalProduct} />
 					{/each}

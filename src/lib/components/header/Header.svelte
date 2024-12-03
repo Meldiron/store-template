@@ -12,7 +12,7 @@
 
 <div
 	class:backdrop-blur-sm={isScrolled}
-	class="sc sticky top-8 z-50 mx-auto mt-8 flex w-[824px] items-center justify-between rounded-2xl border border-gray-200 bg-white/80 p-4"
+	class="sc sticky top-8 z-50 mx-4 mt-8 flex items-center justify-between rounded-2xl border border-gray-200 bg-white/80 p-3 lg:mx-auto lg:w-[824px] lg:p-4"
 >
 	<!-- Store Logo -->
 	<div class="flex items-center gap-4">

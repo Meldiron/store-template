@@ -11,8 +11,8 @@
 <svelte:window on:scroll={handleScroll} />
 
 <div
-	class:backdrop-blur-lg={isScrolled}
-	class="sc sticky top-8 mx-auto mt-8 flex w-[824px] items-center justify-between rounded-2xl border border-gray-200 bg-white/80 p-4"
+	class:backdrop-blur-sm={isScrolled}
+	class="sc sticky top-8 z-50 mx-auto mt-8 flex w-[824px] items-center justify-between rounded-2xl border border-gray-200 bg-white/80 p-4"
 >
 	<!-- Store Logo -->
 	<div class="flex items-center gap-4">
@@ -20,7 +20,7 @@
 			<rect width="40" height="40" rx="8" fill="black" />
 			<circle cx="19.5" cy="20" r="7" fill="white" />
 		</svg>
-		<span class="text-xl">Store</span>
+		<span class="text-xl">StoreZilla</span>
 	</div>
 
 	<!-- Cart Section -->

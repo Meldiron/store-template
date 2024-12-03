@@ -1,27 +1,33 @@
 <script lang="ts">
-	let selectedTab = 'All Products'; // Default selected tab
+	import { page } from '$app/stores';
+
+	const categories = ['All Products', 'Tops', 'Sweaters', 'Socks', 'Shoes', 'Accessories'];
+
+	$: selectedCategory = $page.url.searchParams.get('category') || 'All Products';
 </script>
 
 <div class="mx-auto mt-[88px] flex w-full items-center justify-center gap-[12px]">
-	{#each ['All Products', 'Tops', 'Sweaters', 'Socks', 'Shoes', 'Accessories'] as tab}
-		<button
+	{#each categories as category}
+		<a
+			data-sveltekit-noscroll
+			href={`?category=${category}`}
 			class="item font-inter cursor-pointer text-[14px] font-normal leading-[19.6px] tracking-[-0.063px] text-[#56565C]"
-			class:is-selected={selectedTab === tab}
-			on:click={() => (selectedTab = tab)}
+			class:is-selected={selectedCategory === category}
 		>
-			{tab}
-		</button>
+			{category}
+		</a>
 	{/each}
 </div>
 
 <style>
 	.item {
 		display: flex;
-		padding: 0px var(--space-4, 8px);
+		padding: 0 var(--space-4, 8px);
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		gap: var(--space-2, 4px);
+		text-decoration: none;
 	}
 
 	.is-selected {

@@ -11,7 +11,7 @@
 		<a
 			data-sveltekit-noscroll
 			href={`?category=${category}`}
-			class="item font-inter cursor-pointer text-[14px] font-normal leading-[19.6px] tracking-[-0.063px] text-[#56565C]"
+			class="item cursor-pointer font-inter text-[14px] leading-[19.6px] tracking-[-0.063px] text-[#56565C]"
 			class:is-selected={selectedCategory === category}
 		>
 			{category}

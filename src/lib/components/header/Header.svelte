@@ -20,7 +20,7 @@
 			<rect width="40" height="40" rx="8" fill="black" />
 			<circle cx="19.5" cy="20" r="7" fill="white" />
 		</svg>
-		<span class="text-xl">StoreZilla</span>
+		<span class="text-xl text-[#19191C]">StoreZilla</span>
 	</div>
 
 	<!-- Cart Section -->
@@ -42,12 +42,12 @@
 					stroke-linejoin="round"
 				/>
 			</svg>
-			<span>Cart</span>
+			<span class="text-[#56565C]">Cart</span>
 		</div>
 
 		<!-- Cart Value -->
 		<div
-			class="flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm"
+			class="flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-[#56565C]"
 		>
 			{cartCount}
 		</div>

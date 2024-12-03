@@ -101,7 +101,7 @@
 	}
 
 	.product-name {
-		color: var(--primary, #19191c);
+		color: #19191c;
 		font-size: 24px;
 		font-style: normal;
 		font-weight: 400;
@@ -109,7 +109,7 @@
 	}
 
 	.product-price {
-		color: var(--secondary, #56565c);
+		color: #56565c;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 400;

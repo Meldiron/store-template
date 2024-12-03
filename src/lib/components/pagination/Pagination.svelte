@@ -126,8 +126,8 @@
 	}
 
 	.pagination-number.current-page {
+		color: #19191c;
 		background: var(--color-bgColor-neutral-tertiary, #ededf0);
-		color: var(--primary, #19191c);
 	}
 
 	.pagination-ellipsis {

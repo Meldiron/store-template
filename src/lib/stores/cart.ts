@@ -1,8 +1,9 @@
 import { derived, get, writable } from 'svelte/store';
-import type { Cart, Product } from '../../utils/products';
+import type { Product } from '../../utils/products';
+import type { Basket, BasketItem } from '../../routes/api/checkout/+server';
 
 // Initialize cart store with values from localStorage or empty
-const cartStore = writable<Cart[]>(initializeCartFromLocalStorage());
+const cartStore = writable<Basket>(initializeCartFromLocalStorage());
 
 cartStore.subscribe((value) => {
 	// Persist cart updates to localStorage
@@ -12,14 +13,14 @@ cartStore.subscribe((value) => {
 });
 
 // Helper function to initialize the cart from localStorage
-function initializeCartFromLocalStorage(): Cart[] {
+function initializeCartFromLocalStorage(): Basket {
 	if (typeof window === 'undefined') return [];
 	const storedCart = localStorage.getItem('cartValue');
 	return storedCart ? JSON.parse(storedCart) : [];
 }
 
 // Initialize cart with a new value
-function initializeCart(initialValue: Cart[]) {
+function initializeCart(initialValue: Basket) {
 	cartStore.set(initialValue);
 }
 
@@ -34,7 +35,7 @@ function addItem(product: Product, features: Record<string, string>) {
 		);
 		if (index !== -1) {
 			// Update existing item's count
-			cart[index].count += 1;
+			cart[index].quantity += 1;
 		} else {
 			// Add new item to the cart
 			cart.push({
@@ -88,7 +89,7 @@ function getAllItems() {
 
 // Derived store for total items in the cart
 const totalCartItems = derived(cartStore, ($cart) =>
-	$cart.reduce((total, item) => total + item.count, 0)
+	$cart.reduce((total, item) => total + item.quantity, 0)
 );
 
 export const cart = {

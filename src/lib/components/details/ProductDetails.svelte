@@ -6,6 +6,8 @@
 	export let product: Product;
 	export let selectedFeatures: Record<string, string> = {};
 
+	let features = product.features ?? [];
+
 	function addItemToCart() {
 		cart.addItem(product, selectedFeatures);
 	}

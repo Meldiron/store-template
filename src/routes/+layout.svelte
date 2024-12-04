@@ -8,9 +8,7 @@
 
 	onMount(() => {
 		const storedCart = localStorage.getItem('cartValue');
-		if (storedCart) {
-			cart.initialize(JSON.parse(storedCart));
-		}
+		cart.initialize(JSON.parse(storedCart ?? '[]'));
 	});
 </script>
 

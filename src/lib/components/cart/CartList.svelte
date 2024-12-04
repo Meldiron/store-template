@@ -67,30 +67,6 @@
 							class="inline-flex w-fit items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-2 py-1"
 						>
 							<button
-								aria-label="Add item"
-								on:click={() => {
-									updateCart(cartItem, 'add'); // add one
-								}}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="20"
-									height="20"
-									viewBox="0 0 20 20"
-									fill="none"
-								>
-									<path
-										fill-rule="evenodd"
-										clip-rule="evenodd"
-										d="M10 5C10.5523 5 11 5.44772 11 6V9L14 9C14.5523 9 15 9.44772 15 10C15 10.5523 14.5523 11 14 11H11V14C11 14.5523 10.5523 15 10 15C9.44771 15 9 14.5523 9 14V11H6C5.44772 11 5 10.5523 5 10C5 9.44771 5.44772 9 6 9L9 9V6C9 5.44771 9.44771 5 10 5Z"
-										fill="#97979B"
-									/>
-								</svg>
-							</button>
-
-							{cartItem.count}
-
-							<button
 								aria-label="Remove item"
 								on:click={() => {
 									updateCart(cartItem, 'remove'); // remove one, if 0, remove from cart
@@ -107,6 +83,30 @@
 										fill-rule="evenodd"
 										clip-rule="evenodd"
 										d="M5 10C5 9.44772 5.44772 9 6 9L14 9C14.5523 9 15 9.44772 15 10C15 10.5523 14.5523 11 14 11L6 11C5.44772 11 5 10.5523 5 10Z"
+										fill="#97979B"
+									/>
+								</svg>
+							</button>
+
+							{cartItem.count}
+
+							<button
+								aria-label="Add item"
+								on:click={() => {
+									updateCart(cartItem, 'add'); // add one
+								}}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="20"
+									height="20"
+									viewBox="0 0 20 20"
+									fill="none"
+								>
+									<path
+										fill-rule="evenodd"
+										clip-rule="evenodd"
+										d="M10 5C10.5523 5 11 5.44772 11 6V9L14 9C14.5523 9 15 9.44772 15 10C15 10.5523 14.5523 11 14 11H11V14C11 14.5523 10.5523 15 10 15C9.44771 15 9 14.5523 9 14V11H6C5.44772 11 5 10.5523 5 10C5 9.44771 5.44772 9 6 9L9 9V6C9 5.44771 9.44771 5 10 5Z"
 										fill="#97979B"
 									/>
 								</svg>

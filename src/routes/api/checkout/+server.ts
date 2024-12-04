@@ -13,7 +13,7 @@ function validateCartItem(item: unknown): asserts item is CartItem {
 		throw error(400, `Invalid basket item: ${JSON.stringify(item)}`);
 	}
 
-	const { slug, variation, quantity } = item as CartItem;
+	const { slug, variation, count } = item as CartItem;
 	if (typeof slug !== 'string') {
 		throw error(400, `Invalid or missing productSlug in basket item: ${JSON.stringify(item)}`);
 	}
@@ -22,8 +22,8 @@ function validateCartItem(item: unknown): asserts item is CartItem {
 		throw error(400, `Invalid variation in basket item: ${JSON.stringify(item)}`);
 	}
 
-	if (typeof quantity !== 'number' || quantity <= 0) {
-		throw error(400, `Invalid quantity in basket item: ${JSON.stringify(item)}`);
+	if (typeof count !== 'number' || count <= 0) {
+		throw error(400, `Invalid count in basket item: ${JSON.stringify(item)}`);
 	}
 }
 
@@ -89,7 +89,7 @@ function convertToStripeLineItem(
 			},
 			unit_amount: Math.round(unitAmount * 100)
 		},
-		quantity: item.quantity
+		quantity: item.count
 	};
 }
 

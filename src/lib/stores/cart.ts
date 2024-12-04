@@ -4,7 +4,7 @@ import type { Product } from '../../utils/products';
 export type CartItem = {
 	slug: string;
 	variation?: Record<string, string>;
-	quantity: number;
+	count: number;
 };
 
 export type Cart = CartItem[];

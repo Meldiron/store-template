@@ -7,10 +7,10 @@
 	export let product: Product;
 	export let doReload = false;
 
-	let imgEl;
+	let imgEl: HTMLImageElement;
 
 	onMount(() => {
-		if(imgEl.complete) {
+		if (imgEl.complete) {
 			imgEl.classList.add('!opacity-100');
 		} else {
 			imgEl.addEventListener('load', () => {
@@ -27,8 +27,9 @@
 >
 	<div class="card-image relative">
 		<img
-			src={product.imageBlurhashUrl[0]}
-			class="product-image absolute left-0 top-0 w-full h-full"
+			alt={product.name}
+			src={product.imageBlurhashUrl?.[0] || ''}
+			class="product-image absolute left-0 top-0 h-full w-full"
 		/>
 		<img
 			bind:this={imgEl}

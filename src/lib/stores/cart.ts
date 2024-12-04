@@ -2,9 +2,11 @@ import { derived, get, writable } from 'svelte/store';
 import type { Product } from '../../utils/products';
 
 export type CartItem = {
+	id: string;
 	slug: string;
-	variation?: Record<string, string>;
+	features?: Record<string, string>;
 	count: number;
+	product: Product;
 };
 
 export type Cart = CartItem[];
@@ -42,14 +44,15 @@ function addItem(product: Product, features: Record<string, string>) {
 		const index = cart.findIndex((item) => cartItemId === item.id);
 		if (index !== -1) {
 			// Update existing item's count
-			cart[index].quantity += 1;
+			cart[index].count += 1;
 		} else {
 			// Add new item to the cart
 			cart.push({
 				id: cartItemId,
 				count: 1,
 				features,
-				product: { ...product }
+				slug: product.slug,
+				product
 			});
 		}
 		return [...cart];
@@ -96,7 +99,7 @@ function getAllItems() {
 
 // Derived store for total items in the cart
 const totalCartItems = derived(cartStore, ($cart) =>
-	$cart.reduce((total, item) => total + item.quantity, 0)
+	$cart.reduce((total, item) => total + item.count, 0)
 );
 
 export const cart = {

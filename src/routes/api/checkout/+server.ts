@@ -4,21 +4,23 @@ import { products, type Product } from '../../../utils/products';
 import { STRIPE_SECRET_KEY } from '$env/static/private';
 import type { Cart, CartItem } from '$lib/stores/cart';
 
+type CartItemDto = Omit<CartItem, 'id' | 'product'>;
+
 /**
  * Validates if the provided item conforms to the CartItem type.
  * Throws an error if validation fails.
  */
-function validateCartItem(item: unknown): asserts item is CartItem {
+function validateCartItem(item: unknown): asserts item is CartItemDto {
 	if (typeof item !== 'object' || item === null) {
 		throw error(400, `Invalid basket item: ${JSON.stringify(item)}`);
 	}
 
-	const { slug, variation, count } = item as CartItem;
+	const { slug, features, count } = item as CartItemDto;
 	if (typeof slug !== 'string') {
 		throw error(400, `Invalid or missing productSlug in basket item: ${JSON.stringify(item)}`);
 	}
 
-	if (variation !== undefined && (typeof variation !== 'object' || variation === null)) {
+	if (features !== undefined && (typeof features !== 'object' || features === null)) {
 		throw error(400, `Invalid variation in basket item: ${JSON.stringify(item)}`);
 	}
 
@@ -32,14 +34,14 @@ function validateCartItem(item: unknown): asserts item is CartItem {
  */
 function calculateUnitAmountWithVariations(
 	product: Product,
-	variation: Record<string, string> | undefined
+	features: Record<string, string> | undefined
 ): number {
 	let unitAmount = product.price;
 
-	if (variation && product.features) {
+	if (features && product.features) {
 		for (const feature of product.features) {
 			const featureName = feature.name;
-			const selectedVariation = variation[featureName];
+			const selectedVariation = features[featureName];
 
 			if (!selectedVariation) {
 				throw error(400, `Missing variation for feature: "${featureName}"`);
@@ -69,7 +71,7 @@ function calculateUnitAmountWithVariations(
  * Converts a BasketItem into a Stripe LineItem for the checkout session.
  */
 function convertToStripeLineItem(
-	item: CartItem,
+	item: CartItemDto,
 	origin: string
 ): Stripe.Checkout.SessionCreateParams.LineItem {
 	const product = products.find((p) => p.slug === item.slug);
@@ -77,7 +79,7 @@ function convertToStripeLineItem(
 		throw error(404, `Product with slug "${item.slug}" does not exist`);
 	}
 
-	const unitAmount = calculateUnitAmountWithVariations(product, item.variation);
+	const unitAmount = calculateUnitAmountWithVariations(product, item.features);
 
 	return {
 		price_data: {

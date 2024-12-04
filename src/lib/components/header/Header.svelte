@@ -16,7 +16,7 @@
 >
 	<!-- Store Logo -->
 	<div class="flex items-center gap-4">
-		<a href="/">
+		<a href="/" aria-label="Store">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="40"

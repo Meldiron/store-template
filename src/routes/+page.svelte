@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { tick } from 'svelte';
+	import { browser } from '$app/environment';
+	import { currentPage, selectedCategory } from './store';
+
 	import StaggeredGrid from '$lib/components/grid/StaggeredGrid.svelte';
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
-	import { currentPage, selectedCategory } from './store';
-	import { browser } from '$app/environment';
-	import { tick } from 'svelte';
+	import ScrollToTop from '$lib/components/pagination/ScrollToTop.svelte';
 
 	export let data;
 
@@ -52,5 +54,9 @@
 
 	{#if paginatedProducts.length > 0}
 		<Pagination currentPage={$currentPage} {totalPages} />
+	{/if}
+
+	{#if paginatedProducts.length > 0}
+		<ScrollToTop />
 	{/if}
 </div>

@@ -22,7 +22,7 @@
 	>
 		<img
 			alt={product.name}
-			src={product.images.urls[0]}
+			src={product.imageUrls[0]}
 			class="h-full w-full rounded-lg object-cover"
 		/>
 

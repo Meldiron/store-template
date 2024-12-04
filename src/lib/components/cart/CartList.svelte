@@ -10,19 +10,19 @@
 	function updateCart(cartItem: Cart, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
 			case 'add':
-				cart.updateCount(cartItem.product, cartItem.size, cartItem.count + 1);
+				cart.updateCount(cartItem.product, cartItem.features, cartItem.count + 1);
 				break;
 
 			case 'remove':
 				if (cartItem.count >= 1) {
-					cart.updateCount(cartItem.product, cartItem.size, cartItem.count - 1);
+					cart.updateCount(cartItem.product, cartItem.features, cartItem.count - 1);
 				} else {
-					cart.removeItem(cartItem.product, cartItem.size);
+					cart.removeItem(cartItem.product, cartItem.features);
 				}
 				break;
 
 			case 'delete':
-				cart.removeItem(cartItem.product, cartItem.size);
+				cart.removeItem(cartItem.product, cartItem.features);
 				break;
 
 			default:

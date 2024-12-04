@@ -6,34 +6,34 @@
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
 	import ScrollToTop from '$lib/components/pagination/ScrollToTop.svelte';
 
-	export let data;
+	let { data } = $props();
 
 	const { allProducts } = data;
 
 	const itemsPerPage = 12;
 
-	let filteredProducts = [];
-	$: filteredProducts =
+	let filteredProducts = $derived(
 		$selectedCategory === 'All Products'
 			? allProducts
-			: allProducts.filter((product) => product.categories.includes($selectedCategory));
-
-	let paginatedProducts = [];
-	$: paginatedProducts = filteredProducts.slice(
-		($currentPage - 1) * itemsPerPage,
-		$currentPage * itemsPerPage
+			: allProducts.filter((product) => product.categories.includes($selectedCategory))
 	);
 
-	let totalPages = 1;
-	$: totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-	$: if ($currentPage > 1) {
-		const navigation = document.getElementById('navigation');
-		if (navigation) {
-			tick().then(() => {
-				navigation.scrollIntoView({ behavior: 'smooth' });
-			});
+	let paginatedProducts = $derived(
+		filteredProducts.slice(($currentPage - 1) * itemsPerPage, $currentPage * itemsPerPage)
+	);
+
+	let totalPages = $derived(Math.ceil(filteredProducts.length / itemsPerPage));
+
+	$effect(() => {
+		if ($currentPage > 1) {
+			const navigation = document.getElementById('navigation');
+			if (navigation) {
+				tick().then(() => {
+					navigation.scrollIntoView({ behavior: 'smooth' });
+				});
+			}
 		}
-	}
+	});
 </script>
 
 <div

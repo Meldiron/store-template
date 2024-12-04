@@ -1,22 +1,35 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import type { Product } from '../../../utils/products';
 
-	export let large = false;
-	export let vertical = false;
-	export let product: Product;
-	export let doReload = false;
+	const {
+		large = false,
+		vertical = false,
+		product,
+		doReload = false
+	} = $props<{
+		large?: boolean;
+		vertical?: boolean;
+		product: Product;
+		doReload?: boolean;
+	}>();
+	let imgEl = $state<HTMLImageElement>();
 
-	let imgEl: HTMLImageElement;
+	$effect(() => {
+		const img = imgEl;
+		if (!img) return;
 
-	onMount(() => {
-		if (imgEl.complete) {
-			imgEl.classList.add('!opacity-100');
-		} else {
-			imgEl.addEventListener('load', () => {
-				imgEl.classList.add('!opacity-100');
-			});
+		// If image is already loaded, add class immediately
+		if (img.complete) {
+			img.classList.add('!opacity-100');
+			return;
 		}
+
+		// Otherwise wait for load event
+		const handleLoad = () => img.classList.add('!opacity-100');
+		img.addEventListener('load', handleLoad);
+
+		// Cleanup function
+		return () => img.removeEventListener('load', handleLoad);
 	});
 </script>
 

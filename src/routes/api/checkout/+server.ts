@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import { products, type Product } from '../../../utils/products';
 import { STRIPE_SECRET_KEY } from '$env/static/private';
-import type { Cart, CartItem } from '$lib/stores/cart';
+import type { Cart, CartItem } from '$lib/stores/cart.svelte';
 
 type CartItemDto = Omit<CartItem, 'id' | 'product'>;
 

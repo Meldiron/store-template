@@ -1,15 +1,17 @@
 <script lang="ts">
-	import { cart } from '$lib/stores/cart';
+	import { cart } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import type { Product } from '../../../utils/products';
 
-	export let product: Product;
-	export let selectedFeatures: Record<string, string> = {};
+	interface Props {
+		product: Product;
+		selectedFeatures?: Record<string, string>;
+	}
 
-	let features = product.features ?? [];
+	let { product, selectedFeatures = $bindable({}) }: Props = $props();
 
 	function addItemToCart() {
-		cart.addItem(product, selectedFeatures);
+		cart.add(product, selectedFeatures);
 	}
 </script>
 
@@ -64,7 +66,7 @@
 					<div class="flex flex-wrap gap-3 md:gap-2">
 						{#each feature.variations as variation}
 							<button
-								on:click={() => (selectedFeatures[feature.name] = variation.name)}
+								onclick={() => (selectedFeatures[feature.name] = variation.name)}
 								class:is-selected={(selectedFeatures[feature.name] ?? '') === variation.name}
 								class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
 							>

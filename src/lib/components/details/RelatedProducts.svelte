@@ -2,7 +2,11 @@
 	import RowItem from '$lib/components/grid/RowItem.svelte';
 	import { type Product, products } from '../../../utils/products';
 
-	export let product: Product;
+	interface Props {
+		product: Product;
+	}
+
+	let { product }: Props = $props();
 
 	const relatedProducts = products.filter((prod) =>
 		prod.categories.some((category) => product.categories.includes(category))

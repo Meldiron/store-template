@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui/button';
 
 	let lastScrollY = 0;
-	let isVisible = false;
+	let isVisible = $state(false);
 
 	const handleScroll = () => {
 		const currentScrollY = window.scrollY;
@@ -11,7 +11,7 @@
 	};
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window onscroll={handleScroll} />
 
 <Button
 	on:click={() => {

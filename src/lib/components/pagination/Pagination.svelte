@@ -2,8 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { selectedCategory } from '../../../routes/store';
 
-	export let currentPage: number;
-	export let totalPages: number;
+	interface Props {
+		currentPage: number;
+		totalPages: number;
+	}
+
+	let { currentPage, totalPages }: Props = $props();
 
 	const goToPage = (page: number | string) => {
 		const category = $selectedCategory !== 'All Products' ? `&category=${$selectedCategory}` : '';
@@ -37,7 +41,7 @@
 <div class="pagination-container">
 	<!-- Previous Button -->
 	<button
-		on:click={() => goToPage(currentPage - 1)}
+		onclick={() => goToPage(currentPage - 1)}
 		class="pagination-button"
 		disabled={currentPage === 1}
 	>
@@ -58,7 +62,7 @@
 			<div class="pagination-ellipsis">...</div>
 		{:else}
 			<button
-				on:click={() => goToPage(page)}
+				onclick={() => goToPage(page)}
 				class={`pagination-number ${currentPage === page ? 'current-page' : ''}`}
 			>
 				{page}
@@ -68,7 +72,7 @@
 
 	<!-- Next Button -->
 	<button
-		on:click={() => goToPage(currentPage + 1)}
+		onclick={() => goToPage(currentPage + 1)}
 		class="pagination-button"
 		disabled={currentPage === totalPages}
 	>

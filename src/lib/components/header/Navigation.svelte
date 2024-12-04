@@ -3,9 +3,9 @@
 
 	const categories = ['All Products', 'Tops', 'Sweaters', 'Socks', 'Shoes', 'Accessories'];
 
-	$: selectedCategory = $page.url.searchParams.get('category') || 'All Products';
+	let selectedCategory = $derived($page.url.searchParams.get('category') || 'All Products');
 
-	let container: HTMLDivElement;
+	let container: HTMLDivElement | undefined = $state();
 
 	function scrollToSelectedItem() {
 		const selectedElement = document.querySelector('.is-selected');
@@ -20,7 +20,7 @@
 	}
 
 	// Observe changes to the is-selected class
-	function observeSelection() {
+	function observeSelection(container: HTMLDivElement) {
 		const observer = new MutationObserver(scrollToSelectedItem);
 		observer.observe(container, {
 			subtree: true,
@@ -29,9 +29,9 @@
 		});
 	}
 
-	$: {
-		if (container) observeSelection();
-	}
+	$effect(() => {
+		if (container) observeSelection(container);
+	});
 </script>
 
 <div id="navigation" class="mt-[88px] w-full px-8">

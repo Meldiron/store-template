@@ -1,20 +1,16 @@
 <script lang="ts">
-	import { cart, isCartSheetOpen } from '$lib/stores/cart';
+	import { cart } from '$lib/stores/cart.svelte';
 	import { Content, Header, Root, SheetClose, Title, Trigger } from '$lib/components/ui/sheet';
 	import CartList from '$lib/components/cart/CartList.svelte';
-
-	let totalCartItems: number | null = null;
-
-	$: cart.totalCartItems.subscribe((count) => (totalCartItems = count));
 </script>
 
 <div class="flex">
-	<Root bind:open={$isCartSheetOpen}>
+	<Root open={cart.getIsOpen()} onOpenChange={(value) => cart.setIsOpen(value)}>
 		<Trigger>
 			<button class="flex items-center gap-2">
 				<!-- Cart Icon -->
 				<!--suppress HtmlUnknownTag -->
-				<div class:cart-text={totalCartItems} class="flex items-center gap-1">
+				<div class:cart-text={cart.getTotalItems()} class="flex items-center gap-1">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
@@ -34,11 +30,11 @@
 				</div>
 
 				<!-- Cart Value -->
-				{#if totalCartItems}
+				{#if cart.getTotalItems() > 0}
 					<div
 						class="cart-value flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-[#56565C]"
 					>
-						{totalCartItems}
+						{cart.getTotalItems()}
 					</div>
 				{/if}
 			</button>

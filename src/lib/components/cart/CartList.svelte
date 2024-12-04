@@ -1,10 +1,6 @@
 <script lang="ts">
-	import { cart, type CartItem } from '$lib/stores/cart';
+	import { cart, type CartItem } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
-
-	let cartItems = cart.allItems();
-
-	cart.subscribe((items) => (cartItems = items));
 
 	function updateCart(cartItem: CartItem, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
@@ -16,12 +12,12 @@
 				if (cartItem.quantity >= 1) {
 					cart.updateQuantity(cartItem.product, cartItem.features, cartItem.quantity - 1);
 				} else {
-					cart.removeItem(cartItem.product, cartItem.features);
+					cart.remove(cartItem.product, cartItem.features);
 				}
 				break;
 
 			case 'delete':
-				cart.removeItem(cartItem.product, cartItem.features);
+				cart.remove(cartItem.product, cartItem.features);
 				break;
 
 			default:
@@ -32,7 +28,7 @@
 
 <div class="mt-8 flex h-full w-full flex-col">
 	<div class="no-scrollbar flex flex-col gap-2 overflow-auto pb-24">
-		{#each cartItems as cartItem}
+		{#each cart.getItems() as cartItem}
 			{@const product = cartItem.product}
 			<div class="flex h-fit flex-col items-start gap-6 rounded-lg bg-white p-3 md:flex-row">
 				<img
@@ -69,7 +65,7 @@
 						>
 							<button
 								aria-label="Remove item"
-								on:click={() => {
+								onclick={() => {
 									updateCart(cartItem, 'remove'); // remove one, if 0, remove from cart
 								}}
 							>
@@ -93,7 +89,7 @@
 
 							<button
 								aria-label="Add item"
-								on:click={() => {
+								onclick={() => {
 									updateCart(cartItem, 'add'); // add one
 								}}
 							>
@@ -119,7 +115,7 @@
 						>
 							<button
 								aria-label="Remove item from cart"
-								on:click={() => {
+								onclick={() => {
 									updateCart(cartItem, 'delete');
 								}}
 							>
@@ -151,7 +147,7 @@
 		{/each}
 	</div>
 
-	{#if cartItems.length}
+	{#if cart.getTotalItems() > 0}
 		<Button class="sticky bottom-0 flex justify-center" on:click={() => console.log('Checkout')}>
 			Checkout
 		</Button>

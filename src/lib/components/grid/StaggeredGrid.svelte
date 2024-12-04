@@ -2,7 +2,11 @@
 	import RowItem from '$lib/components/grid/RowItem.svelte';
 	import type { Product } from '../../../utils/products';
 
-	export let products: Array<Product> = [];
+	interface Props {
+		products?: Array<Product>;
+	}
+
+	let { products = [] }: Props = $props();
 </script>
 
 <div class="grid gap-8">

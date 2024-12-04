@@ -1,14 +1,14 @@
 <script lang="ts">
 	import CartSheet from '$lib/components/cart/CartSheet.svelte';
 
-	let isScrolled = false;
+	let isScrolled = $state(false);
 
 	const handleScroll = () => {
 		isScrolled = window.scrollY > 25;
 	};
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window onscroll={handleScroll} />
 
 <div
 	class:backdrop-blur-sm={isScrolled}

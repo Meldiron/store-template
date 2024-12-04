@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
-	import { cart } from '$lib/stores/cart';
+	import { cart } from '$lib/stores/cart.svelte';
 	import SiteHeader from '$lib/components/header/SiteHeader.svelte';
 
 	let { children } = $props();

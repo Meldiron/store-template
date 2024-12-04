@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { decode } from 'blurhash';
 	import type { Product } from '../../../utils/products';
 
 	export let large = false;
@@ -8,22 +7,15 @@
 	export let product: Product;
 	export let doReload = false;
 
-	let blurDataUrl: string = '';
+	let imgEl;
 
 	onMount(() => {
-		const dimension = 32;
-		const pixels = decode(product.images.blur, dimension, dimension);
-
-		const canvas = document.createElement('canvas');
-		canvas.width = dimension;
-		canvas.height = dimension;
-		const ctx = canvas.getContext('2d');
-
-		if (ctx) {
-			const imageData = ctx.createImageData(dimension, dimension);
-			imageData.data.set(new Uint8ClampedArray(pixels));
-			ctx.putImageData(imageData, 0, 0);
-			blurDataUrl = canvas.toDataURL();
+		if(imgEl.complete) {
+			imgEl.classList.add('!opacity-100');
+		} else {
+			imgEl.addEventListener('load', () => {
+				imgEl.classList.add('!opacity-100');
+			});
 		}
 	});
 </script>
@@ -33,12 +25,16 @@
 	href={`/product-${product.slug}`}
 	class={`card ${large ? 'large-card' : vertical ? 'vertical-card' : 'horizontal-card'}`}
 >
-	<div class="card-image">
+	<div class="card-image relative">
 		<img
-			src={product.images.urls[0]}
+			src={product.imageBlurhashUrl[0]}
+			class="product-image absolute left-0 top-0 w-full h-full"
+		/>
+		<img
+			bind:this={imgEl}
+			src={product.imageUrls[0]}
 			alt={product.name}
-			class="product-image"
-			style={`background-image: url(${blurDataUrl});`}
+			class="product-image relative opacity-0"
 		/>
 	</div>
 

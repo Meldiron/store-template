@@ -47,7 +47,7 @@ export const cart = {
 		const featuresId = Object.keys(features)
 			.map((v) => `${v}-${features[v]}`)
 			.join('-');
-		const cartItemSlug = `${product.slug}-${featuresId}`;
+		const cartItemSlug = `${product.slug}_${featuresId}`;
 
 		const index = items.findIndex((item) => cartItemSlug === item.slug);
 		if (index !== -1) {
@@ -69,7 +69,7 @@ export const cart = {
 		const featuresId = Object.keys(features)
 			.map((v) => `${v}-${features[v]}`)
 			.join('-');
-		const cartItemSlug = `${product.slug}-${featuresId}`;
+		const cartItemSlug = `${product.slug}_${featuresId}`;
 
 		items = items.filter((item) => item.slug !== cartItemSlug);
 	},

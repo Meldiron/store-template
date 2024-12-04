@@ -64,6 +64,7 @@
 							class="inline-flex w-fit items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-2 py-1"
 						>
 							<button
+								type="button"
 								aria-label="Remove item"
 								onclick={() => {
 									updateCart(cartItem, 'remove'); // remove one, if 0, remove from cart
@@ -88,6 +89,7 @@
 							{cartItem.quantity}
 
 							<button
+								type="button"
 								aria-label="Add item"
 								onclick={() => {
 									updateCart(cartItem, 'add'); // add one
@@ -114,6 +116,7 @@
 							class="flex h-[34px] w-[32px] flex-shrink-0 items-center justify-center gap-[12px] rounded-lg border border-gray-300 bg-white px-[6px] py-[10px]"
 						>
 							<button
+								type="button"
 								aria-label="Remove item from cart"
 								onclick={() => {
 									updateCart(cartItem, 'delete');
@@ -142,15 +145,26 @@
 		{:else}
 			<div class="flex flex-col justify-center gap-4 p-4 text-center">
 				<h2 class="text-lg font-semibold text-gray-700">Your cart is empty</h2>
-				<p class="text-sm text-gray-500">Looks like you haven’t added anything to your cart yet.</p>
+				<p class="text-sm text-gray-500">Looks like you haven't added anything to your cart yet.</p>
 			</div>
 		{/each}
 	</div>
 
 	{#if cart.getTotalItems() > 0}
-		<Button class="sticky bottom-0 flex justify-center" on:click={() => console.log('Checkout')}>
-			Checkout
-		</Button>
+		<form method="POST" action="/api/checkout">
+			<input
+				type="hidden"
+				name="cart"
+				value={JSON.stringify(
+					cart.getItems().map((item) => ({
+						slug: item.product.slug.split('_')[0],
+						quantity: item.quantity,
+						features: item.features
+					}))
+				)}
+			/>
+			<Button type="submit" class="sticky bottom-0 flex justify-center">Checkout</Button>
+		</form>
 	{/if}
 </div>
 

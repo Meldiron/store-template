@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import { products, type Product } from '../../../utils/products';
 import { STRIPE_SECRET_KEY } from '$env/static/private';
-import type { Cart, CartItem } from '$lib/stores/cart.svelte';
+import type { CartItem } from '$lib/stores/cart.svelte';
 
 type CartItemDto = Omit<CartItem, 'id' | 'product'>;
 
@@ -107,20 +107,22 @@ export async function POST({ request }) {
 	let body;
 
 	try {
-		body = await request.json();
+		body = await request.formData();
 	} catch (e) {
 		if (e instanceof SyntaxError) {
-			throw error(400, 'Invalid request: Body must be a JSON object');
+			throw error(400, 'Invalid request: Body must be a form data object');
 		} else {
 			throw error(500, 'Internal server error: Failed to parse request body');
 		}
 	}
 
-	if (!body || typeof body !== 'object' || !Array.isArray(body.cart) || body.cart.length === 0) {
-		throw error(400, 'Invalid request: `cart` must be a non-empty array');
+	const cartRaw = body.get('cart') as string;
+	const cart = JSON.parse(cartRaw) as CartItemDto[];
+
+	if (!cart || typeof cart !== 'object' || !Array.isArray(cart)) {
+		throw error(400, 'Invalid or missing cart data');
 	}
 
-	const cart: Cart = body.basket;
 	cart.forEach(validateCartItem);
 
 	if (!STRIPE_SECRET_KEY) {

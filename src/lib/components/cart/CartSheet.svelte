@@ -1,0 +1,113 @@
+<script lang="ts">
+	import { cart, isCartSheetOpen } from '$lib/stores/cart';
+	import { Content, Header, Root, SheetClose, Title, Trigger } from '$lib/components/ui/sheet';
+	import CartList from '$lib/components/cart/CartList.svelte';
+
+	let totalCartItems: number | null = null;
+
+	$: cart.totalCartItems.subscribe((count) => (totalCartItems = count));
+</script>
+
+<div class="flex">
+	<Root bind:open={$isCartSheetOpen}>
+		<Trigger>
+			<button class="flex items-center gap-2">
+				<!-- Cart Icon -->
+				<!--suppress HtmlUnknownTag -->
+				<div class:cart-text={totalCartItems} class="flex items-center gap-1">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 20 20"
+						fill="none"
+					>
+						<path
+							d="M13.125 8.75V5C13.125 4.1712 12.7957 3.37634 12.2097 2.79029C11.6236 2.20424 10.8288 1.875 9.99999 1.875C9.17119 1.875 8.37633 2.20424 7.79028 2.79029C7.20423 3.37634 6.87499 4.1712 6.87499 5V8.75M16.3383 7.08917L17.3908 17.0892C17.4492 17.6433 17.0158 18.125 16.4583 18.125H3.54165C3.41016 18.1251 3.28011 18.0976 3.15994 18.0442C3.03978 17.9908 2.93219 17.9127 2.84417 17.8151C2.75615 17.7174 2.68967 17.6023 2.64903 17.4772C2.6084 17.3521 2.59453 17.2199 2.60832 17.0892L3.66165 7.08917C3.68595 6.8588 3.79468 6.64558 3.96686 6.49063C4.13905 6.33568 4.36251 6.24996 4.59415 6.25H15.4058C15.8858 6.25 16.2883 6.6125 16.3383 7.08917ZM7.18749 8.75C7.18749 8.83288 7.15456 8.91237 7.09596 8.97097C7.03735 9.02958 6.95787 9.0625 6.87499 9.0625C6.79211 9.0625 6.71262 9.02958 6.65402 8.97097C6.59541 8.91237 6.56249 8.83288 6.56249 8.75C6.56249 8.66712 6.59541 8.58763 6.65402 8.52903C6.71262 8.47042 6.79211 8.4375 6.87499 8.4375C6.95787 8.4375 7.03735 8.47042 7.09596 8.52903C7.15456 8.58763 7.18749 8.66712 7.18749 8.75ZM13.4375 8.75C13.4375 8.83288 13.4046 8.91237 13.346 8.97097C13.2874 9.02958 13.2079 9.0625 13.125 9.0625C13.0421 9.0625 12.9626 9.02958 12.904 8.97097C12.8454 8.91237 12.8125 8.83288 12.8125 8.75C12.8125 8.66712 12.8454 8.58763 12.904 8.52903C12.9626 8.47042 13.0421 8.4375 13.125 8.4375C13.2079 8.4375 13.2874 8.47042 13.346 8.52903C13.4046 8.58763 13.4375 8.66712 13.4375 8.75Z"
+							stroke="black"
+							stroke-width="1.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+					<span class="text-[#56565C]">Cart</span>
+				</div>
+
+				<!-- Cart Value -->
+				{#if totalCartItems}
+					<div
+						class="cart-value flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-[#56565C]"
+					>
+						{totalCartItems}
+					</div>
+				{/if}
+			</button>
+		</Trigger>
+		<Content
+			class="m-6 max-h-[calc(100vh-3rem)] overflow-y-auto rounded-[16px] bg-[rgba(255,255,255)]"
+		>
+			<Header>
+				<div class="flex items-center justify-between">
+					<Title class="font-inter text-[24px] font-normal tracking-[-0.24px] text-[#2D2D31]">
+						Cart
+					</Title>
+					<SheetClose class="custom-close-icon">
+						<button class="flex h-6 w-6 items-center justify-center" aria-label="Close">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+							>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M5.15128 5.15152C5.61991 4.68289 6.3797 4.68289 6.84833 5.15152L11.9998 10.303L17.1513 5.15152C17.6199 4.68289 18.3797 4.68289 18.8483 5.15152C19.317 5.62015 19.317 6.37995 18.8483 6.84858L13.6969 12L18.8483 17.1515C19.317 17.6202 19.317 18.38 18.8483 18.8486C18.3797 19.3172 17.6199 19.3172 17.1513 18.8486L11.9998 13.6971L6.84833 18.8486C6.3797 19.3172 5.61991 19.3172 5.15128 18.8486C4.68265 18.38 4.68265 17.6202 5.15128 17.1515L10.3027 12L5.15128 6.84858C4.68265 6.37995 4.68265 5.62015 5.15128 5.15152Z"
+									fill="#56565C"
+								/>
+							</svg>
+						</button>
+					</SheetClose>
+				</div>
+			</Header>
+			<CartList />
+		</Content>
+	</Root>
+</div>
+
+<style>
+	.cart-text,
+	.cart-value {
+		transform: translateX(10px);
+		animation: slideIn 0.3s forwards;
+	}
+
+	@keyframes slideIn {
+		0% {
+			transform: translateX(10px);
+		}
+		100% {
+			transform: translateX(0);
+		}
+	}
+
+	:global(button[data-dialog-close]:not(.custom-close-icon)) {
+		display: none !important;
+	}
+
+	/*todo: desktop only*/
+	:global([data-dialog-content]) {
+		background: #f2f2f2;
+		min-width: 494px !important;
+
+		@media (max-width: 768px) {
+			min-width: 350px !important;
+		}
+	}
+
+	:global([data-dialog-overlay]) {
+		--tw-backdrop-blur: blur(2px);
+		background: rgba(0, 0, 0, 0.24) !important;
+	}
+</style>

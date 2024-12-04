@@ -1,16 +1,14 @@
 {
-  "name": "blurhash",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "blurhash": "^2.0.5",
-    "sharp": "^0.33.5"
-  }
+	"name": "blurhash",
+	"version": "1.0.0",
+	"main": "index.js",
+	"type": "module",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"blurhash": "^2.0.5",
+		"sharp": "^0.33.5"
+	}
 }

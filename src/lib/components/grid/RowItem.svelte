@@ -5,11 +5,12 @@
 	export let large = false;
 	export let vertical = false;
 	export let product: Product;
+	export let doReload = false;
 
-	let imgEl;
+	let imgEl: HTMLImageElement;
 
 	onMount(() => {
-		if(imgEl.complete) {
+		if (imgEl.complete) {
 			imgEl.classList.add('!opacity-100');
 		} else {
 			imgEl.addEventListener('load', () => {
@@ -19,11 +20,16 @@
 	});
 </script>
 
-<div class={`card ${large ? 'large-card' : vertical ? 'vertical-card' : 'horizontal-card'}`}>
+<a
+	data-sveltekit-reload={doReload}
+	href={`/product-${product.slug}`}
+	class={`card ${large ? 'large-card' : vertical ? 'vertical-card' : 'horizontal-card'}`}
+>
 	<div class="card-image relative">
 		<img
-			src={product.imageBlurhashUrl[0]}
-			class="product-image absolute left-0 top-0 w-full h-full"
+			alt={product.name}
+			src={product.imageBlurhashUrl?.[0] || ''}
+			class="product-image absolute left-0 top-0 h-full w-full"
 		/>
 		<img
 			bind:this={imgEl}
@@ -33,11 +39,11 @@
 		/>
 	</div>
 
-	<p class="card-content flex flex-col gap-2">
+	<div class="card-content flex flex-col items-start gap-2">
 		<span class="product-name">{product.name}</span>
-		<span class="product-price">$25.00</span>
-	</p>
-</div>
+		<span class="product-price">{product.price.currency}{product.price.amount.toFixed(2)}</span>
+	</div>
+</a>
 
 <style>
 	.card {

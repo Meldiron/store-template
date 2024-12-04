@@ -1,3 +1,9 @@
+export type Cart = {
+	size: string;
+	count: number;
+	product: Product;
+};
+
 export type Product = {
 	slug: string;
 	name: string;
@@ -15,7 +21,7 @@ export type ProductFeature = {
 	variations: ProductVariation[]
 	metadata?: any;
 }
-	
+
 export type ProductVariation = {
 	name: string;
 	priceModifier: (price: number, product: Product, variation: ProductVariation, feature: ProductFeature) => number;

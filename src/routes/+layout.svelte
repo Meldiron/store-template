@@ -1,8 +1,17 @@
 <script lang="ts">
 	import '../app.css';
+	import { onMount } from 'svelte';
+	import { cart } from '$lib/stores/cart';
 	import SiteHeader from '$lib/components/header/SiteHeader.svelte';
 
 	let { children } = $props();
+
+	onMount(() => {
+		const storedCart = localStorage.getItem('cartValue');
+		if (storedCart) {
+			cart.initialize(JSON.parse(storedCart));
+		}
+	});
 </script>
 
 <SiteHeader />

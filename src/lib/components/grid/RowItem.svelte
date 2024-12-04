@@ -6,6 +6,7 @@
 	export let large = false;
 	export let vertical = false;
 	export let product: Product;
+	export let doReload = false;
 
 	let blurDataUrl: string = '';
 
@@ -27,7 +28,11 @@
 	});
 </script>
 
-<div class={`card ${large ? 'large-card' : vertical ? 'vertical-card' : 'horizontal-card'}`}>
+<a
+	data-sveltekit-reload={doReload}
+	href={`/product-${product.slug}`}
+	class={`card ${large ? 'large-card' : vertical ? 'vertical-card' : 'horizontal-card'}`}
+>
 	<div class="card-image">
 		<img
 			src={product.images.urls[0]}
@@ -37,11 +42,11 @@
 		/>
 	</div>
 
-	<p class="card-content flex flex-col gap-2">
+	<div class="card-content flex flex-col items-start gap-2">
 		<span class="product-name">{product.name}</span>
-		<span class="product-price">$25.00</span>
-	</p>
-</div>
+		<span class="product-price">{product.price.currency}{product.price.amount.toFixed(2)}</span>
+	</div>
+</a>
 
 <style>
 	.card {

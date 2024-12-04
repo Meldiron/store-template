@@ -1,11 +1,15 @@
 <script lang="ts">
-	import { cartValue } from '../../../routes/store';
+	import { cart } from '$lib/stores/cart';
 
 	let isScrolled = false;
 
 	const handleScroll = () => {
 		isScrolled = window.scrollY > 25;
 	};
+
+	let totalCartItems: number | null = null;
+
+	$: cart.totalCartItems.subscribe((count) => (totalCartItems = count));
 </script>
 
 <svelte:window on:scroll={handleScroll} />
@@ -24,14 +28,9 @@
 	</div>
 
 	<!-- Cart Section -->
-	<button
-		class="flex items-center gap-2"
-		on:click={() => {
-			cartValue.update((n) => n + 1);
-		}}
-	>
+	<button class="flex items-center gap-2">
 		<!-- Cart Icon -->
-		<div class:cart-text={$cartValue} class="flex items-center gap-1">
+		<div class:cart-text={totalCartItems} class="flex items-center gap-1">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="20"
@@ -51,11 +50,11 @@
 		</div>
 
 		<!-- Cart Value -->
-		{#if $cartValue}
+		{#if totalCartItems}
 			<div
 				class="cart-value flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-[#56565C]"
 			>
-				{$cartValue}
+				{totalCartItems}
 			</div>
 		{/if}
 	</button>

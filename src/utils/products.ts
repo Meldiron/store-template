@@ -1,3 +1,9 @@
+export type Cart = {
+	size: string;
+	count: number;
+	product: Product;
+};
+
 export type Product = {
 	slug: string;
 	name: string;
@@ -11,7 +17,7 @@ export type Product = {
 	variations: string[];
 	price: {
 		amount: number;
-		currency: 'USD';
+		currency: '$';
 	};
 };
 
@@ -28,7 +34,7 @@ export const baseProducts: Product[] = [
 		},
 		categories: ['Tops'],
 		variations: [],
-		price: { amount: 30, currency: 'USD' }
+		price: { amount: 30, currency: '$' }
 	},
 	{
 		slug: 'top',
@@ -41,7 +47,7 @@ export const baseProducts: Product[] = [
 		},
 		categories: ['Tops'],
 		variations: [],
-		price: { amount: 35, currency: 'USD' }
+		price: { amount: 35, currency: '$' }
 	},
 	{
 		slug: 'multiple-tshirts',
@@ -54,7 +60,7 @@ export const baseProducts: Product[] = [
 		},
 		categories: ['Tops'],
 		variations: [],
-		price: { amount: 60, currency: 'USD' }
+		price: { amount: 60, currency: '$' }
 	},
 
 	// Sweaters
@@ -69,7 +75,7 @@ export const baseProducts: Product[] = [
 		},
 		categories: ['Sweaters'],
 		variations: [],
-		price: { amount: 45, currency: 'USD' }
+		price: { amount: 45, currency: '$' }
 	},
 
 	// Shoes
@@ -84,7 +90,7 @@ export const baseProducts: Product[] = [
 		},
 		categories: ['Shoes'],
 		variations: [],
-		price: { amount: 70, currency: 'USD' }
+		price: { amount: 70, currency: '$' }
 	},
 	{
 		slug: 'black-shoes',
@@ -97,20 +103,20 @@ export const baseProducts: Product[] = [
 		},
 		categories: ['Shoes'],
 		variations: [],
-		price: { amount: 75, currency: 'USD' }
+		price: { amount: 75, currency: '$' }
 	},
 	{
 		slug: 'hanging-shoes',
 		name: 'Hanging Shoes',
 		description: 'Durable shoes for everyday adventures.',
-		sizes: ['6', '7', '8', '9', '10'],
+		sizes: ['6', '6.5', '7', '7.5', '8', '8.5', '9'],
 		images: {
 			blur: 'LGI5E_~q?wRj_NxuogkCE2j[V@Rj',
 			urls: ['products/hanging-shoes.png']
 		},
 		categories: ['Shoes'],
 		variations: [],
-		price: { amount: 65, currency: 'USD' }
+		price: { amount: 65, currency: '$' }
 	},
 	{
 		slug: 'shoes',
@@ -123,7 +129,7 @@ export const baseProducts: Product[] = [
 		},
 		categories: ['Shoes'],
 		variations: [],
-		price: { amount: 55, currency: 'USD' }
+		price: { amount: 55, currency: '$' }
 	},
 
 	// Accessories
@@ -131,53 +137,53 @@ export const baseProducts: Product[] = [
 		slug: 'black-sunglasses',
 		name: 'Black Sunglasses',
 		description: 'Classic black sunglasses with UV protection.',
-		sizes: ['onesize'],
+		sizes: ['One size'],
 		images: {
 			blur: 'L6Pj0^oL~qIA?dS%M{t7~qWCogR*',
 			urls: ['products/sunglasses-black.png']
 		},
 		categories: ['Accessories'],
 		variations: [],
-		price: { amount: 50, currency: 'USD' }
+		price: { amount: 50, currency: '$' }
 	},
 	{
 		slug: 'aviator-sunglasses',
 		name: 'Aviator Sunglasses',
 		description: 'Timeless aviator sunglasses with a sleek design.',
-		sizes: ['onesize'],
+		sizes: ['One size'],
 		images: {
 			blur: 'LGF5]+oL?wI9~pIUogM|?ZoeR*oL',
 			urls: ['products/sunglasses-aviator.png']
 		},
 		categories: ['Accessories'],
 		variations: [],
-		price: { amount: 65, currency: 'USD' }
+		price: { amount: 65, currency: '$' }
 	},
 	{
 		slug: 'sunglasses',
 		name: 'Stylish Sunglasses',
 		description: 'Fashionable sunglasses for a sunny day.',
-		sizes: ['onesize'],
+		sizes: ['One size'],
 		images: {
 			blur: 'LGF5]+oL?wI9~pIUogM|?ZoeR*oL',
 			urls: ['products/sunglasses.png']
 		},
 		categories: ['Accessories'],
 		variations: [],
-		price: { amount: 55, currency: 'USD' }
+		price: { amount: 55, currency: '$' }
 	},
 	{
 		slug: 'watch',
 		name: 'Classic Watch',
 		description: 'Elegant and durable watch to complement any outfit.',
-		sizes: ['onesize'],
+		sizes: ['One size'],
 		images: {
 			blur: 'LGI5E_~q?wRj_NxuogkCE2j[V@Rj',
 			urls: ['products/watch.png']
 		},
 		categories: ['Accessories'],
 		variations: [],
-		price: { amount: 150, currency: 'USD' }
+		price: { amount: 150, currency: '$' }
 	}
 ];
 
@@ -185,6 +191,6 @@ export const baseProducts: Product[] = [
 export const products: Product[] = Array.from({ length: 4 }).flatMap((_, index) =>
 	baseProducts.map((product) => ({
 		...product,
-		name: `${product.name} #${index}`
+		name: `${product.name} #${index + 1}`
 	}))
 );

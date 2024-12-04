@@ -11,7 +11,7 @@
 	let { product, selectedFeatures = $bindable({}) }: Props = $props();
 
 	function addItemToCart() {
-		cart.add(product, selectedFeatures);
+		cart.add(product, $state.snapshot(selectedFeatures));
 	}
 </script>
 

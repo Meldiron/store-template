@@ -62,39 +62,24 @@
 
 		<!-- Product Sizes -->
 
-		{#each product.features as feature}
+		{#each features as feature}
 			<div class="flex flex-col gap-4">
 				<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]"
 					>{feature.name}</span
 				>
 				<div class="flex flex-wrap gap-3 md:gap-2">
-					{#each feature.values as value}
+					{#each feature.variations as variation}
 						<button
-							on:click={() => (selectedVariation[feature.name] = value)}
-							class:is-selected={selectedVariation[feature.name] === value}
+							on:click={() => (selectedVariation[feature.name] = variation.name)}
+							class:is-selected={selectedVariation[feature.name] === variation.name}
 							class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
 						>
-							{value}
+							{variation.name}
 						</button>
 					{/each}
 				</div>
 			</div>
 		{/each}
-
-		<div class="flex flex-col gap-4">
-			<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]">Size</span>
-			<div class="flex flex-wrap gap-3 md:gap-2">
-				{#each product.sizes as size}
-					<button
-						on:click={() => (selectedSize = size)}
-						class:is-selected={selectedSize === size}
-						class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
-					>
-						{size}
-					</button>
-				{/each}
-			</div>
-		</div>
 
 		<!-- Add to Cart Button -->
 		<Button

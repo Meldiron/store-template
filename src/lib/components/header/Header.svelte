@@ -16,11 +16,19 @@
 >
 	<!-- Store Logo -->
 	<div class="flex items-center gap-4">
-		<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-			<rect width="40" height="40" rx="8" fill="black" />
-			<circle cx="19.5" cy="20" r="7" fill="white" />
-		</svg>
-		<a class="text-xl text-[#19191C]" href="/">StoreZilla</a>
+		<a href="/">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="40"
+				height="40"
+				viewBox="0 0 40 40"
+				fill="none"
+			>
+				<rect width="40" height="40" rx="8" fill="black" />
+				<circle cx="19.5" cy="20" r="7" fill="white" />
+			</svg>
+		</a>
+		<a class="text-xl text-[#19191C]" href="/">Store</a>
 	</div>
 
 	<!-- Cart Section -->

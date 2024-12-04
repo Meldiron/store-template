@@ -7,26 +7,6 @@
 
 	cart.subscribe((items) => (cartItems = items));
 
-	function getCorrectSizeName(size: string): string {
-		switch (size) {
-			case 'S':
-				return 'Small';
-			case 'M':
-				return 'Medium';
-			case 'L':
-				return 'Large';
-			case 'XL':
-				return 'Extra Large';
-			case 'XXL':
-				return 'Double Extra Large';
-			case 'One size':
-			case 'onesize': // if the browser saved this value before
-				return size;
-			default:
-				throw new Error(`Invalid size: ${size}`);
-		}
-	}
-
 	function updateCart(cartItem: Cart, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
 			case 'add':
@@ -67,12 +47,18 @@
 					<div class="flex flex-col gap-2">
 						<div class="flex flex-wrap items-center justify-between">
 							<span class="font-inter text-[16px] font-medium text-[#2D2D31]">{product.name}</span>
-							<span class="product-price"
-								>{product.price.currency}{product.price.amount.toFixed(2)}</span
-							>
+							<span class="product-price">${product.price.toFixed(2)}</span>
 						</div>
 
-						<span class="text-sm text-gray-600">{getCorrectSizeName(cartItem.size)}</span>
+						<p class="text-sm text-gray-600">
+							{#each product.features as feature, index}
+								<span
+									>{feature.name}: {cartItem.features[
+										feature.name
+									]}{#if index !== product.features.length - 1},&nbsp;{/if}
+								</span>
+							{/each}
+						</p>
 					</div>
 
 					<!-- bottom actions -->

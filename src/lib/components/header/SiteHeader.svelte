@@ -14,15 +14,14 @@
 			<span
 				class="text-center font-inter text-[48px] font-normal leading-[68px] tracking-[-0.64px] text-[#19191C] lg:text-[64px]"
 			>
-				Shop with Style
+				Store template
 			</span>
 		</div>
 
 		<p
 			class="text-center font-inter text-[14px] font-normal leading-[22px] tracking-[-0.072px] text-[#56565C] lg:text-[16px]"
 		>
-			Discover essentials crafted for every occasion. From daily wear to statement pieces, find
-			everything you need in one place.
+			A modern template designed for online stores with a mobile-friendly interface, customizable theme, and an integrated payments using Stripe.
 		</p>
 	</div>
 

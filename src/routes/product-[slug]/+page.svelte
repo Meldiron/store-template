@@ -5,15 +5,16 @@
 
 	export let data;
 
-	let selectedSize = '';
-
 	const product: Product = data.product;
-	product.name = product.name.split('#')[0].trim();
 
-	selectedSize = product.sizes[0];
+	let selectedFeatures: Record<string, string> = {};
+
+	for(const feature of product.features) {
+		selectedFeatures[feature.name] = feature.variations[0].name;
+	}
 </script>
 
-<ProductDetails bind:selectedSize {product} />
+<ProductDetails bind:selectedFeatures {product} />
 
 <hr class="visible mx-5 bg-[#EDEDF0] md:hidden" />
 

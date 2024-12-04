@@ -4,12 +4,10 @@
 	import type { Product } from '../../../utils/products';
 
 	export let product: Product;
-	export let selectedSize = '';
-
-	product.name = product.name.split('#')[0].trim();
+	export let selectedFeatures: Record<string, string> = {};
 
 	function addItemToCart() {
-		cart.addItem(product, selectedSize);
+		cart.addItem(product, selectedFeatures);
 	}
 </script>
 
@@ -42,7 +40,7 @@
 		<span
 			class="font-inter text-[16px] font-normal leading-[140%] tracking-[-0.16px] text-[#56565C]"
 		>
-			{product.price.currency}{product.price.amount.toFixed(2)}
+			${product.price.toFixed(2)}
 		</span>
 
 		<hr class="bg-[#EDEDF0]" />
@@ -55,20 +53,22 @@
 		<hr class="bg-[#EDEDF0]" />
 
 		<!-- Product Sizes -->
+		{#each product.features as feature}
 		<div class="flex flex-col gap-4">
-			<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]">Size</span>
+			<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]">{feature.name}</span>
 			<div class="flex flex-wrap gap-3 md:gap-2">
-				{#each product.sizes as size}
+				{#each feature.variations as variation}
 					<button
-						on:click={() => (selectedSize = size)}
-						class:is-selected={selectedSize === size}
+						on:click={() => selectedFeatures[feature.name] = variation.name}
+						class:is-selected={(selectedFeatures[feature.name] ?? '') === variation.name}
 						class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
 					>
-						{size}
+						{variation.name}
 					</button>
 				{/each}
 			</div>
 		</div>
+		{/each}
 
 		<!-- Add to Cart Button -->
 		<Button

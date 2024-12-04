@@ -41,7 +41,7 @@
 
 	<div class="card-content flex flex-col items-start gap-2">
 		<span class="product-name">{product.name}</span>
-		<span class="product-price">{product.price.currency}{product.price.amount.toFixed(2)}</span>
+		<span class="product-price">${product.price.toFixed(2)}</span>
 	</div>
 </a>
 

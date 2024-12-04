@@ -24,10 +24,13 @@ function initializeCart(initialValue: Cart[]) {
 }
 
 // Add item to the cart or increment its count
-function addItem(product: Product, size: string) {
+function addItem(product: Product, features: Record<string, string>) {
+	const featuresId = Object.keys(features).map((v) => `${v}-${features[v]}`).join('-');
+	const cartItemId = `${product.slug}-${featuresId}`;
+
 	cartStore.update((cart) => {
 		const index = cart.findIndex(
-			(item) => item.product.slug === product.slug && item.size === size
+			(item) => cartItemId === item.id
 		);
 		if (index !== -1) {
 			// Update existing item's count
@@ -35,8 +38,9 @@ function addItem(product: Product, size: string) {
 		} else {
 			// Add new item to the cart
 			cart.push({
+				id: cartItemId,
 				count: 1,
-				size,
+				features,
 				product: { ...product }
 			});
 		}
@@ -45,23 +49,29 @@ function addItem(product: Product, size: string) {
 }
 
 // Remove an item entirely from the cart
-function removeItem(product: Product, size: string) {
+function removeItem(product: Product, features: Record<string, string>) {
+	const featuresId = Object.keys(features).map((v) => `${v}-${features[v]}`).join('-');
+	const cartItemId = `${product.slug}-${featuresId}`;
+
 	cartStore.update((cart) =>
-		cart.filter((item) => !(item.product.slug === product.slug && item.size === size))
+		cart.filter((item) => item.id !== cartItemId)
 	);
 }
 
 // Update the count of a specific item in the cart
-function updateCount(product: Product, size: string, newCount: number) {
+function updateCount(product: Product, features: Record<string, string>, newCount: number) {
+	const featuresId = Object.keys(features).map((v) => `${v}-${features[v]}`).join('-');
+	const cartItemId = `${product.slug}-${featuresId}`;
+
 	cartStore.update((cart) => {
 		if (newCount <= 0) {
 			// Remove item if count is 0 or less
-			return cart.filter((item) => !(item.product.slug === product.slug && item.size === size));
+			return cart.filter((item) => item.id !== cartItemId);
 		}
 
 		// Update the item's count
 		return cart.map((item) =>
-			item.product.slug === product.slug && item.size === size ? { ...item, count: newCount } : item
+			item.id === cartItemId ? { ...item, count: newCount } : item
 		);
 	});
 }

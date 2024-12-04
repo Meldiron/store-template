@@ -1,7 +1,8 @@
 export type Cart = {
-	size: string;
+	id: string;
 	count: number;
 	product: Product;
+	features: Record<string, string>;
 };
 
 export type Product = {
@@ -101,7 +102,26 @@ export const products: Product[] = [
 		imageUrls: ['products/heavy-tshirt.png'],
 		categories: ['Tops'],
 		price: 30,
-		features: shirtFeatures
+		features: [
+			...shirtFeatures,
+			{
+				name: "Color",
+				variations: [
+					{
+						name: "Black",
+						priceModifier: (price) => price
+					},
+					{
+						name: "White",
+						priceModifier: (price) => price
+					},
+					{
+						name: "Gray",
+						priceModifier: (price) => price
+					}
+				]
+			}
+		]
 	},
 	{
 		slug: 'top',

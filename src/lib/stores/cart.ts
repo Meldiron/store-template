@@ -1,9 +1,16 @@
 import { derived, get, writable } from 'svelte/store';
 import type { Product } from '../../utils/products';
-import type { Basket, BasketItem } from '../../routes/api/checkout/+server';
+
+export type CartItem = {
+	slug: string;
+	variation?: Record<string, string>;
+	quantity: number;
+};
+
+export type Cart = CartItem[];
 
 // Initialize cart store with values from localStorage or empty
-const cartStore = writable<Basket>(initializeCartFromLocalStorage());
+const cartStore = writable<Cart>(initializeCartFromLocalStorage());
 
 cartStore.subscribe((value) => {
 	// Persist cart updates to localStorage
@@ -13,26 +20,26 @@ cartStore.subscribe((value) => {
 });
 
 // Helper function to initialize the cart from localStorage
-function initializeCartFromLocalStorage(): Basket {
+function initializeCartFromLocalStorage(): Cart {
 	if (typeof window === 'undefined') return [];
 	const storedCart = localStorage.getItem('cartValue');
 	return storedCart ? JSON.parse(storedCart) : [];
 }
 
 // Initialize cart with a new value
-function initializeCart(initialValue: Basket) {
+function initializeCart(initialValue: Cart) {
 	cartStore.set(initialValue);
 }
 
 // Add item to the cart or increment its count
 function addItem(product: Product, features: Record<string, string>) {
-	const featuresId = Object.keys(features).map((v) => `${v}-${features[v]}`).join('-');
+	const featuresId = Object.keys(features)
+		.map((v) => `${v}-${features[v]}`)
+		.join('-');
 	const cartItemId = `${product.slug}-${featuresId}`;
 
 	cartStore.update((cart) => {
-		const index = cart.findIndex(
-			(item) => cartItemId === item.id
-		);
+		const index = cart.findIndex((item) => cartItemId === item.id);
 		if (index !== -1) {
 			// Update existing item's count
 			cart[index].quantity += 1;
@@ -51,17 +58,19 @@ function addItem(product: Product, features: Record<string, string>) {
 
 // Remove an item entirely from the cart
 function removeItem(product: Product, features: Record<string, string>) {
-	const featuresId = Object.keys(features).map((v) => `${v}-${features[v]}`).join('-');
+	const featuresId = Object.keys(features)
+		.map((v) => `${v}-${features[v]}`)
+		.join('-');
 	const cartItemId = `${product.slug}-${featuresId}`;
 
-	cartStore.update((cart) =>
-		cart.filter((item) => item.id !== cartItemId)
-	);
+	cartStore.update((cart) => cart.filter((item) => item.id !== cartItemId));
 }
 
 // Update the count of a specific item in the cart
 function updateCount(product: Product, features: Record<string, string>, newCount: number) {
-	const featuresId = Object.keys(features).map((v) => `${v}-${features[v]}`).join('-');
+	const featuresId = Object.keys(features)
+		.map((v) => `${v}-${features[v]}`)
+		.join('-');
 	const cartItemId = `${product.slug}-${featuresId}`;
 
 	cartStore.update((cart) => {
@@ -71,9 +80,7 @@ function updateCount(product: Product, features: Record<string, string>, newCoun
 		}
 
 		// Update the item's count
-		return cart.map((item) =>
-			item.id === cartItemId ? { ...item, count: newCount } : item
-		);
+		return cart.map((item) => (item.id === cartItemId ? { ...item, count: newCount } : item));
 	});
 }
 

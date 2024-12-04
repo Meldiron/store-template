@@ -21,7 +21,8 @@
 		<p
 			class="text-center font-inter text-[14px] font-normal leading-[22px] tracking-[-0.072px] text-[#56565C] lg:text-[16px]"
 		>
-			A modern template designed for online stores with a mobile-friendly interface, customizable theme, and an integrated payments using Stripe.
+			A modern template designed for online stores with a mobile-friendly interface, customizable
+			theme, and an integrated payments using Stripe.
 		</p>
 	</div>
 

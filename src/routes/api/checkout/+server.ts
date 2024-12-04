@@ -13,13 +13,13 @@ function validateCartItem(item: unknown): asserts item is CartItem {
 		throw error(400, `Invalid basket item: ${JSON.stringify(item)}`);
 	}
 
-	const { slug, variation, quantity } = item as CartItem;
+	const { slug, features, quantity } = item as CartItem;
 	if (typeof slug !== 'string') {
 		throw error(400, `Invalid or missing productSlug in basket item: ${JSON.stringify(item)}`);
 	}
 
-	if (variation !== undefined && (typeof variation !== 'object' || variation === null)) {
-		throw error(400, `Invalid variation in basket item: ${JSON.stringify(item)}`);
+	if (features !== undefined && (typeof features !== 'object' || features === null)) {
+		throw error(400, `Invalid features in basket item: ${JSON.stringify(item)}`);
 	}
 
 	if (typeof quantity !== 'number' || quantity <= 0) {
@@ -28,9 +28,9 @@ function validateCartItem(item: unknown): asserts item is CartItem {
 }
 
 /**
- * Calculates the unit amount for a product, including any price modifications from variations.
+ * Calculates the unit amount for a product, including any price modifications from features.
  */
-function calculateUnitAmountWithVariations(
+function calculateUnitAmountWithFeatures(
 	product: Product,
 	variation: Record<string, string> | undefined
 ): number {
@@ -77,7 +77,7 @@ function convertToStripeLineItem(
 		throw error(404, `Product with slug "${item.slug}" does not exist`);
 	}
 
-	const unitAmount = calculateUnitAmountWithVariations(product, item.variation);
+	const unitAmount = calculateUnitAmountWithFeatures(product, item.features);
 
 	return {
 		price_data: {

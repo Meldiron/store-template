@@ -52,25 +52,29 @@
 			{product.description}
 		</p>
 
-		<hr class="bg-[#EDEDF0]" />
+		{#if product.features && product.features.length > 0}
+			<hr class="bg-[#EDEDF0]" />
 
-		<!-- Product Sizes -->
-		{#each product.features as feature}
-		<div class="flex flex-col gap-4">
-			<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]">{feature.name}</span>
-			<div class="flex flex-wrap gap-3 md:gap-2">
-				{#each feature.variations as variation}
-					<button
-						on:click={() => selectedFeatures[feature.name] = variation.name}
-						class:is-selected={(selectedFeatures[feature.name] ?? '') === variation.name}
-						class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
+			<!-- Product Sizes -->
+			{#each product.features as feature}
+				<div class="flex flex-col gap-4">
+					<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]"
+						>{feature.name}</span
 					>
-						{variation.name}
-					</button>
-				{/each}
-			</div>
-		</div>
-		{/each}
+					<div class="flex flex-wrap gap-3 md:gap-2">
+						{#each feature.variations as variation}
+							<button
+								on:click={() => (selectedFeatures[feature.name] = variation.name)}
+								class:is-selected={(selectedFeatures[feature.name] ?? '') === variation.name}
+								class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
+							>
+								{variation.name}
+							</button>
+						{/each}
+					</div>
+				</div>
+			{/each}
+		{/if}
 
 		<!-- Add to Cart Button -->
 		<Button

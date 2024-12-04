@@ -1,21 +1,20 @@
 <script lang="ts">
-	import { cart } from '$lib/stores/cart';
-	import type { Cart } from '../../../utils/products';
+	import { cart, type CartItem } from '$lib/stores/cart';
 	import { Button } from '$lib/components/ui/button';
 
 	let cartItems = cart.allItems();
 
 	cart.subscribe((items) => (cartItems = items));
 
-	function updateCart(cartItem: Cart, action: 'add' | 'remove' | 'delete') {
+	function updateCart(cartItem: CartItem, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
 			case 'add':
-				cart.updateCount(cartItem.product, cartItem.features, cartItem.count + 1);
+				cart.updateCount(cartItem.product, cartItem.features, cartItem.quantity + 1);
 				break;
 
 			case 'remove':
-				if (cartItem.count >= 1) {
-					cart.updateCount(cartItem.product, cartItem.features, cartItem.count - 1);
+				if (cartItem.quantity >= 1) {
+					cart.updateCount(cartItem.product, cartItem.features, cartItem.quantity - 1);
 				} else {
 					cart.removeItem(cartItem.product, cartItem.features);
 				}
@@ -50,15 +49,17 @@
 							<span class="product-price">${product.price.toFixed(2)}</span>
 						</div>
 
-						<p class="text-sm text-gray-600">
-							{#each product.features as feature, index}
-								<span
-									>{feature.name}: {cartItem.features[
-										feature.name
-									]}{#if index !== product.features.length - 1},&nbsp;{/if}
-								</span>
-							{/each}
-						</p>
+						{#if product.features && product.features.length > 0}
+							<p class="text-sm text-gray-600">
+								{#each product.features as feature, index}
+									<span
+										>{feature.name}: {cartItem.features[
+											feature.name
+										]}{#if index !== product.features.length - 1},&nbsp;{/if}
+									</span>
+								{/each}
+							</p>
+						{/if}
 					</div>
 
 					<!-- bottom actions -->
@@ -88,7 +89,7 @@
 								</svg>
 							</button>
 
-							{cartItem.count}
+							{cartItem.quantity}
 
 							<button
 								aria-label="Add item"

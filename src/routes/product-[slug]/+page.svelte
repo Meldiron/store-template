@@ -9,7 +9,7 @@
 
 	let selectedFeatures: Record<string, string> = {};
 
-	for(const feature of product.features) {
+	for (const feature of product.features ?? []) {
 		selectedFeatures[feature.name] = feature.variations[0].name;
 	}
 </script>

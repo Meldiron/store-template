@@ -19,77 +19,82 @@ export type Product = {
 
 export type ProductFeature = {
 	name: string;
-	variations: ProductVariation[]
+	variations: ProductVariation[];
 	metadata?: any;
-}
+};
 
 export type ProductVariation = {
 	name: string;
-	priceModifier: (price: number, product: Product, variation: ProductVariation, feature: ProductFeature) => number;
+	priceModifier: (
+		price: number,
+		product: Product,
+		variation: ProductVariation,
+		feature: ProductFeature
+	) => number;
 	metadata?: any;
-}
+};
 
 const unisexFeatures: ProductFeature[] = [
-		{
-			name: "Sex",
-			variations: [
-				{
-					name: "Unisex",
-					priceModifier: (price) => price
-				},
-			]
-		}
+	{
+		name: 'Sex',
+		variations: [
+			{
+				name: 'Unisex',
+				priceModifier: (price) => price
+			}
+		]
+	}
 ];
 
 const shirtFeatures: ProductFeature[] = [
 	{
-		name: "Size",
+		name: 'Size',
 		variations: [
 			{
-				name: "S",
-				priceModifier: (price) => price,
+				name: 'S',
+				priceModifier: (price) => price
 			},
 			{
-				name: "M",
-				priceModifier: (price) => price + 5,
+				name: 'M',
+				priceModifier: (price) => price + 5
 			},
 			{
-				name: "L",
-				priceModifier: (price) => price + 10,
+				name: 'L',
+				priceModifier: (price) => price + 10
 			},
 			{
-				name: "XL",
-				priceModifier: (price) => price + 15,
+				name: 'XL',
+				priceModifier: (price) => price + 15
 			}
-		],
+		]
 	}
 ];
 
 const shoeFeatures: ProductFeature[] = [
 	{
-		name: "Size",
+		name: 'Size',
 		variations: [
 			{
-				name: "6",
-				priceModifier: (price) => price,
+				name: '6',
+				priceModifier: (price) => price
 			},
 			{
-				name: "7",
-				priceModifier: (price) => price + 5,
+				name: '7',
+				priceModifier: (price) => price + 5
 			},
 			{
-				name: "8",
-				priceModifier: (price) => price + 5,
+				name: '8',
+				priceModifier: (price) => price + 5
 			},
 			{
-				name: "9",
-				priceModifier: (price) => price + 10,
+				name: '9',
+				priceModifier: (price) => price + 10
 			},
 			{
-				name: "10",
-				priceModifier: (price) => price + 10,
+				name: '10',
+				priceModifier: (price) => price + 10
 			}
-		],
+		]
 	}
 ];
 
@@ -105,18 +110,18 @@ export const products: Product[] = [
 		features: [
 			...shirtFeatures,
 			{
-				name: "Color",
+				name: 'Color',
 				variations: [
 					{
-						name: "Black",
+						name: 'Black',
 						priceModifier: (price) => price
 					},
 					{
-						name: "White",
+						name: 'White',
 						priceModifier: (price) => price
 					},
 					{
-						name: "Gray",
+						name: 'Gray',
 						priceModifier: (price) => price
 					}
 				]

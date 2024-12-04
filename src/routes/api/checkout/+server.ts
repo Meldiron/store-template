@@ -4,11 +4,13 @@ import { products, type Product } from '../../../utils/products';
 import { STRIPE_SECRET_KEY } from '$env/static/private';
 import type { Cart, CartItem } from '$lib/stores/cart';
 
+type CartItemDto = Omit<CartItem, 'id' | 'product'>;
+
 /**
  * Validates if the provided item conforms to the CartItem type.
  * Throws an error if validation fails.
  */
-function validateCartItem(item: unknown): asserts item is CartItem {
+function validateCartItem(item: unknown): asserts item is CartItemDto {
 	if (typeof item !== 'object' || item === null) {
 		throw error(400, `Invalid basket item: ${JSON.stringify(item)}`);
 	}
@@ -22,8 +24,8 @@ function validateCartItem(item: unknown): asserts item is CartItem {
 		throw error(400, `Invalid features in basket item: ${JSON.stringify(item)}`);
 	}
 
-	if (typeof quantity !== 'number' || quantity <= 0) {
-		throw error(400, `Invalid quantity in basket item: ${JSON.stringify(item)}`);
+	if (typeof count !== 'number' || count <= 0) {
+		throw error(400, `Invalid count in basket item: ${JSON.stringify(item)}`);
 	}
 }
 
@@ -32,14 +34,14 @@ function validateCartItem(item: unknown): asserts item is CartItem {
  */
 function calculateUnitAmountWithFeatures(
 	product: Product,
-	variation: Record<string, string> | undefined
+	features: Record<string, string> | undefined
 ): number {
 	let unitAmount = product.price;
 
-	if (variation && product.features) {
+	if (features && product.features) {
 		for (const feature of product.features) {
 			const featureName = feature.name;
-			const selectedVariation = variation[featureName];
+			const selectedVariation = features[featureName];
 
 			if (!selectedVariation) {
 				throw error(400, `Missing variation for feature: "${featureName}"`);
@@ -69,7 +71,7 @@ function calculateUnitAmountWithFeatures(
  * Converts a BasketItem into a Stripe LineItem for the checkout session.
  */
 function convertToStripeLineItem(
-	item: CartItem,
+	item: CartItemDto,
 	origin: string
 ): Stripe.Checkout.SessionCreateParams.LineItem {
 	const product = products.find((p) => p.slug === item.slug);
@@ -89,7 +91,7 @@ function convertToStripeLineItem(
 			},
 			unit_amount: Math.round(unitAmount * 100)
 		},
-		quantity: item.quantity
+		quantity: item.count
 	};
 }
 

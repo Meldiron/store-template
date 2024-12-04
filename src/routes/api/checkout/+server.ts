@@ -24,8 +24,8 @@ function validateCartItem(item: unknown): asserts item is CartItemDto {
 		throw error(400, `Invalid features in basket item: ${JSON.stringify(item)}`);
 	}
 
-	if (typeof count !== 'number' || count <= 0) {
-		throw error(400, `Invalid count in basket item: ${JSON.stringify(item)}`);
+	if (typeof quantity !== 'number' || quantity <= 0) {
+		throw error(400, `Invalid quantity in basket item: ${JSON.stringify(item)}`);
 	}
 }
 
@@ -91,7 +91,7 @@ function convertToStripeLineItem(
 			},
 			unit_amount: Math.round(unitAmount * 100)
 		},
-		quantity: item.count
+		quantity: item.quantity
 	};
 }
 

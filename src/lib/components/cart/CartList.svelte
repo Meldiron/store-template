@@ -9,12 +9,12 @@
 	function updateCart(cartItem: CartItem, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
 			case 'add':
-				cart.updateCount(cartItem.product, cartItem.features, cartItem.quantity + 1);
+				cart.updateQuantity(cartItem.product, cartItem.features, cartItem.quantity + 1);
 				break;
 
 			case 'remove':
 				if (cartItem.quantity >= 1) {
-					cart.updateCount(cartItem.product, cartItem.features, cartItem.quantity - 1);
+					cart.updateQuantity(cartItem.product, cartItem.features, cartItem.quantity - 1);
 				} else {
 					cart.removeItem(cartItem.product, cartItem.features);
 				}

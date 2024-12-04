@@ -2,7 +2,6 @@ import { derived, get, writable } from 'svelte/store';
 import type { Product } from '../../utils/products';
 
 export type CartItem = {
-	id: string;
 	slug: string;
 	features: Record<string, string>;
 	quantity: number;
@@ -33,7 +32,7 @@ function initializeCart(initialValue: Cart) {
 	cartStore.set(initialValue);
 }
 
-// Add item to the cart or increment its count
+// Add item to the cart or increment its quantity
 function addItem(product: Product, features: Record<string, string>) {
 	const featuresId = Object.keys(features)
 		.map((v) => `${v}-${features[v]}`)
@@ -43,8 +42,8 @@ function addItem(product: Product, features: Record<string, string>) {
 	cartStore.update((cart) => {
 		const index = cart.findIndex((item) => cartItemSlug === item.slug);
 		if (index !== -1) {
-			// Update existing item's count
-			cart[index].count += 1;
+			// Update existing item's quantity
+			cart[index].quantity += 1;
 		} else {
 			// Add new item to the cart
 			cart.push({
@@ -68,22 +67,22 @@ function removeItem(product: Product, features: Record<string, string>) {
 	cartStore.update((cart) => cart.filter((item) => item.slug !== cartItemSlug));
 }
 
-// Update the count of a specific item in the cart
-function updateCount(product: Product, features: Record<string, string>, newCount: number) {
+// Update the quantity of a specific item in the cart
+function updateQuantity(product: Product, features: Record<string, string>, newQuantity: number) {
 	const featuresId = Object.keys(features)
 		.map((v) => `${v}-${features[v]}`)
 		.join('-');
 	const cartItemSlug = `${product.slug}-${featuresId}`;
 
 	cartStore.update((cart) => {
-		if (newCount <= 0) {
-			// Remove item if count is 0 or less
+		if (newQuantity <= 0) {
+			// Remove item if quantity is 0 or less
 			return cart.filter((item) => item.slug !== cartItemSlug);
 		}
 
-		// Update the item's count
+		// Update the item's qnantitiy
 		return cart.map((item) =>
-			item.slug === cartItemSlug ? { ...item, quantity: newCount } : item
+			item.slug === cartItemSlug ? { ...item, quantity: newQuantity } : item
 		);
 	});
 }
@@ -100,13 +99,13 @@ function getAllItems() {
 
 // Derived store for total items in the cart
 const totalCartItems = derived(cartStore, ($cart) =>
-	$cart.reduce((total, item) => total + item.count, 0)
+	$cart.reduce((total, item) => total + item.quantity, 0)
 );
 
 export const cart = {
 	addItem,
 	removeItem,
-	updateCount,
+	updateQuantity,
 	clearCart,
 	initialize: initializeCart,
 	allItems: getAllItems,

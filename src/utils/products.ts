@@ -1,6 +1,6 @@
 export type Cart = {
 	id: string;
-	count: number;
+	quantity: number;
 	product: Product;
 	features: Record<string, string>;
 };

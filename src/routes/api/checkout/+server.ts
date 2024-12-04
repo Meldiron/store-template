@@ -1,6 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import { products, type Product } from '../../../utils/products';
+import { STRIPE_SECRET_KEY } from '$env/static/private';
 
 export type BasketItem = {
 	productSlug: string;
@@ -20,7 +21,6 @@ function validateBasketItem(item: unknown): asserts item is BasketItem {
 	}
 
 	const { productSlug, variation, quantity } = item as BasketItem;
-
 	if (typeof productSlug !== 'string') {
 		throw error(400, `Invalid or missing productSlug in basket item: ${JSON.stringify(item)}`);
 	}
@@ -81,7 +81,7 @@ function convertToStripeLineItem(
 ): Stripe.Checkout.SessionCreateParams.LineItem {
 	const product = products.find((p) => p.slug === item.productSlug);
 	if (!product) {
-		throw error(400, `Product with slug "${item.productSlug}" does not exist`);
+		throw error(404, `Product with slug "${item.productSlug}" does not exist`);
 	}
 
 	const unitAmount = calculateUnitAmountWithVariations(product, item.variation);
@@ -109,7 +109,18 @@ export async function POST({ request }) {
 		throw error(400, 'Missing "Origin" header');
 	}
 
-	const body = await request.json();
+	let body;
+
+	try {
+		body = await request.json();
+	} catch (e) {
+		if (e instanceof SyntaxError) {
+			throw error(400, 'Invalid request: Body must be a JSON object');
+		} else {
+			throw error(500, 'Internal server error: Failed to parse request body');
+		}
+	}
+
 	if (
 		!body ||
 		typeof body !== 'object' ||
@@ -122,13 +133,12 @@ export async function POST({ request }) {
 	const basket: Basket = body.basket;
 	basket.forEach(validateBasketItem);
 
-	const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-	if (!stripeSecretKey) {
+	if (!STRIPE_SECRET_KEY) {
 		console.error('Stripe secret key is not configured');
 		throw error(500, 'Internal server error: Stripe is not configured');
 	}
 
-	const stripe = new Stripe(stripeSecretKey);
+	const stripe = new Stripe(STRIPE_SECRET_KEY);
 	const lineItems = basket.map((item) => convertToStripeLineItem(item, origin));
 
 	const session = await stripe.checkout.sessions.create({

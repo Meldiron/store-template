@@ -4,12 +4,18 @@
 	import type { Product } from '../../../utils/products';
 
 	export let product: Product;
-	export let selectedSize = '';
+	export let selectedVariation: Record<string, string> = {};
 
 	product.name = product.name.split('#')[0].trim();
 
+	let features = product.features ?? [];
+
 	function addItemToCart() {
-		cart.addItem(product, selectedSize);
+		cart.addItem({
+			productSlug: product.slug,
+			quantity: 1,
+			variation: selectedVariation
+		});
 	}
 </script>
 
@@ -42,7 +48,7 @@
 		<span
 			class="font-inter text-[16px] font-normal leading-[140%] tracking-[-0.16px] text-[#56565C]"
 		>
-			{product.price.currency}{product.price.amount.toFixed(2)}
+			${product.price}
 		</span>
 
 		<hr class="bg-[#EDEDF0]" />
@@ -55,6 +61,26 @@
 		<hr class="bg-[#EDEDF0]" />
 
 		<!-- Product Sizes -->
+
+		{#each product.features as feature}
+			<div class="flex flex-col gap-4">
+				<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]"
+					>{feature.name}</span
+				>
+				<div class="flex flex-wrap gap-3 md:gap-2">
+					{#each feature.values as value}
+						<button
+							on:click={() => (selectedVariation[feature.name] = value)}
+							class:is-selected={selectedVariation[feature.name] === value}
+							class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
+						>
+							{value}
+						</button>
+					{/each}
+				</div>
+			</div>
+		{/each}
+
 		<div class="flex flex-col gap-4">
 			<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]">Size</span>
 			<div class="flex flex-wrap gap-3 md:gap-2">

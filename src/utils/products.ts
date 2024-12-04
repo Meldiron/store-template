@@ -14,13 +14,13 @@ export type Product = {
 	categories: string[];
 	price: number;
 	features?: ProductFeature[];
-	metadata?: any;
+	metadata?: Record<string, unknown>;
 };
 
 export type ProductFeature = {
 	name: string;
 	variations: ProductVariation[];
-	metadata?: any;
+	metadata?: Record<string, unknown>;
 };
 
 export type ProductVariation = {
@@ -31,7 +31,7 @@ export type ProductVariation = {
 		variation: ProductVariation,
 		feature: ProductFeature
 	) => number;
-	metadata?: any;
+	metadata?: Record<string, unknown>;
 };
 
 const unisexFeatures: ProductFeature[] = [

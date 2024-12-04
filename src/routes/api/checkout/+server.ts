@@ -2,26 +2,19 @@ import { error, redirect } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import { products, type Product } from '../../../utils/products';
 import { STRIPE_SECRET_KEY } from '$env/static/private';
-
-export type BasketItem = {
-	productSlug: string;
-	variation?: Record<string, string>;
-	quantity: number;
-};
-
-export type Basket = BasketItem[];
+import type { Cart, CartItem } from '$lib/stores/cart';
 
 /**
- * Validates if the provided item conforms to the BasketItem type.
+ * Validates if the provided item conforms to the CartItem type.
  * Throws an error if validation fails.
  */
-function validateBasketItem(item: unknown): asserts item is BasketItem {
+function validateCartItem(item: unknown): asserts item is CartItem {
 	if (typeof item !== 'object' || item === null) {
 		throw error(400, `Invalid basket item: ${JSON.stringify(item)}`);
 	}
 
-	const { productSlug, variation, quantity } = item as BasketItem;
-	if (typeof productSlug !== 'string') {
+	const { slug, variation, quantity } = item as CartItem;
+	if (typeof slug !== 'string') {
 		throw error(400, `Invalid or missing productSlug in basket item: ${JSON.stringify(item)}`);
 	}
 
@@ -76,12 +69,12 @@ function calculateUnitAmountWithVariations(
  * Converts a BasketItem into a Stripe LineItem for the checkout session.
  */
 function convertToStripeLineItem(
-	item: BasketItem,
+	item: CartItem,
 	origin: string
 ): Stripe.Checkout.SessionCreateParams.LineItem {
-	const product = products.find((p) => p.slug === item.productSlug);
+	const product = products.find((p) => p.slug === item.slug);
 	if (!product) {
-		throw error(404, `Product with slug "${item.productSlug}" does not exist`);
+		throw error(404, `Product with slug "${item.slug}" does not exist`);
 	}
 
 	const unitAmount = calculateUnitAmountWithVariations(product, item.variation);
@@ -121,17 +114,12 @@ export async function POST({ request }) {
 		}
 	}
 
-	if (
-		!body ||
-		typeof body !== 'object' ||
-		!Array.isArray(body.basket) ||
-		body.basket.length === 0
-	) {
-		throw error(400, 'Invalid request: Basket must be a non-empty array');
+	if (!body || typeof body !== 'object' || !Array.isArray(body.cart) || body.cart.length === 0) {
+		throw error(400, 'Invalid request: `cart` must be a non-empty array');
 	}
 
-	const basket: Basket = body.basket;
-	basket.forEach(validateBasketItem);
+	const cart: Cart = body.basket;
+	cart.forEach(validateCartItem);
 
 	if (!STRIPE_SECRET_KEY) {
 		console.error('Stripe secret key is not configured');
@@ -139,7 +127,7 @@ export async function POST({ request }) {
 	}
 
 	const stripe = new Stripe(STRIPE_SECRET_KEY);
-	const lineItems = basket.map((item) => convertToStripeLineItem(item, origin));
+	const lineItems = cart.map((item) => convertToStripeLineItem(item, origin));
 
 	const session = await stripe.checkout.sessions.create({
 		payment_method_types: ['card'],

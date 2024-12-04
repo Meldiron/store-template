@@ -3,10 +3,10 @@
 import stripe from 'stripe';
 
 class StripeService {
+  /** @type {import('stripe').Stripe} */
+  client;
+
   constructor() {
-    // Note: stripe cjs API types are faulty
-    /** @type {import('stripe').Stripe} */
-    // @ts-ignore
     this.client = stripe(process.env.STRIPE_SECRET_KEY);
   }
 

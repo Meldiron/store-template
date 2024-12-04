@@ -1,5 +1,4 @@
 import AppwriteService from './appwrite.js';
-import { throwIfMissing } from './utils.js';
 
 async function setup() {
   const databaseId = process.env.APPWRITE_DATABASE_ID ?? 'orders';

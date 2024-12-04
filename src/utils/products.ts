@@ -106,7 +106,7 @@ export const products: Product[] = [
 		description: 'A premium heavy t-shirt, perfect for cooler weather.',
 		imageUrls: ['products/heavy-tshirt.png'],
 		categories: ['Tops'],
-		price: 30,
+		price: 40,
 		features: [
 			...shirtFeatures,
 			{

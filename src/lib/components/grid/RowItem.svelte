@@ -46,7 +46,12 @@
 
 	<div class="card-content flex flex-col items-start gap-2">
 		<span class="product-name">{product.name}</span>
-		<span class="product-price">${product.price.toFixed(2)}</span>
+		<span class="product-price"
+			>${product.price.toFixed(2)}
+			{#if product.discount}
+				<span class="product-price-discount">-{product.discount * 100}%</span>
+			{/if}
+		</span>
 	</div>
 </a>
 
@@ -114,5 +119,18 @@
 		font-weight: 400;
 		line-height: 22px;
 		letter-spacing: -0.063px;
+	}
+
+	.product-price-discount {
+		border-radius: var(--space-2, 4px);
+		padding: var(--space-1, 2px) var(--space-2, 4px);
+		margin-left: var(--space-1, 2px);
+		color: #56565c;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 22px;
+		letter-spacing: -0.063px;
+		background-color: rgba(0, 0, 0, 0.06);
 	}
 </style>

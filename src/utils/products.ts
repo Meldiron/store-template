@@ -17,6 +17,7 @@ export type Product = {
 	popularity: number;
 	features?: ProductFeature[];
 	metadata?: Record<string, unknown>;
+	discount?: number; // Visual discount, not affecting final price
 };
 
 export type ProductFeature = {
@@ -112,12 +113,13 @@ A premium heavy t-shirt, perfect for cooler weather.
 **Limited offer. Available until sold out!**
 		`,
 		imageUrls: [
-			'products/heavy-tshirt.webp',
-			'products/heavy-tshirt-2.webp',
-			'products/heavy-tshirt-3.webp'
+			'/products/heavy-tshirt.webp',
+			'/products/heavy-tshirt-2.webp',
+			'/products/heavy-tshirt-3.webp'
 		],
 		categories: ['Tops'],
 		price: 40,
+		discount: 0.5,
 		features: [
 			...shirtFeatures,
 			{
@@ -209,7 +211,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 88
 	},
 	{
-		slug: 'shoes',
+		slug: 'casual-shoes',
 		name: 'Casual Shoes',
 		description: 'Comfortable casual shoes for everyday wear.',
 		imageUrls: ['/products/shoes.webp'],
@@ -220,7 +222,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 74
 	},
 	{
-		slug: 'shoes',
+		slug: 'yellow-shoes',
 		name: 'Yellow Shoes',
 		description: 'Comfortable casual shoes for everyday wear.',
 		imageUrls: ['/products/yellow-shoes.webp'],
@@ -231,7 +233,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 74
 	},
 	{
-		slug: 'shoes',
+		slug: 'elegant-shoes',
 		name: 'Elegant Shoes',
 		description: 'Comfortable casual shoes for everyday wear.',
 		imageUrls: ['/products/elegant-shoes.webp'],
@@ -242,7 +244,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 74
 	},
 	{
-		slug: 'shoes',
+		slug: 'dark-shoes',
 		name: 'Dark Shoes',
 		description: 'Comfortable casual shoes for everyday wear.',
 		imageUrls: ['/products/dark-shoes.webp'],

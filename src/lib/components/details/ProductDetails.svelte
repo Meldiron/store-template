@@ -99,10 +99,12 @@
 		</h1>
 
 		<!-- Product Price -->
-		<span
-			class="font-inter text-[16px] font-normal leading-[140%] tracking-[-0.16px] text-[#56565C]"
-		>
+		<span class="product-price font-inter">
 			${productPrice.toFixed(2)}
+			{#if product.discount}
+				<span class="product-price-old">${(productPrice * (1 / product.discount)).toFixed(2)}</span>
+				<span class="product-price-discount">-{product.discount * 100}%</span>
+			{/if}
 		</span>
 
 		<hr class="bg-[#EDEDF0]" />
@@ -163,5 +165,37 @@
 		transform: scale(1.1);
 		background-color: #f4f4f7;
 		border: 1px solid var(--color-border-neutral-stronger, #818186);
+	}
+
+	.product-price {
+		color: #56565c;
+		font-size: 18px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 28px;
+		letter-spacing: -0.063px;
+	}
+
+	.product-price-old {
+		color: #97979b;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 28px;
+		letter-spacing: -0.063px;
+		text-decoration: line-through;
+	}
+
+	.product-price-discount {
+		border-radius: var(--space-2, 4px);
+		padding: var(--space-1, 2px) var(--space-2, 4px);
+		margin-left: var(--space-1, 2px);
+		color: #56565c;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 22px;
+		letter-spacing: -0.063px;
+		background-color: rgba(0, 0, 0, 0.06);
 	}
 </style>

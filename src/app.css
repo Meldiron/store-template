@@ -97,3 +97,23 @@ body {
 	flex-direction: column;
 	background: var(--background, #fafafb);
 }
+
+/* Alternative to Tailwind md: */
+@media (min-width: 768px) {
+	.large .card {
+		height: 672px;
+
+		@media (max-width: 640px) {
+			height: 316px;
+			align-self: stretch;
+		}
+	}
+
+	.large .card .card-image {
+		height: 565px;
+
+		@media (max-width: 640px) {
+			height: 210px;
+		}
+	}
+}

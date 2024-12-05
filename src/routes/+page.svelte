@@ -12,7 +12,9 @@
 	const itemsPerPage = 12;
 
 	let { data } = $props();
-	const { allProducts, filter } = data;
+
+	const allProducts: Product[] = $derived(data.allProducts);
+	const filter: string = $derived(data.filter);
 
 	let filteredProducts = $derived(
 		$selectedCategory === 'All Products'

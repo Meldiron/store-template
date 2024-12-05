@@ -6,7 +6,7 @@
 
 	let { data } = $props();
 
-	const product: Product = data.product;
+	const product: Product = $derived(data.product);
 
 	function initialFeatures() {
 		let selectedFeatures: Record<string, string> = {};
@@ -20,9 +20,9 @@
 
 	let selectedFeatures: Record<string, string> = $state(initialFeatures());
 
-	const title = `${product.name} |  Store`;
-	const description = product.description;
-	const ogImage = `${data.origin}/thumbnail.png`;
+	const title: string = $derived(`${product.name} |  Store`);
+	const description: string = $derived(product.description);
+	const ogImage: string = $derived(`${data.origin}/thumbnail.png`);
 </script>
 
 <svelte:head>

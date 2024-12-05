@@ -112,7 +112,7 @@
 
 		<div class="flex items-center gap-2">
 			{#each socials as social (social.link)}
-				<a class="card" href={social.link} target="_blank">
+				<a aria-label={social.label} class="card" href={social.link} target="_blank">
 					<span class="svg-wrapper">
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						{@html social.icon}

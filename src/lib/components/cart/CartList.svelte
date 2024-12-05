@@ -46,7 +46,7 @@
 					<div class="flex flex-col gap-2">
 						<div class="flex flex-wrap items-center justify-between">
 							<span class="font-inter text-[16px] font-medium text-[#2D2D31]">{product.name}</span>
-							<span class="product-price">${cartItem.price.toFixed(2)}</span>
+							<span class="product-price">${(cartItem.price * cartItem.quantity).toFixed(2)}</span>
 						</div>
 
 						{#if product.features && product.features.length > 0}

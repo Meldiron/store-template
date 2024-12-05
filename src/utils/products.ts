@@ -102,17 +102,15 @@ export const products: Product[] = [
 	{
 		slug: 'heavy-tshirt',
 		name: 'Heavy T-Shirt',
-		description: `A premium heavy t-shirt, perfect for cooler weather.
+		description: `
+A premium heavy t-shirt, perfect for cooler weather.
 
-# BEST PRODUCT EVER!
+- 100% cotton
+- No branding
+- Slim fit cut
 
-Our product supports:
-- 24/7 uptime
-- left-handed holding
-- up to 5 faster speed than previous model
-
-Used by [Google](google.com) and [Facebook](meta.com).
-`,
+**Limited offer. Available until sold out!**
+		`,
 		imageUrls: ['products/heavy-tshirt.png'],
 		categories: ['Tops'],
 		price: 40,

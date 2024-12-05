@@ -2,13 +2,6 @@
 	import { cart, type CartItem } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 
-	// Close cart when removing last item
-	$effect(() => {
-		if (cart.getTotalItems() === 0 && cart.getIsOpen()) {
-			cart.closeCart();
-		}
-	});
-
 	function updateCart(cartItem: CartItem, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
 			case 'add':
@@ -29,6 +22,10 @@
 
 			default:
 				throw new Error(`Invalid action: ${action}`);
+		}
+
+		if (cart.getTotalItems() === 0 && cart.getIsOpen()) {
+			cart.closeCart();
 		}
 	}
 </script>

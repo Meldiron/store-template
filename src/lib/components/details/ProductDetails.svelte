@@ -1,4 +1,5 @@
 <script lang="ts">
+	import SvelteMarkdown from 'svelte-markdown';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import type { Product } from '../../../utils/products';
@@ -104,8 +105,8 @@
 		<hr class="bg-[#EDEDF0]" />
 
 		<!-- Product Description -->
-		<p class="font-inter text-[16px] font-normal leading-[22px] text-[#56565C]">
-			{product.description}
+		<p class="prose font-inter text-[16px] font-normal leading-[22px] text-[#56565C]">
+			<SvelteMarkdown source={product.description} />
 		</p>
 
 		{#if product.features && product.features.length > 0}

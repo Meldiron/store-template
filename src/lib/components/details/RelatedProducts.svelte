@@ -8,9 +8,7 @@
 
 	let { product }: Props = $props();
 
-	const relatedProducts = products.filter((prod) =>
-		prod.categories.some((category) => product.categories.includes(category))
-	);
+	const relatedProducts = products.filter((prod) => prod.slug !== product.slug);
 
 	const getRandomProducts = (items: Product[], count: number) => {
 		const shuffled = [...items].sort(() => Math.random() - 0.5);

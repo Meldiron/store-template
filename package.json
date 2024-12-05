@@ -41,6 +41,12 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"blurhash": "^2.0.5",
 		"stripe": "^17.4.0",
+		"svelte-markdown": "^0.4.1",
 		"unlazy": "^0.12.0"
+	},
+	"overrides": {
+		"svelte-markdown": {
+			"svelte": "^5.0.0"
+		}
 	}
 }

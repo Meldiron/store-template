@@ -68,60 +68,25 @@
 >
 	<!-- Product Image -->
 	<div
-		class="card relative aspect-[4/3] w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
+		class="card h-fit w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
 	>
-		{#if product.imageUrls.length > 1}
-			<Carousel.Root class="relative">
-				<Carousel.Content class="h-full">
-					{#each product.imageUrls as imageUrl, index (imageUrl)}
-						<Carousel.Item>
-							{#if index === 0}
-								<img
-									bind:this={imgBlurEl}
-									alt={product.name}
-									src={product.imageBlurhashUrl?.[0] || imageUrl}
-									class="absolute inset-0 h-full w-full rounded-[20px] p-3"
-								/>
+		<Carousel.Root>
+			<Carousel.Content>
+				{#each product.imageUrls as imageUrl, index (imageUrl)}
+					<Carousel.Item>
+						<img alt={product.name} src={imageUrl} class="h-full w-full rounded-lg object-cover" />
+					</Carousel.Item>
+				{/each}
+			</Carousel.Content>
 
-								<img
-									bind:this={imgEl}
-									alt={product.name}
-									src={imageUrl}
-									class="relative h-full w-full rounded-lg object-cover opacity-0"
-								/>
-							{:else}
-								<img
-									alt={product.name}
-									src={imageUrl}
-									class="relative h-full w-full rounded-lg object-cover"
-								/>
-							{/if}
-						</Carousel.Item>
-					{/each}
-				</Carousel.Content>
-
-				<!-- Navigation Buttons (Bottom Center) -->
-				<div class="absolute bottom-2 left-1/2 gap-4">
+			{#if product.imageUrls.length > 1}
+				<div class="absolute bottom-6 left-1/2 gap-4">
 					<Carousel.Previous class="rounded-full bg-white" />
 
 					<Carousel.Next class="rounded-full bg-white" />
 				</div>
-			</Carousel.Root>
-		{:else}
-			<img
-				bind:this={imgBlurEl}
-				alt={product.name}
-				src={product.imageBlurhashUrl?.[0] || ''}
-				class="absolute inset-0 h-full w-full rounded-[20px] p-3"
-			/>
-
-			<img
-				bind:this={imgEl}
-				alt={product.name}
-				src={product.imageUrls[0]}
-				class="relative h-full w-full rounded-lg object-cover opacity-0"
-			/>
-		{/if}
+			{/if}
+		</Carousel.Root>
 	</div>
 
 	<!-- Product Details -->

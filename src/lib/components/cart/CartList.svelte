@@ -31,7 +31,7 @@
 </script>
 
 <div class="mt-8 flex h-full w-full flex-col">
-	<div class="no-scrollbar flex flex-col gap-2 overflow-auto pb-24">
+	<div class="flex flex-col gap-2 overflow-auto pb-24">
 		{#each cart.getItems() as cartItem}
 			{@const product = cartItem.product}
 			<div class="flex h-fit flex-col items-start gap-6 rounded-lg bg-white p-3 md:flex-row">

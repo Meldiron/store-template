@@ -1,14 +1,9 @@
 <script lang="ts">
 	import type { Product } from '../../../utils/products';
 
-	const {
-		vertical = false,
-		product,
-		doReload = false
-	} = $props<{
+	const { vertical = false, product } = $props<{
 		vertical?: boolean;
 		product: Product;
-		doReload?: boolean;
 	}>();
 	let imgEl = $state<HTMLImageElement>();
 
@@ -32,7 +27,6 @@
 </script>
 
 <a
-	data-sveltekit-reload={doReload}
 	href={`/product-${product.slug}`}
 	class={`card ${vertical ? 'vertical-card' : 'horizontal-card'}`}
 >

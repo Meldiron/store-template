@@ -35,13 +35,14 @@
 		await goto(`${currentUrl.pathname}?${currentUrl.searchParams.toString()}`);
 	}
 
-	let selectedFilter = $state({ value: '', label: '' });
 	const filterOptions = [
-		{ value: 'newest', label: 'Newest' },
 		{ value: 'popular', label: 'Popular' },
 		{ value: 'lth', label: 'Price Low to High' },
-		{ value: 'htl', label: 'Price High to Low' }
+		{ value: 'htl', label: 'Price High to Low' },
+		{ value: 'newest', label: 'Newest' },
 	];
+
+	let selectedFilter = $state({ value: filterOptions[0].value, label: filterOptions[0].label });
 
 	$effect(() => {
 		if ($currentPage > 1) {

@@ -12,7 +12,9 @@
 	const itemsPerPage = 12;
 
 	let { data } = $props();
-	const { allProducts, filter } = data;
+
+	const allProducts: Product[] = $derived(data.allProducts);
+	const filter: string = $derived(data.filter);
 
 	let filteredProducts = $derived(
 		$selectedCategory === 'All Products'
@@ -39,7 +41,7 @@
 		{ value: 'popular', label: 'Popular' },
 		{ value: 'lth', label: 'Price Low to High' },
 		{ value: 'htl', label: 'Price High to Low' },
-		{ value: 'newest', label: 'Newest' },
+		{ value: 'newest', label: 'Newest' }
 	];
 
 	let selectedFilter = $state({ value: filterOptions[0].value, label: filterOptions[0].label });

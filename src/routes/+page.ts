@@ -33,6 +33,8 @@ export const load = async ({ url, depends }) => {
 				return a.price - b.price;
 			case 'htl':
 				return b.price - a.price;
+			case 'discount':
+				return (b.discount || 0) - (a.discount || 0);
 			default:
 				return 0;
 		}

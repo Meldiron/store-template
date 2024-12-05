@@ -39,6 +39,7 @@
 
 	const filterOptions = [
 		{ value: 'popular', label: 'Popular' },
+		{ value: 'discount', label: 'Highest discount' },
 		{ value: 'lth', label: 'Price Low to High' },
 		{ value: 'htl', label: 'Price High to Low' },
 		{ value: 'newest', label: 'Newest' }

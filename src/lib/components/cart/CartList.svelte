@@ -71,7 +71,7 @@
 								type="button"
 								aria-label="Remove item"
 								onclick={() => {
-									updateCart(cartItem, 'remove'); // remove one, if 0, remove from cart
+									updateCart(cartItem, 'remove');
 								}}
 							>
 								<svg
@@ -96,7 +96,7 @@
 								type="button"
 								aria-label="Add item"
 								onclick={() => {
-									updateCart(cartItem, 'add'); // add one
+									updateCart(cartItem, 'add');
 								}}
 							>
 								<svg
@@ -167,7 +167,7 @@
 					}))
 				)}
 			/>
-			<Button type="submit" class="sticky bottom-0 flex justify-center">Checkout</Button>
+			<Button type="submit" class="w-full">Checkout</Button>
 		</form>
 	{/if}
 </div>

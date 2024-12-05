@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { tick } from 'svelte';
 	import { currentPage, selectedCategory } from './store';
+	import { type Product } from '../utils/products';
 
 	import StaggeredGrid from '$lib/components/grid/StaggeredGrid.svelte';
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
@@ -18,7 +19,7 @@
 			: allProducts.filter((product) => product.categories.includes($selectedCategory))
 	);
 
-	let paginatedProducts = $derived(
+	let paginatedProducts: Product[] = $derived(
 		filteredProducts.slice(($currentPage - 1) * itemsPerPage, $currentPage * itemsPerPage)
 	);
 
@@ -29,7 +30,7 @@
 			const navigation = document.getElementById('navigation');
 			if (navigation) {
 				tick().then(() => {
-					navigation.scrollIntoView({ behavior: 'smooth' });
+					navigation.scrollIntoView();
 				});
 			}
 		}

@@ -8,14 +8,36 @@
 
 	let { product }: Props = $props();
 
-	const relatedProducts = products.filter((prod) => prod.slug !== product.slug);
+	const getRelatedProducts = (products: Product[], product: Product, count: number = 3) => {
+		const sameCategoryItem = products.find(
+			(prod) =>
+				prod.slug !== product.slug &&
+				prod.categories.some((category) => product.categories.includes(category))
+		);
 
-	const getRandomProducts = (items: Product[], count: number) => {
-		const shuffled = [...items].sort(() => Math.random() - 0.5);
-		return shuffled.slice(0, count);
+		let relatedProducts: Product[] = [];
+		if (sameCategoryItem) {
+			relatedProducts.push(sameCategoryItem);
+
+			const otherCategoryItems = products.filter(
+				(prod) =>
+					prod.slug !== product.slug &&
+					!prod.categories.some((category) => product.categories.includes(category))
+			);
+
+			const shuffledOtherCategories = [...otherCategoryItems].sort(() => Math.random() - 0.5);
+			relatedProducts.push(...shuffledOtherCategories.slice(0, count - 1));
+		} else {
+			const shuffledProducts = [...products.filter((prod) => prod.slug !== product.slug)].sort(
+				() => Math.random() - 0.5
+			);
+			relatedProducts = shuffledProducts.slice(0, count);
+		}
+
+		return relatedProducts;
 	};
 
-	const randomRelatedProducts = getRandomProducts(relatedProducts, 3);
+	let relatedProducts = $derived(getRelatedProducts(products, product, 3));
 </script>
 
 <div class="m-8 mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 sm:px-8 md:px-16 lg:px-16">
@@ -25,7 +47,7 @@
 
 	<!-- Related Products Horizontal Scroll -->
 	<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-		{#each randomRelatedProducts as horizontalProduct}
+		{#each relatedProducts as horizontalProduct}
 			<RowItem product={horizontalProduct} />
 		{/each}
 	</div>

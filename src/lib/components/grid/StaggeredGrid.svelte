@@ -12,7 +12,7 @@
 <div class="grid gap-8">
 	{#if products.length > 0}
 		{#each products as product, index (`${product.slug} + ${index}`)}
-			{#if index % 12 === 0 && index + 3 <= products.length}
+			{#if index % 12 === 0 && (index + 3 <= products.length || index < products.length)}
 				<!-- Section 1: 3 horizontal -->
 				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
 					{#each products.slice(index, index + 3) as horizontalProduct}

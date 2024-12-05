@@ -12,6 +12,7 @@
 
 	function addItemToCart() {
 		cart.add(product, $state.snapshot(selectedFeatures));
+		cart.openCart();
 	}
 
 	let imgEl = $state<HTMLImageElement>();

@@ -7,61 +7,22 @@
 	}
 
 	let { products = [] }: Props = $props();
+
+	const everyXWithOffset = (index: number, x: number, offset: number = 0) =>
+		(index + 1) % x === offset && index !== 0;
 </script>
 
 <div class="grid gap-8">
 	{#if products.length > 0}
-		{#each products as product, index (`${product.slug} + ${index}`)}
-			{#if index % 12 === 0 && (index + 3 <= products.length || index < products.length)}
-				<!-- Section 1: 3 horizontal -->
-				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-					{#each products.slice(index, index + 3) as horizontalProduct}
-						<RowItem product={horizontalProduct} />
-					{/each}
+		<div class="grid grid-cols-1 gap-6 xs:grid-cols-2 md:grid-cols-3 md:gap-8">
+			{#each products as product, index (`${product.slug} + ${index}`)}
+				<div
+					class={`col-span-1 ${everyXWithOffset(index, 3) ? 'xs:col-span-2' : 'xs:col-span-1'} ${everyXWithOffset(index, 9, 4) || everyXWithOffset(index, 9, 8) ? 'large md:col-span-2 md:row-span-2' : 'md:col-span-1 md:row-span-1'}`}
+				>
+					<RowItem {product} />
 				</div>
-			{/if}
-
-			{#if index % 12 === 3 && index + 3 <= products.length}
-				<!-- Section 2: 2 vertical + 1 horizontal -->
-				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-					<div class="flex flex-col gap-8">
-						{#each products.slice(index, index + 2) as verticalProduct}
-							<RowItem product={verticalProduct} vertical />
-						{/each}
-					</div>
-					{#if products[index + 2]}
-						<div class="col-span-1 sm:col-span-2">
-							<RowItem product={products[index + 2]} large />
-						</div>
-					{/if}
-				</div>
-			{/if}
-
-			{#if index % 12 === 6 && index + 3 <= products.length}
-				<!-- Section 3: 1 horizontal + 2 vertical -->
-				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-					{#if products[index]}
-						<div class="col-span-1 sm:col-span-2">
-							<RowItem product={products[index]} large />
-						</div>
-					{/if}
-					<div class="flex flex-col gap-8">
-						{#each products.slice(index + 1, index + 3) as verticalProduct}
-							<RowItem product={verticalProduct} vertical />
-						{/each}
-					</div>
-				</div>
-			{/if}
-
-			{#if index % 12 === 9 && index + 3 <= products.length}
-				<!-- Section 4: 3 horizontal -->
-				<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-					{#each products.slice(index, index + 3) as horizontalProduct}
-						<RowItem product={horizontalProduct} />
-					{/each}
-				</div>
-			{/if}
-		{/each}
+			{/each}
+		</div>
 	{:else}
 		<!-- Fallback Message -->
 		<div class="flex flex-col items-center justify-center gap-4 text-center">

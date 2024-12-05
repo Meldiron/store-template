@@ -113,7 +113,9 @@
 	{#if paginatedProducts.length > 0}
 		<StaggeredGrid products={paginatedProducts} />
 
-		<Pagination currentPage={$currentPage} {totalPages} />
+		{#if totalPages > 1}
+			<Pagination currentPage={$currentPage} {totalPages} />
+		{/if}
 
 		<ScrollToTop />
 	{:else}

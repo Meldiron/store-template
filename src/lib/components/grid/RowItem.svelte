@@ -2,12 +2,10 @@
 	import type { Product } from '../../../utils/products';
 
 	const {
-		large = false,
 		vertical = false,
 		product,
 		doReload = false
 	} = $props<{
-		large?: boolean;
 		vertical?: boolean;
 		product: Product;
 		doReload?: boolean;
@@ -36,7 +34,7 @@
 <a
 	data-sveltekit-reload={doReload}
 	href={`/product-${product.slug}`}
-	class={`card ${large ? 'large-card' : vertical ? 'vertical-card' : 'horizontal-card'}`}
+	class={`card ${vertical ? 'vertical-card' : 'horizontal-card'}`}
 >
 	<div class="card-image relative">
 		<img
@@ -84,15 +82,6 @@
 		height: auto;
 	}
 
-	.large-card {
-		height: 672px;
-
-		@media (max-width: 640px) {
-			height: 316px;
-			align-self: stretch;
-		}
-	}
-
 	.card-image {
 		height: 210px;
 		flex-shrink: 0;
@@ -100,14 +89,6 @@
 		align-self: stretch;
 		overflow: hidden;
 		position: relative;
-	}
-
-	.large-card .card-image {
-		height: 565px;
-
-		@media (max-width: 640px) {
-			height: 210px;
-		}
 	}
 
 	.product-image {

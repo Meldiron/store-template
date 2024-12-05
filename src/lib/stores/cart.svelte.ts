@@ -78,7 +78,7 @@ export const cart = {
 		const featuresId = Object.keys(features)
 			.map((v) => `${v}-${features[v]}`)
 			.join('-');
-		const cartItemSlug = `${product.slug}-${featuresId}`;
+		const cartItemSlug = `${product.slug}_${featuresId}`;
 
 		if (newQuantity <= 0) {
 			items = items.filter((item) => item.slug !== cartItemSlug);

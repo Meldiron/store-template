@@ -91,6 +91,7 @@ function convertToStripeLineItem(
 	return {
 		price_data: {
 			currency: 'usd',
+			tax_behavior: 'exclusive',
 			product_data: {
 				name: product.name,
 				description: product.description,
@@ -143,6 +144,8 @@ export async function POST({ request }) {
 	const session = await stripe.checkout.sessions.create({
 		payment_method_types: ['card'],
 		line_items: lineItems,
+		allow_promotion_codes: true,
+		automatic_tax: { enabled: true },
 		mode: 'payment',
 		success_url: `${origin}/checkout/success`,
 		cancel_url: `${origin}/checkout/cancel`

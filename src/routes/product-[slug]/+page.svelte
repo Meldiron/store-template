@@ -22,7 +22,7 @@
 
 	const title = `${product.name} |  Store`;
 	const description = product.description;
-	const featuredImage = `/${product.imageUrls[0]}`;
+	const ogImage = `${data.origin}/thumbnail.png`;
 </script>
 
 <svelte:head>
@@ -38,10 +38,10 @@
 	<meta name="twitter:description" content={description} />
 
 	<!-- Image -->
+	<meta property="og:image" content={ogImage} />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
-	<meta property="og:image" content={featuredImage} />
-	<meta name="twitter:image" content={featuredImage} />
+	<meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
 <ProductDetails bind:selectedFeatures {product} />

@@ -38,6 +38,7 @@ export const load = async ({ url }: { url: URL }) => {
 		totalPages,
 		currentPage: page,
 		allProducts: products,
-		products: paginatedProducts
+		products: paginatedProducts,
+		origin: url.origin
 	};
 };

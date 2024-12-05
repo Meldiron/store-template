@@ -5,7 +5,7 @@ import generateBlurHash from '../../utils/blurhash';
 
 const blurHashDataset: Record<string, string> = blurHashDatasetRaw;
 
-export function load({ params }) {
+export function load({ params, url }) {
 	const slug = params.slug;
 
 	const product = products.find((item: Product) => item.slug === slug);
@@ -17,6 +17,7 @@ export function load({ params }) {
 	generateBlurHash(product);
 
 	return {
-		product
+		product,
+		origin: url.origin
 	};
 }

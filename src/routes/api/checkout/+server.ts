@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { products, type Product } from '../../../utils/products';
 import { STRIPE_SECRET_KEY } from '$env/static/private';
 import type { CartItem } from '$lib/stores/cart.svelte';
+import { markdownToText } from '$lib/utils';
 
 type CartItemDto = Omit<CartItem, 'id' | 'product'>;
 
@@ -94,7 +95,7 @@ function convertToStripeLineItem(
 			tax_behavior: 'exclusive',
 			product_data: {
 				name: product.name,
-				description: product.description,
+				description: markdownToText(product.description),
 				images: product.imageUrls.map((url) => new URL(url, origin).href)
 			},
 			unit_amount: Math.round(unitAmount * 100)

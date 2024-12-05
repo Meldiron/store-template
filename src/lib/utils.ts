@@ -54,3 +54,46 @@ export const flyAndScale = (
 		easing: cubicOut
 	};
 };
+
+export function markdownToText(markdown: string): string {
+	if (!markdown) return '';
+
+	return (
+		markdown
+			// Remove HTML tags
+			.replace(/<[^>]*>/g, '')
+
+			// Headers
+			.replace(/^#{1,6}\s+/gm, '')
+
+			// Bold/Italic
+			.replace(/[*_]{1,3}(.*?)[*_]{1,3}/g, '$1')
+
+			// Code blocks
+			.replace(/```[\s\S]*?```/g, '')
+			.replace(/`([^`]+)`/g, '$1')
+
+			// Links
+			.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+
+			// Images
+			.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+
+			// Lists
+			.replace(/^[-*+]\s+/gm, '')
+			.replace(/^\d+\.\s+/gm, '')
+
+			// Blockquotes
+			.replace(/^>\s+/gm, '')
+
+			// Horizontal rules
+			.replace(/^[-*_]{3,}\s*$/gm, '')
+
+			// Tables
+			.replace(/\|.*\|/g, '')
+
+			// Extra whitespace
+			.replace(/\n{3,}/g, '\n\n')
+			.trim()
+	);
+}

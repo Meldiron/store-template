@@ -111,7 +111,11 @@ A premium heavy t-shirt, perfect for cooler weather.
 
 **Limited offer. Available until sold out!**
 		`,
-		imageUrls: ['products/heavy-tshirt.png'],
+		imageUrls: [
+			'products/heavy-tshirt.png',
+			'products/heavy-tshirt-2.png',
+			'products/heavy-tshirt-3.png'
+		],
 		categories: ['Tops'],
 		price: 40,
 		features: [

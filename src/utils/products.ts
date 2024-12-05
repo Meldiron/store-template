@@ -119,7 +119,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 		],
 		categories: ['Tops'],
 		price: 40,
-		discount: 0.5,
+		discount: 0.75,
 		features: [
 			...shirtFeatures,
 			{
@@ -171,6 +171,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 		imageUrls: ['/products/sweatshirts.webp'],
 		categories: ['Sweaters'],
 		price: 45,
+		discount: 0.55,
 		features: shirtFeatures,
 		date: '2024-11-10',
 		popularity: 68
@@ -263,6 +264,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 		imageUrls: ['/products/sunglasses-black.webp'],
 		categories: ['Accessories'],
 		price: 50,
+		discount: 0.5,
 		features: unisexFeatures,
 		date: '2024-11-25',
 		popularity: 67
@@ -295,7 +297,8 @@ A premium heavy t-shirt, perfect for cooler weather.
 		description: 'Elegant and durable watch to complement any outfit.',
 		imageUrls: ['/products/watch.webp'],
 		categories: ['Accessories'],
-		price: 150,
+		price: 180,
+		discount: 0.1,
 		features: unisexFeatures,
 		date: '2024-12-04',
 		popularity: 97

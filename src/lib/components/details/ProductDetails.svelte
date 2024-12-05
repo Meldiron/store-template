@@ -102,8 +102,8 @@
 		<span class="product-price font-inter">
 			${productPrice.toFixed(2)}
 			{#if product.discount}
-				<span class="product-price-old">${(productPrice * (1 / product.discount)).toFixed(2)}</span>
-				<span class="product-price-discount">-{product.discount * 100}%</span>
+				<span class="product-price-old">${(productPrice / (1 - product.discount)).toFixed(2)}</span>
+				<span class="product-price-discount">-{(product.discount * 100).toFixed(0)}%</span>
 			{/if}
 		</span>
 
@@ -178,7 +178,7 @@
 
 	.product-price-old {
 		color: #97979b;
-		font-size: 16px;
+		font-size: 14px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 28px;

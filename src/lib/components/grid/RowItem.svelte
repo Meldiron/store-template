@@ -49,7 +49,7 @@
 		<span class="product-price"
 			>${product.price.toFixed(2)}
 			{#if product.discount}
-				<span class="product-price-discount">-{product.discount * 100}%</span>
+				<span class="product-price-discount">-{(product.discount * 100).toFixed(0)}%</span>
 			{/if}
 		</span>
 	</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SvelteMarkdown from 'svelte-markdown';
-	import { cart } from '$lib/stores/cart.svelte';
+	import { cart, type CartItem } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import type { Product } from '../../../utils/products';
 	import * as Carousel from '$lib/components/ui/carousel';
@@ -80,10 +80,13 @@
 			</Carousel.Content>
 
 			{#if product.imageUrls.length > 1}
-				<div class="absolute bottom-6 left-1/2 gap-4">
-					<Carousel.Previous class="rounded-full bg-white" />
-
-					<Carousel.Next class="rounded-full bg-white" />
+				<div class="absolute bottom-10 left-1/2 gap-0">
+					<Carousel.Previous
+						class="-left-8 rounded-md rounded-r-none border border-[#D8D8DB] bg-white text-[#97979B]"
+					/>
+					<Carousel.Next
+						class="-right-8 rounded-md rounded-l-none border border-[#D8D8DB] bg-white text-[#97979B]"
+					/>
 				</div>
 			{/if}
 		</Carousel.Root>
@@ -138,13 +141,14 @@
 			{/each}
 		{/if}
 
-		<!-- Add to Cart Button -->
-		<Button
-			on:click={addItemToCart}
-			class="mt-4 rounded-lg p-6 font-inter text-[16px] font-medium text-white md:w-fit md:px-[14px] md:py-[9px]"
-		>
-			Add to cart
-		</Button>
+		<div class="flex">
+			<Button
+				on:click={addItemToCart}
+				class="mt-4 rounded-lg p-6 font-inter text-[16px] font-medium text-white md:w-fit md:px-[14px] md:py-[9px]"
+			>
+				Add to cart
+			</Button>
+		</div>
 	</div>
 </div>
 

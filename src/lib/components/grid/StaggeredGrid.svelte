@@ -19,7 +19,7 @@
 				<div
 					class={`col-span-1 ${everyXWithOffset(index, 3) ? 'xs:col-span-2' : 'xs:col-span-1'} ${everyXWithOffset(index, 9, 4) || everyXWithOffset(index, 9, 8) ? 'large md:col-span-2 md:row-span-2' : 'md:col-span-1 md:row-span-1'}`}
 				>
-					<RowItem {product} large0{everyX} />
+					<RowItem {product} />
 				</div>
 			{/each}
 		</div>

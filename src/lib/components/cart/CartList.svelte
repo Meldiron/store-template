@@ -30,8 +30,8 @@
 	}
 </script>
 
-<div class="mt-8 flex h-full w-full flex-col">
-	<div class="flex flex-col gap-2 overflow-auto pb-24">
+<div class="mt-4 flex min-h-1 w-full flex-grow flex-col">
+	<div class="flex flex-grow flex-col gap-2 overflow-y-auto pb-4">
 		{#each cart.getItems() as cartItem}
 			{@const product = cartItem.product}
 			<div class="flex h-fit flex-col items-start gap-6 rounded-lg bg-white p-3 md:flex-row">
@@ -155,20 +155,22 @@
 	</div>
 
 	{#if cart.getTotalItems() > 0}
-		<form method="POST" action="/api/checkout">
-			<input
-				type="hidden"
-				name="cart"
-				value={JSON.stringify(
-					cart.getItems().map((item) => ({
-						slug: item.product.slug.split('_')[0],
-						quantity: item.quantity,
-						features: item.features
-					}))
-				)}
-			/>
-			<Button type="submit" class="w-full">Checkout</Button>
-		</form>
+		<div class="w-full">
+			<form method="POST" action="/api/checkout">
+				<input
+					type="hidden"
+					name="cart"
+					value={JSON.stringify(
+						cart.getItems().map((item) => ({
+							slug: item.product.slug.split('_')[0],
+							quantity: item.quantity,
+							features: item.features
+						}))
+					)}
+				/>
+				<Button type="submit" class="w-full">Checkout</Button>
+			</form>
+		</div>
 	{/if}
 </div>
 

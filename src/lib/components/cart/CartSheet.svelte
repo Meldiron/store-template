@@ -40,7 +40,7 @@
 			</button>
 		</Trigger>
 		<Content
-			class="m-6 max-h-[calc(100vh-3rem)] overflow-y-auto rounded-[16px] bg-[rgba(255,255,255)]"
+			class="m-6 flex h-full max-h-[calc(100vh-3rem)] flex-col overflow-y-auto rounded-[16px] bg-[rgba(255,255,255)]"
 		>
 			<Header>
 				<div class="flex items-center justify-between">

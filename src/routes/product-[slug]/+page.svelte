@@ -9,7 +9,7 @@
 
 	const product: Product = $derived(data.product);
 
-	function initialFeatures() {
+	function initialFeatures(product: Product) {
 		let selectedFeatures: Record<string, string> = {};
 
 		for (const feature of product.features ?? []) {
@@ -19,7 +19,10 @@
 		return selectedFeatures;
 	}
 
-	let selectedFeatures: Record<string, string> = $state(initialFeatures());
+	let selectedFeatures: Record<string, string> = $state(initialFeatures(data.product));
+	$effect(() => {
+		selectedFeatures = initialFeatures(product);
+	});
 
 	const title: string = $derived(`${product.name} |  Store`);
 	const ogImage: string = $derived(`${data.origin}/thumbnail.png`);

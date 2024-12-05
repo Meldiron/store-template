@@ -62,7 +62,11 @@ const config: Config = {
 				inter: ['Inter', 'sans-serif']
 			}
 		}
-	}
+	},
+	plugins: [
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		require('@tailwindcss/typography')
+	]
 };
 
 export default config;

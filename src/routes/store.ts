@@ -11,4 +11,7 @@ export const currentPage = derived(
 	($page) => Number($page.url.searchParams.get('page')) || 1
 );
 
-export const showSiteHeaders = derived(page, ($page) => $page.route.id !== '/product-[slug]');
+export const showSiteHeaders = derived(
+	page,
+	($page) => $page.route.id?.trim() === '/' && !$page.error
+);

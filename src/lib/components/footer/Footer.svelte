@@ -126,9 +126,10 @@
 <style>
 	footer {
 		font-size: 14px;
-		font-style: normal;
 		font-weight: 400;
 		line-height: 22px;
+		margin-top: auto;
+		font-style: normal;
 		letter-spacing: -0.063px;
 		color: var(--color-fgColor-neutral-secondary, #56565c);
 

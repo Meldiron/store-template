@@ -92,7 +92,6 @@
 		display: none !important;
 	}
 
-	/*todo: desktop only*/
 	:global([data-dialog-content]) {
 		background: #f2f2f2;
 		min-width: 494px !important;

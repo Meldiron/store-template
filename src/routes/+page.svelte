@@ -35,7 +35,29 @@
 			}
 		}
 	});
+
+	const title = 'Store | E-commerce Template';
+	const description =
+		'A customizable e-commerce template for Appwrite Sites, built on Appwrite Cloud.';
 </script>
+
+<svelte:head>
+	<title>{title}</title>
+	<meta name="description" content={description} />
+
+	<meta property="og:title" content={title} />
+	<meta name="twitter:title" content={title} />
+	<!-- Description -->
+	<meta name="description" content={description} />
+	<meta property="og:description" content={description} />
+	<meta name="twitter:description" content={description} />
+
+	<!-- Image -->
+	<!-- <meta property="og:image" content={ogImage} /> -->
+	<!-- <meta property="og:image:width" content="1200" /> -->
+	<!-- <meta property="og:image:height" content="630" /> -->
+	<!-- <meta name="twitter:image" content={ogImage} /> -->
+</svelte:head>
 
 <div
 	class="mx-auto mb-16 mt-[54px] flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-8 lg:mt-[72px] lg:px-16"

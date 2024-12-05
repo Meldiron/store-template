@@ -39,6 +39,7 @@
 	const title = 'Store | E-commerce Template';
 	const description =
 		'A customizable e-commerce template for Appwrite Sites, built on Appwrite Cloud.';
+	const ogImage = `${data.origin}/thumbnail.png`;
 </script>
 
 <svelte:head>
@@ -53,10 +54,10 @@
 	<meta name="twitter:description" content={description} />
 
 	<!-- Image -->
-	<!-- <meta property="og:image" content={ogImage} /> -->
-	<!-- <meta property="og:image:width" content="1200" /> -->
-	<!-- <meta property="og:image:height" content="630" /> -->
-	<!-- <meta name="twitter:image" content={ogImage} /> -->
+	<meta property="og:image" content={ogImage} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
 <div

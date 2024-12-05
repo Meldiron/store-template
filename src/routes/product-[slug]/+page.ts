@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { type Product, products } from '../../utils/products';
 
-export function load({ params }) {
+export function load({ params, url }) {
 	const slug = params.slug;
 
 	const product = products.find((item: Product) => item.slug === slug);
@@ -11,6 +11,7 @@ export function load({ params }) {
 	}
 
 	return {
-		product
+		product,
+		origin: url.origin
 	};
 }

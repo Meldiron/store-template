@@ -1,17 +1,18 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import { currentPage, selectedCategory } from './store';
 	import { type Product } from '../utils/products';
+	import * as Select from '$lib/components/ui/select';
+	import { currentPage, selectedCategory } from './store';
 
 	import StaggeredGrid from '$lib/components/grid/StaggeredGrid.svelte';
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
 	import ScrollToTop from '$lib/components/pagination/ScrollToTop.svelte';
-
-	let { data } = $props();
-
-	const { allProducts } = data;
+	import { goto } from '$app/navigation';
 
 	const itemsPerPage = 12;
+
+	let { data } = $props();
+	const { allProducts, filter } = data;
 
 	let filteredProducts = $derived(
 		$selectedCategory === 'All Products'
@@ -25,6 +26,23 @@
 
 	let totalPages = $derived(Math.ceil(filteredProducts.length / itemsPerPage));
 
+	async function filterProducts(filter: unknown) {
+		if (!filter) return;
+		const currentUrl = new URL(window.location.href);
+		currentUrl.searchParams.delete('page');
+		currentUrl.searchParams.set('filter', filter as string);
+
+		await goto(`${currentUrl.pathname}?${currentUrl.searchParams.toString()}`);
+	}
+
+	let selectedFilter = $state({ value: '', label: '' });
+	const filterOptions = [
+		{ value: 'newest', label: 'Newest' },
+		{ value: 'popular', label: 'Popular' },
+		{ value: 'lth', label: 'Price Low to High' },
+		{ value: 'htl', label: 'Price High to Low' }
+	];
+
 	$effect(() => {
 		if ($currentPage > 1) {
 			const navigation = document.getElementById('navigation');
@@ -33,6 +51,10 @@
 					navigation.scrollIntoView();
 				});
 			}
+		}
+
+		if (selectedFilter.value !== filter) {
+			selectedFilter = filterOptions.find((item) => item.value === filter) ?? selectedFilter;
 		}
 	});
 
@@ -63,9 +85,30 @@
 <div
 	class="mx-auto mb-16 mt-[54px] flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-8 lg:mt-[72px] lg:px-16"
 >
-	<h1 class="text-[40px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C]">
-		{$selectedCategory}
-	</h1>
+	<div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+		<h1 class="text-[40px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C]">
+			{$selectedCategory}
+		</h1>
+
+		<div class="filter-selection">
+			<Select.Root
+				selected={selectedFilter}
+				onSelectedChange={(filter) => filterProducts(filter?.value)}
+			>
+				<Select.Trigger class="w-full md:w-[240px]">
+					<Select.Value
+						placeholder="Sort via filters"
+						class="data-[placeholder]:font-inter data-[placeholder]:text-[16px] data-[placeholder]:font-medium data-[placeholder]:!text-[#2D2D31]"
+					/>
+				</Select.Trigger>
+				<Select.Content>
+					{#each filterOptions as filter}
+						<Select.Item value={filter.value} label={filter.label}>{filter.label}</Select.Item>
+					{/each}
+				</Select.Content>
+			</Select.Root>
+		</div>
+	</div>
 
 	{#if paginatedProducts.length > 0}
 		<StaggeredGrid products={paginatedProducts} />
@@ -79,3 +122,10 @@
 		</p>
 	{/if}
 </div>
+
+<style>
+	:global(.filter-selection svg) {
+		width: 20px !important;
+		height: 20px !important;
+	}
+</style>

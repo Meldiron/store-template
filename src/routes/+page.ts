@@ -2,7 +2,9 @@ import { redirect } from '@sveltejs/kit';
 import { type Product, products } from '../utils/products';
 import generateBlurHash from '../utils/blurhash';
 
-export const load = async ({ url }: { url: URL }) => {
+export const load = async ({ url, depends }) => {
+	depends('page:filters');
+
 	const itemsPerPage = 12;
 
 	const pageParam = url.searchParams.get('page');
@@ -12,33 +14,51 @@ export const load = async ({ url }: { url: URL }) => {
 		throw redirect(301, '/');
 	}
 
+	const filter = url.searchParams.get('filter') || '';
 	const category = url.searchParams.get('category') || 'All Products';
 
+	// Filter by category
 	const filteredProducts =
 		category === 'All Products'
 			? products
 			: products.filter((product) => product.categories.includes(category));
 
-	const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+	const sortedProducts = [...filteredProducts].sort((a, b) => {
+		switch (filter) {
+			case 'newest':
+				return new Date(b.date || '').getTime() - new Date(a.date || '').getTime();
+			case 'popular':
+				return (b.popularity || 0) - (a.popularity || 0);
+			case 'lth':
+				return a.price - b.price;
+			case 'htl':
+				return b.price - a.price;
+			default:
+				return 0;
+		}
+	});
 
-	if (filteredProducts.length && page > totalPages) {
+	const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+
+	if (sortedProducts.length && page > totalPages) {
 		throw redirect(301, '/');
 	}
 
 	const startIndex = (page - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
-	const paginatedProducts: Product[] = filteredProducts.slice(startIndex, endIndex);
+	const paginatedProducts: Product[] = sortedProducts.slice(startIndex, endIndex);
 
 	for (const product of paginatedProducts) {
 		generateBlurHash(product);
 	}
 
 	return {
+		filter,
 		category,
 		totalPages,
 		currentPage: page,
-		allProducts: products,
-		products: paginatedProducts,
-		origin: url.origin
+		origin: url.origin,
+		allProducts: sortedProducts,
+		products: paginatedProducts
 	};
 };

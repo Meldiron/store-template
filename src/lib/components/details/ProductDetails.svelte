@@ -87,7 +87,7 @@
 	</div>
 
 	<!-- Product Details -->
-	<div class="flex w-full max-w-lg flex-col gap-6 md:max-w-[379px]">
+	<div class="flex w-full max-w-lg flex-col gap-6 md:max-w-[379px] md:pb-10">
 		<!-- Product Name -->
 		<h1
 			class="font-inter text-[48px] font-normal leading-[68px] tracking-[-0.64px] text-[#19191C] md:text-[64px]"

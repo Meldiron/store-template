@@ -3,12 +3,13 @@
 	import CheckoutState from '$lib/components/checkout/CheckoutState.svelte';
 </script>
 
+<!-- TODO: Use a href here instead onclick -->
 <CheckoutState
 	title="Thank you for your order!"
 	message="You'll receive an email confirmation shortly with all the details. Stay tuned for updates as
 			we prepare your order!"
 	buttonText="Continue shopping"
-	onClick={() => goto('/')}
+	on:click={() => goto('/')}
 >
 	<div slot="icon">
 		<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">

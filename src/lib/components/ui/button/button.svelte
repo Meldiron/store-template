@@ -6,32 +6,20 @@
 	type $$Props = Props;
 	type $$Events = Events;
 
-	interface Props_1 {
-		class?: $$Props['class'];
-		variant?: $$Props['variant'];
-		size?: $$Props['size'];
-		builders?: $$Props['builders'];
-		children?: import('svelte').Snippet;
-		[key: string]: any;
-	}
-
-	let {
-		class: className = undefined,
-		variant = 'default',
-		size = 'default',
-		builders = [],
-		children,
-		...rest
-	}: Props_1 = $props();
+	let className: $$Props['class'] = undefined;
+	export let variant: $$Props['variant'] = 'default';
+	export let size: $$Props['size'] = 'default';
+	export let builders: $$Props['builders'] = [];
+	export { className as class };
 </script>
 
 <ButtonPrimitive.Root
 	{builders}
 	class={cn(buttonVariants({ variant, size, className }))}
 	type="button"
-	{...rest}
+	{...$$restProps}
 	on:click
 	on:keydown
 >
-	{@render children?.()}
+	<slot />
 </ButtonPrimitive.Root>

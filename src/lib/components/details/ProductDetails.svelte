@@ -3,6 +3,7 @@
 	import { cart } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import type { Product } from '../../../utils/products';
+	import * as Carousel from '$lib/components/ui/carousel';
 
 	interface Props {
 		product: Product;
@@ -69,21 +70,58 @@
 	<div
 		class="card relative aspect-[4/3] w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
 	>
-		<img
-			bind:this={imgBlurEl}
-			alt={product.name}
-			src={product.imageBlurhashUrl?.[0] || ''}
-			class="absolute inset-0 h-full w-full rounded-[20px] p-3"
-		/>
+		{#if product.imageUrls.length > 1}
+			<Carousel.Root class="relative">
+				<Carousel.Content class="h-full">
+					{#each product.imageUrls as imageUrl, index (imageUrl)}
+						<Carousel.Item>
+							{#if index === 0}
+								<img
+									bind:this={imgBlurEl}
+									alt={product.name}
+									src={product.imageBlurhashUrl?.[0] || imageUrl}
+									class="absolute inset-0 h-full w-full rounded-[20px] p-3"
+								/>
 
-		<img
-			bind:this={imgEl}
-			alt={product.name}
-			src={product.imageUrls[0]}
-			class="relative h-full w-full rounded-lg object-cover opacity-0"
-		/>
+								<img
+									bind:this={imgEl}
+									alt={product.name}
+									src={imageUrl}
+									class="relative h-full w-full rounded-lg object-cover opacity-0"
+								/>
+							{:else}
+								<img
+									alt={product.name}
+									src={imageUrl}
+									class="relative h-full w-full rounded-lg object-cover"
+								/>
+							{/if}
+						</Carousel.Item>
+					{/each}
+				</Carousel.Content>
 
-		<!-- TODO: Add carousel buttons		-->
+				<!-- Navigation Buttons (Bottom Center) -->
+				<div class="absolute bottom-2 left-1/2 gap-4">
+					<Carousel.Previous class="rounded-full bg-white" />
+
+					<Carousel.Next class="rounded-full bg-white" />
+				</div>
+			</Carousel.Root>
+		{:else}
+			<img
+				bind:this={imgBlurEl}
+				alt={product.name}
+				src={product.imageBlurhashUrl?.[0] || ''}
+				class="absolute inset-0 h-full w-full rounded-[20px] p-3"
+			/>
+
+			<img
+				bind:this={imgEl}
+				alt={product.name}
+				src={product.imageUrls[0]}
+				class="relative h-full w-full rounded-lg object-cover opacity-0"
+			/>
+		{/if}
 	</div>
 
 	<!-- Product Details -->

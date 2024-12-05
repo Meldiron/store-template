@@ -22,7 +22,7 @@
 
 	const title = `${product.name} |  Store`;
 	const description = product.description;
-	const featuredImage = `${$page.url.hostname}/${product.imageUrls[0]}`;
+	const featuredImage = `/${product.imageUrls[0]}`;
 </script>
 
 <svelte:head>

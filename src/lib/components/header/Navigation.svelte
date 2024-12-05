@@ -14,7 +14,7 @@
 			const { left: containerLeft, right: containerRight } = container.getBoundingClientRect();
 
 			if (left < containerLeft || right > containerRight) {
-				selectedElement.scrollIntoView({ inline: 'nearest' });
+				selectedElement.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
 			}
 		}
 	}

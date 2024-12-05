@@ -27,7 +27,7 @@ export type ProductFeature = {
 
 export type ProductVariation = {
 	name: string;
-	priceModifier: (
+	priceModifier?: (
 		price: number,
 		product: Product,
 		variation: ProductVariation,
@@ -41,8 +41,7 @@ const unisexFeatures: ProductFeature[] = [
 		name: 'Sex',
 		variations: [
 			{
-				name: 'Unisex',
-				priceModifier: (price) => price
+				name: 'Unisex'
 			}
 		]
 	}
@@ -53,8 +52,7 @@ const shirtFeatures: ProductFeature[] = [
 		name: 'Size',
 		variations: [
 			{
-				name: 'S',
-				priceModifier: (price) => price
+				name: 'S'
 			},
 			{
 				name: 'M',
@@ -77,8 +75,7 @@ const shoeFeatures: ProductFeature[] = [
 		name: 'Size',
 		variations: [
 			{
-				name: '6',
-				priceModifier: (price) => price
+				name: '6'
 			},
 			{
 				name: '7',
@@ -115,16 +112,13 @@ export const products: Product[] = [
 				name: 'Color',
 				variations: [
 					{
-						name: 'Black',
-						priceModifier: (price) => price
+						name: 'Black'
 					},
 					{
-						name: 'White',
-						priceModifier: (price) => price
+						name: 'White'
 					},
 					{
-						name: 'Gray',
-						priceModifier: (price) => price
+						name: 'Gray'
 					}
 				]
 			}

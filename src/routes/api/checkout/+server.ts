@@ -56,7 +56,14 @@ function calculateUnitAmountWithFeatures(
 				);
 			}
 
-			unitAmount = matchingVariation.priceModifier(unitAmount, product, matchingVariation, feature);
+			if (matchingVariation.priceModifier) {
+				unitAmount = matchingVariation.priceModifier(
+					unitAmount,
+					product,
+					matchingVariation,
+					feature
+				);
+			}
 		}
 	}
 

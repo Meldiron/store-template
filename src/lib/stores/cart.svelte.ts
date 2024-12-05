@@ -6,6 +6,7 @@ export type CartItem = {
 	features: Record<string, string>;
 	quantity: number;
 	product: Product;
+	price: number; // Product price + features price modifiers
 };
 
 export type Cart = CartItem[];
@@ -53,13 +54,24 @@ export const cart = {
 		if (index !== -1) {
 			items[index].quantity += 1;
 		} else {
+			let price = product.price;
+			for (const featureName in features) {
+				const feature = product.features?.find((f) => f.name === featureName);
+				const variation = feature?.variations.find((v) => v.name === features[featureName]);
+
+				if (variation && feature && variation.priceModifier) {
+					price = variation.priceModifier(price, product, variation, feature);
+				}
+			}
+
 			items = [
 				...items,
 				{
 					slug: cartItemSlug,
 					quantity: 1,
 					features,
-					product
+					product,
+					price
 				}
 			];
 		}

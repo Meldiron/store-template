@@ -18,6 +18,26 @@
 	let imgEl = $state<HTMLImageElement>();
 	let imgBlurEl = $state<HTMLImageElement>();
 
+	let productPrice = $state(product.price);
+
+	// Re-calculate productPrice with features
+	$effect(() => {
+		let price = product.price;
+
+		for (const feature in selectedFeatures) {
+			const selectedFeature = (product.features ?? []).find((f) => f.name === feature);
+			const selectedVariation = selectedFeature?.variations.find(
+				(v) => v.name === selectedFeatures[feature]
+			);
+
+			if (selectedFeature && selectedVariation && selectedVariation.priceModifier) {
+				price = selectedVariation.priceModifier(price, product, selectedVariation, selectedFeature);
+			}
+		}
+
+		productPrice = price;
+	});
+
 	$effect(() => {
 		const img = imgEl;
 		const blurImg = imgBlurEl;
@@ -78,7 +98,7 @@
 		<span
 			class="font-inter text-[16px] font-normal leading-[140%] tracking-[-0.16px] text-[#56565C]"
 		>
-			${product.price.toFixed(2)}
+			${productPrice.toFixed(2)}
 		</span>
 
 		<hr class="bg-[#EDEDF0]" />

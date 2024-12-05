@@ -2,6 +2,13 @@
 	import { cart, type CartItem } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 
+	// Close cart when removing last item
+	$effect(() => {
+		if (cart.getTotalItems() === 0 && cart.getIsOpen()) {
+			cart.closeCart();
+		}
+	});
+
 	function updateCart(cartItem: CartItem, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
 			case 'add':
@@ -42,7 +49,7 @@
 					<div class="flex flex-col gap-2">
 						<div class="flex flex-wrap items-center justify-between">
 							<span class="font-inter text-[16px] font-medium text-[#2D2D31]">{product.name}</span>
-							<span class="product-price">${product.price.toFixed(2)}</span>
+							<span class="product-price">${cartItem.price.toFixed(2)}</span>
 						</div>
 
 						{#if product.features && product.features.length > 0}

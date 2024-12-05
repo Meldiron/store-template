@@ -4,7 +4,6 @@
 	export let title: string;
 	export let message: string;
 	export let buttonText: string;
-	export let onClick: () => void;
 </script>
 
 <div class="mt-[210px] flex flex-col items-center gap-5 px-8 text-center md:px-0">
@@ -23,7 +22,7 @@
 	</div>
 
 	<Button
-		on:click={onClick}
+		type="submit"
 		class="mt-5 font-inter text-[16px] font-medium leading-[137.5%] tracking-[-0.16px] text-white"
 	>
 		{buttonText}

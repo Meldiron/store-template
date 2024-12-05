@@ -26,7 +26,7 @@
 	<!-- Related Products Horizontal Scroll -->
 	<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
 		{#each randomRelatedProducts as horizontalProduct}
-			<RowItem product={horizontalProduct} doReload />
+			<RowItem product={horizontalProduct} />
 		{/each}
 	</div>
 </div>

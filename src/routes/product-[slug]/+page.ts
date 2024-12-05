@@ -1,9 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { type Product, products } from '../../utils/products';
-import blurHashDatasetRaw from '$lib/blurhash.json';
 import generateBlurHash from '../../utils/blurhash';
-
-const blurHashDataset: Record<string, string> = blurHashDatasetRaw;
 
 export function load({ params, url }) {
 	const slug = params.slug;

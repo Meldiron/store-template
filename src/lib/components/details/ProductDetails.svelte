@@ -13,6 +13,31 @@
 	function addItemToCart() {
 		cart.add(product, $state.snapshot(selectedFeatures));
 	}
+
+	let imgEl = $state<HTMLImageElement>();
+	let imgBlurEl = $state<HTMLImageElement>();
+
+	$effect(() => {
+		const img = imgEl;
+		const blurImg = imgBlurEl;
+		if (!img) return;
+
+		// If image is already loaded, add class immediately
+		if (img.complete) {
+			img.classList.add('!opacity-100');
+			return;
+		}
+
+		// Otherwise wait for load event
+		const handleLoad = () => {
+			img.classList.add('!opacity-100');
+			blurImg?.classList.add('!hidden');
+		};
+		img.addEventListener('load', handleLoad);
+
+		// Cleanup function
+		return () => img.removeEventListener('load', handleLoad);
+	});
 </script>
 
 <div
@@ -20,12 +45,20 @@
 >
 	<!-- Product Image -->
 	<div
-		class="card aspect-[4/3] w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
+		class="card relative aspect-[4/3] w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
 	>
 		<img
+			bind:this={imgBlurEl}
+			alt={product.name}
+			src={product.imageBlurhashUrl?.[0] || ''}
+			class="absolute inset-0 h-full w-full rounded-[20px] p-3"
+		/>
+
+		<img
+			bind:this={imgEl}
 			alt={product.name}
 			src={product.imageUrls[0]}
-			class="h-full w-full rounded-lg object-cover"
+			class="relative h-full w-full rounded-lg object-cover opacity-0"
 		/>
 
 		<!-- TODO: Add carousel buttons		-->

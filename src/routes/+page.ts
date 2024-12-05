@@ -1,9 +1,6 @@
 import { redirect } from '@sveltejs/kit';
-import blurHashDatasetRaw from '$lib/blurhash.json';
-import { createPngDataUri } from 'unlazy/blurhash';
 import { type Product, products } from '../utils/products';
-
-const blurHashDataset: Record<string, string> = blurHashDatasetRaw;
+import generateBlurHash from '../utils/blurhash';
 
 export const load = async ({ url }: { url: URL }) => {
 	const itemsPerPage = 12;
@@ -33,16 +30,7 @@ export const load = async ({ url }: { url: URL }) => {
 	const paginatedProducts: Product[] = filteredProducts.slice(startIndex, endIndex);
 
 	for (const product of paginatedProducts) {
-		if (!product.imageBlurhashUrl) {
-			product.imageBlurhashUrl = [];
-		}
-
-		for (const imageUrl of product.imageUrls) {
-			const imageName = imageUrl.split('/').pop() ?? '';
-			const blurhash = blurHashDataset[imageName] ?? '';
-			const pngDataUri = createPngDataUri(blurhash, { ratio: 4 / 3 });
-			product.imageBlurhashUrl.push(pngDataUri);
-		}
+		generateBlurHash(product);
 	}
 
 	return {

@@ -15,7 +15,6 @@
 		side?: Side;
 	};
 
-	
 	interface Props {
 		class?: $$Props['class'];
 		side?: $$Props['side'];
@@ -24,7 +23,7 @@
 		outTransition?: $$Props['outTransition'];
 		outTransitionConfig?: $$Props['outTransitionConfig'];
 		children?: import('svelte').Snippet;
-		[key: string]: any
+		[key: string]: any;
 	}
 
 	let {

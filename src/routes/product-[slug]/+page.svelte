@@ -3,6 +3,7 @@
 	import type { Product } from '../../utils/products';
 	import ProductDetails from '$lib/components/details/ProductDetails.svelte';
 	import RelatedProducts from '$lib/components/details/RelatedProducts.svelte';
+	import { markdownToText } from '$lib/utils';
 
 	let { data } = $props();
 
@@ -21,8 +22,8 @@
 	let selectedFeatures: Record<string, string> = $state(initialFeatures());
 
 	const title: string = $derived(`${product.name} |  Store`);
-	const description: string = $derived(product.description);
 	const ogImage: string = $derived(`${data.origin}/thumbnail.png`);
+	const description: string = $derived(markdownToText(product.description));
 </script>
 
 <svelte:head>

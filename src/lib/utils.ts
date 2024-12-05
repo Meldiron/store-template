@@ -67,7 +67,7 @@ export function markdownToText(markdown: string): string {
 			.replace(/^#{1,6}\s+/gm, '')
 
 			// Bold/Italic
-			.replace(/[*_]{1,3}(.*?)[*_]{1,3}/g, '$1')
+			.replace(/[*_]{1,3}([^*_]+?)[*_]{1,3}/g, '$1')
 
 			// Code blocks
 			.replace(/```[\s\S]*?```/g, '')
@@ -77,11 +77,14 @@ export function markdownToText(markdown: string): string {
 			.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
 
 			// Images
-			.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+			.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '$1')
 
-			// Lists
-			.replace(/^[-*+]\s+/gm, '')
-			.replace(/^\d+\.\s+/gm, '')
+			// Lists: Add commas for continuing items and a full stop for the last item
+			.replace(/^([-*+])\s*(.+)$/gm, (_, __, content, offset, str) => {
+				// Check if the current list item is the last one
+				const isLastItem = str.substring(offset).match(/^([-*+]\s*.+$)/gm)?.length === 1;
+				return isLastItem ? `${content}.` : `${content},`;
+			})
 
 			// Blockquotes
 			.replace(/^>\s+/gm, '')
@@ -90,10 +93,17 @@ export function markdownToText(markdown: string): string {
 			.replace(/^[-*_]{3,}\s*$/gm, '')
 
 			// Tables
-			.replace(/\|.*\|/g, '')
+			.replace(/\|.*?\|/g, '')
 
-			// Extra whitespace
-			.replace(/\n{3,}/g, '\n\n')
+			// Replace multiple newlines or Markdown-inducing breaks with a space
+			.replace(/(\s*\n\s*)+/g, ' ')
+
+			// Normalize punctuation spacing
+			.replace(/\s*,\s*/g, ', ')
+			.replace(/\s*\.\s*/g, '. ')
+
+			// Ensure clean trailing punctuation
+			.replace(/\s*\.$/, '.')
 			.trim()
 	);
 }

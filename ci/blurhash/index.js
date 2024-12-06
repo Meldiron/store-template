@@ -52,7 +52,9 @@ async function generateBlurHash(imagePath) {
 
 	const files = fs
 		.readdirSync(basePath)
-		.filter((file) => !file.endsWith('.blurhash.txt') && !dataset[file]);
+		.filter((file) => !dataset[file])
+		.filter((file) => !file.endsWith('.blurhash.txt'))
+		.filter((file) => !file === '.DS_Store');
 
 	console.log(`Found ${files.length} unprocessed files`);
 

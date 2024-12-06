@@ -10,7 +10,7 @@ export async function GET({ url }) {
 }
 
 const websitePages = () => {
-	const productPages = products.map((product) => product.slug);
+	const productPages = products.map((product) => `product-${product.slug}`);
 	const encodedFilters = filterOptions.map(
 		(filter) => `?filter=${encodeURIComponent(filter.value)}`
 	);

@@ -111,7 +111,7 @@
 		</div>
 
 		{#if paginatedProducts.length > 0}
-			<StaggeredGrid products={paginatedProducts} />
+			<StaggeredGrid products={paginatedProducts} selectedFilter={selectedFilter.value} />
 
 			{#if totalPages > 1}
 				<Pagination currentPage={$currentPage} {totalPages} />

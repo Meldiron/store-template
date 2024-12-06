@@ -31,18 +31,17 @@
 	}
 
 	function getSubtotal(): number {
-		return cart.getItems().reduce(
-			(total, cartItem) => total + cartItem.product.price * cartItem.quantity,
-			0
-		)
+		return cart
+			.getItems()
+			.reduce((total, cartItem) => total + cartItem.product.price * cartItem.quantity, 0);
 	}
 
-	function getDiscounts(): number {
-		return cart.getItems().reduce((total, cartItem) => {
+	let discounts = $derived(
+		cart.getItems().reduce((total, cartItem) => {
 			const discount = cartItem.product.discount || 0;
 			return total + cartItem.product.price * discount * cartItem.quantity;
 		}, 0)
-	}
+	);
 </script>
 
 <div class="mt-4 flex min-h-1 w-full flex-grow flex-col">
@@ -178,30 +177,39 @@
 	</div>
 
 	{#if cart.getTotalItems() > 0}
-		<div class="w-full flex flex-col gap-6">
+		<div class="flex w-full flex-col gap-6">
 			<div class="total-section flex flex-col gap-3">
 				<div class="flex flex-wrap items-center justify-between">
-					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]">Subtotal</span>
+					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+						>Subtotal</span
+					>
 					<span class="product-price">${getSubtotal().toFixed(2)}</span>
 				</div>
 
-				<div class="flex flex-wrap items-center justify-between">
-					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]">Discounts</span>
-					<span class="product-price">-${getDiscounts().toFixed(2)}</span>
-				</div>
+				{#if discounts > 0}
+					<div class="flex flex-wrap items-center justify-between">
+						<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+							>Discounts</span
+						>
+						<span class="product-price">-${discounts.toFixed(2)}</span>
+					</div>
+				{/if}
 
 				<div class="flex flex-wrap items-center justify-between">
-					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]">Shipping</span>
+					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+						>Shipping</span
+					>
 					<span class="product-price">Calculated at next step</span>
 				</div>
 
 				<hr />
 
 				<div class="flex flex-wrap items-center justify-between">
-					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]">Total</span>
-					<span class="product-price">{(getSubtotal() - getDiscounts()).toFixed(2)}</span>
+					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+						>Total</span
+					>
+					<span class="product-price">${(getSubtotal() - discounts).toFixed(2)}</span>
 				</div>
-
 			</div>
 
 			<form method="POST" action="/api/checkout">

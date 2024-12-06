@@ -1,4 +1,5 @@
 <script lang="ts">
+	import seedrandom from 'seedrandom';
 	import RowItem from '$lib/components/grid/RowItem.svelte';
 	import { type Product, products } from '../../../utils/products';
 
@@ -7,6 +8,8 @@
 	}
 
 	let { product }: Props = $props();
+
+	const randomness = seedrandom(product.slug);
 
 	const getRelatedProducts = (products: Product[], product: Product, count: number = 3) => {
 		const sameCategoryItem = products.find(
@@ -25,11 +28,11 @@
 					!prod.categories.some((category) => product.categories.includes(category))
 			);
 
-			const shuffledOtherCategories = [...otherCategoryItems].sort(() => Math.random() - 0.5);
+			const shuffledOtherCategories = [...otherCategoryItems].sort(() => randomness() - 0.5);
 			relatedProducts.push(...shuffledOtherCategories.slice(0, count - 1));
 		} else {
 			const shuffledProducts = [...products.filter((prod) => prod.slug !== product.slug)].sort(
-				() => Math.random() - 0.5
+				() => randomness() - 0.5
 			);
 			relatedProducts = shuffledProducts.slice(0, count);
 		}

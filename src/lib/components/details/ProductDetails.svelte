@@ -73,10 +73,36 @@
 		<Carousel.Root>
 			<Carousel.Content>
 				{#each product.imageUrls as imageUrl, index (imageUrl)}
+					{@const isFirstItem = index === 0}
 					<Carousel.Item
-						style={index === 0 ? `view-transition-name: product-image-${product.slug};` : ''}
+						style={isFirstItem ? `view-transition-name: product-image-${product.slug};` : ''}
 					>
-						<img alt={product.name} src={imageUrl} class="h-full w-full rounded-lg object-cover" />
+						<div class="h-full w-full">
+							{#if isFirstItem}
+								<!-- Blur image -->
+								<img
+									alt={product.name}
+									bind:this={imgBlurEl}
+									src={product.imageBlurhashUrl?.[0] || ''}
+									class="h-full w-full rounded-lg object-cover"
+								/>
+
+								<!-- Main image with binding -->
+								<img
+									src={imageUrl}
+									alt={product.name}
+									bind:this={imgEl}
+									class="h-full w-full rounded-lg object-cover opacity-0"
+								/>
+							{:else}
+								<!-- Fallback image for non-first items -->
+								<img
+									src={imageUrl}
+									alt={product.name}
+									class="h-full w-full rounded-lg object-cover"
+								/>
+							{/if}
+						</div>
 					</Carousel.Item>
 				{/each}
 			</Carousel.Content>

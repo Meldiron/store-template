@@ -74,7 +74,12 @@
 			<Carousel.Content>
 				{#each product.imageUrls as imageUrl, index (imageUrl)}
 					<Carousel.Item>
-						<img alt={product.name} src={imageUrl} class="h-full w-full rounded-lg object-cover" />
+						<img
+							alt={product.name}
+							src={imageUrl}
+							class="h-full w-full rounded-lg object-cover"
+							style={index === 0 ? `view-transition-name: product-image-${product.slug};` : ''}
+						/>
 					</Carousel.Item>
 				{/each}
 			</Carousel.Content>
@@ -96,13 +101,17 @@
 	<div class="flex w-full max-w-lg flex-col gap-6 md:max-w-[379px] md:pb-10">
 		<!-- Product Name -->
 		<h1
+			style="view-transition-name: product-title-{product.slug};"
 			class="font-inter text-[48px] font-normal leading-[68px] tracking-[-0.64px] text-[#19191C] dark:text-[#e6e6e3] md:text-[64px]"
 		>
 			{product.name}
 		</h1>
 
 		<!-- Product Price -->
-		<span class="product-price font-inter">
+		<span
+			class="product-price font-inter"
+			style="view-transition-name: product-price-{product.slug};"
+		>
 			${productPrice.toFixed(2)}
 			{#if product.discount}
 				<span class="product-price-old">${(productPrice / (1 - product.discount)).toFixed(2)}</span>

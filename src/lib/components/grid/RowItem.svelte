@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onNavigate } from '$app/navigation';
 	import type { Product } from '../../../utils/products';
 
 	const { vertical = false, product } = $props<{
@@ -24,6 +25,18 @@
 		// Cleanup function
 		return () => img.removeEventListener('load', handleLoad);
 	});
+
+	onNavigate((navigation) => {
+		// let's just be safe...
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) =>
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			})
+		);
+	});
 </script>
 
 <a
@@ -41,13 +54,17 @@
 			src={product.imageUrls[0]}
 			alt={product.name}
 			class="product-image relative opacity-0"
+			style="view-transition-name: product-image-{product.slug};"
 		/>
 	</div>
 
 	<div class="card-content flex flex-col items-start gap-2">
-		<span class="product-name">{product.name}</span>
-		<span class="product-price"
-			>${product.price.toFixed(2)}
+		<span class="product-name" style="view-transition-name: product-title-{product.slug};"
+			>{product.name}</span
+		>
+
+		<span class="product-price" style="view-transition-name: product-price-{product.slug};">
+			${product.price.toFixed(2)}
 			{#if product.discount}
 				<span class="product-price-discount">-{(product.discount * 100).toFixed(0)}%</span>
 			{/if}

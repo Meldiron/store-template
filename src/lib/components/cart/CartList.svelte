@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { cart, type CartItem } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { theme } from '$lib/stores/theme.svelte';
 
 	function updateCart(cartItem: CartItem, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
@@ -34,7 +35,9 @@
 	<div class="flex flex-grow flex-col gap-2 overflow-y-auto pb-4">
 		{#each cart.getItems() as cartItem}
 			{@const product = cartItem.product}
-			<div class="flex h-fit flex-col items-start gap-6 rounded-lg bg-white p-3 md:flex-row">
+			<div
+				class="flex h-fit flex-col items-start gap-6 rounded-lg bg-white p-3 dark:bg-[#2c2c2f] md:flex-row"
+			>
 				<img
 					class="h-[124px] w-full flex-shrink-0 rounded-lg object-cover md:w-[199px]"
 					src={product.imageUrls[0]}
@@ -45,12 +48,14 @@
 					<!-- top meta -->
 					<div class="flex flex-col gap-2">
 						<div class="flex flex-wrap items-center justify-between">
-							<span class="font-inter text-[16px] font-medium text-[#2D2D31]">{product.name}</span>
+							<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+								>{product.name}</span
+							>
 							<span class="product-price">${(cartItem.price * cartItem.quantity).toFixed(2)}</span>
 						</div>
 
 						{#if product.features && product.features.length > 0}
-							<p class="text-sm text-gray-600">
+							<p class="text-sm text-gray-600 dark:text-[#A3A3A0]">
 								{#each product.features as feature, index}
 									<span
 										>{feature.name}: {cartItem.features[
@@ -65,7 +70,7 @@
 					<!-- bottom actions -->
 					<div class="flex flex-wrap justify-between">
 						<div
-							class="inline-flex w-fit items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-2 py-1"
+							class="inline-flex w-fit items-center justify-center gap-3 rounded-lg border border-gray-300 px-2 py-1 dark:border-[#3F3F46]"
 						>
 							<button
 								type="button"
@@ -85,12 +90,14 @@
 										fill-rule="evenodd"
 										clip-rule="evenodd"
 										d="M5 10C5 9.44772 5.44772 9 6 9L14 9C14.5523 9 15 9.44772 15 10C15 10.5523 14.5523 11 14 11L6 11C5.44772 11 5 10.5523 5 10Z"
-										fill="#97979B"
+										fill={theme.isDarkTheme() ? '#909094' : '#97979B'}
 									/>
 								</svg>
 							</button>
 
-							{cartItem.quantity}
+							<span class="text-[#56565C] dark:text-[#A3A3A0]">
+								{cartItem.quantity}
+							</span>
 
 							<button
 								type="button"
@@ -110,14 +117,14 @@
 										fill-rule="evenodd"
 										clip-rule="evenodd"
 										d="M10 5C10.5523 5 11 5.44772 11 6V9L14 9C14.5523 9 15 9.44772 15 10C15 10.5523 14.5523 11 14 11H11V14C11 14.5523 10.5523 15 10 15C9.44771 15 9 14.5523 9 14V11H6C5.44772 11 5 10.5523 5 10C5 9.44771 5.44772 9 6 9L9 9V6C9 5.44771 9.44771 5 10 5Z"
-										fill="#97979B"
+										fill={theme.isDarkTheme() ? '#909094' : '#97979B'}
 									/>
 								</svg>
 							</button>
 						</div>
 
 						<div
-							class="flex h-[34px] w-[32px] flex-shrink-0 items-center justify-center gap-[12px] rounded-lg border border-gray-300 bg-white px-[6px] py-[10px]"
+							class="flex h-[34px] w-[32px] flex-shrink-0 items-center justify-center gap-[12px] rounded-lg border border-gray-300 px-[6px] py-[10px] dark:border-[#3F3F46]"
 						>
 							<button
 								type="button"
@@ -135,7 +142,7 @@
 								>
 									<path
 										d="M10.2833 6.50019L9.995 14.0002M6.005 14.0002L5.71667 6.50019M14.0233 3.82519C14.3083 3.86852 14.5917 3.91436 14.875 3.96352M14.0233 3.82519L13.1333 15.3944C13.097 15.8654 12.8842 16.3053 12.5375 16.6262C12.1908 16.9471 11.7358 17.1253 11.2633 17.1252H4.73667C4.26425 17.1253 3.80919 16.9471 3.46248 16.6262C3.11578 16.3053 2.90299 15.8654 2.86667 15.3944L1.97667 3.82519M14.0233 3.82519C13.0616 3.67979 12.0948 3.56944 11.125 3.49436M1.97667 3.82519C1.69167 3.86769 1.40833 3.91352 1.125 3.96269M1.97667 3.82519C2.93844 3.67979 3.9052 3.56944 4.875 3.49436M11.125 3.49436V2.73102C11.125 1.74769 10.3667 0.92769 9.38333 0.896857C8.46135 0.867389 7.53865 0.867389 6.61667 0.896857C5.63333 0.92769 4.875 1.74852 4.875 2.73102V3.49436M11.125 3.49436C9.04477 3.33359 6.95523 3.33359 4.875 3.49436"
-										stroke="#818186"
+										stroke={theme.isDarkTheme() ? '#909094' : '#818186'}
 										stroke-width="1.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
@@ -148,8 +155,10 @@
 			</div>
 		{:else}
 			<div class="flex flex-col justify-center gap-4 p-4 text-center">
-				<h2 class="text-lg font-semibold text-gray-700">Your cart is empty</h2>
-				<p class="text-sm text-gray-500">Looks like you haven't added anything to your cart yet.</p>
+				<h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Your cart is empty</h2>
+				<p class="text-sm text-gray-500 dark:text-gray-400">
+					Looks like you haven't added anything to your cart yet.
+				</p>
 			</div>
 		{/each}
 	</div>
@@ -182,5 +191,9 @@
 		font-weight: 400;
 		line-height: 22px;
 		letter-spacing: -0.063px;
+	}
+
+	:global(html.dark .product-price) {
+		color: #a3a3a0;
 	}
 </style>

@@ -11,12 +11,14 @@
 
 	<div class="flex max-w-[500px] flex-col gap-2">
 		<h1
-			class="font-inter text-[32px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C] md:text-[40px]"
+			class="font-inter text-[32px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C] dark:text-[#e6e6e3] md:text-[40px]"
 		>
 			{title}
 		</h1>
 
-		<p class="font-inter text-[16px] font-normal leading-[140%] tracking-[-0.16px] text-[#56565C]">
+		<p
+			class="font-inter text-[16px] font-normal leading-[140%] tracking-[-0.16px] text-[#56565C] dark:text-[#A3A3A0]"
+		>
 			{message}
 		</p>
 	</div>

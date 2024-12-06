@@ -12,7 +12,7 @@
 
 <div
 	class:backdrop-blur-sm={isScrolled}
-	class="sc sticky top-8 z-50 mx-4 mt-8 flex items-center justify-between rounded-2xl border border-gray-200 bg-white/80 p-3 lg:mx-auto lg:w-[824px] lg:p-4"
+	class="sticky top-8 z-50 mx-4 mt-8 flex items-center justify-between rounded-2xl border border-gray-200 bg-white/90 p-3 backdrop-blur-lg dark:border-gray-600 dark:bg-neutral-900/80 lg:mx-auto lg:w-[824px] lg:p-4"
 >
 	<!-- Store Logo -->
 	<div class="flex items-center gap-4">
@@ -28,7 +28,7 @@
 				<circle cx="19.5" cy="20" r="7" fill="white" />
 			</svg>
 		</a>
-		<a class="text-xl text-[#19191C]" href="/">Store</a>
+		<a class="text-xl text-[#19191C] dark:text-[#e6e6e3]" href="/">Store</a>
 	</div>
 
 	<!-- Cart Section -->

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SvelteMarkdown from 'svelte-markdown';
-	import { cart, type CartItem } from '$lib/stores/cart.svelte';
+	import { cart } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import type { Product } from '../../../utils/products';
 	import * as Carousel from '$lib/components/ui/carousel';
@@ -68,7 +68,7 @@
 >
 	<!-- Product Image -->
 	<div
-		class="card h-fit w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
+		class="product-card h-fit w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
 	>
 		<Carousel.Root>
 			<Carousel.Content>
@@ -96,7 +96,7 @@
 	<div class="flex w-full max-w-lg flex-col gap-6 md:max-w-[379px] md:pb-10">
 		<!-- Product Name -->
 		<h1
-			class="font-inter text-[48px] font-normal leading-[68px] tracking-[-0.64px] text-[#19191C] md:text-[64px]"
+			class="font-inter text-[48px] font-normal leading-[68px] tracking-[-0.64px] text-[#19191C] dark:text-[#e6e6e3] md:text-[64px]"
 		>
 			{product.name}
 		</h1>
@@ -110,28 +110,33 @@
 			{/if}
 		</span>
 
-		<hr class="bg-[#EDEDF0]" />
+		<hr class="bg-[#EDEDF0] dark:bg-[#FAFAFB]" />
 
 		<!-- Product Description -->
-		<p class="prose font-inter text-[16px] font-normal leading-[22px] text-[#56565C]">
+		<p
+			class="description prose font-inter text-[16px] font-normal leading-[22px] text-[#56565C] dark:text-[#A3A3A0]"
+		>
 			<SvelteMarkdown source={product.description} />
 		</p>
 
 		{#if product.features && product.features.length > 0}
-			<hr class="bg-[#EDEDF0]" />
+			<hr class="bg-[#EDEDF0] dark:bg-[#FAFAFB]" />
 
 			<!-- Product Sizes -->
 			{#each product.features as feature}
 				<div class="flex flex-col gap-4">
-					<span class="font-inter text-[14px] font-medium uppercase text-[#56565C]"
-						>{feature.name}</span
+					<span
+						class="bg-transparent font-inter text-[14px] font-medium uppercase text-[#56565C] dark:text-[#D1D1CD]"
 					>
+						{feature.name}
+					</span>
 					<div class="flex flex-wrap gap-3 md:gap-2">
 						{#each feature.variations as variation}
 							<button
 								onclick={() => (selectedFeatures[feature.name] = variation.name)}
-								class:is-selected={(selectedFeatures[feature.name] ?? '') === variation.name}
-								class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out md:px-2.5 md:py-1.5"
+								class:feature-is-selected={(selectedFeatures[feature.name] ?? '') ===
+									variation.name}
+								class="flex transform items-center justify-center rounded-md border border-[#EDEDF0] bg-[#FAFAFB] px-3.5 py-2.5 font-inter text-[14px] font-medium leading-[140%] tracking-[-0.063px] text-[#56565C] transition-all duration-300 ease-in-out dark:border-[#3A3A3D] dark:bg-[#121212] dark:text-[#D1D1CD] md:px-2.5 md:py-1.5"
 							>
 								{variation.name}
 							</button>
@@ -144,7 +149,7 @@
 		<div class="flex">
 			<Button
 				on:click={addItemToCart}
-				class="mt-4 rounded-lg p-6 font-inter text-[16px] font-medium text-white md:w-fit md:px-[14px] md:py-[9px]"
+				class="mt-4 rounded-lg p-6 font-inter text-[16px] font-medium md:w-fit md:px-[14px] md:py-[9px]"
 			>
 				Add to cart
 			</Button>
@@ -153,7 +158,7 @@
 </div>
 
 <style>
-	.card {
+	.product-card {
 		gap: 24px;
 		display: flex;
 		cursor: pointer;
@@ -165,10 +170,20 @@
 		border: 1px solid var(--neutral-40, #f4f4f7);
 	}
 
-	.is-selected {
+	:global(html.dark .product-card) {
+		background: #1b1b1b;
+		border: 1px solid #2c2c2f;
+	}
+
+	.feature-is-selected {
 		transform: scale(1.1);
 		background-color: #f4f4f7;
-		border: 1px solid var(--color-border-neutral-stronger, #818186);
+		border: 1px solid #3a3a3d;
+	}
+
+	:global(html.dark .feature-is-selected) {
+		background-color: #121216;
+		border: 1px solid #818186;
 	}
 
 	.product-price {
@@ -180,6 +195,10 @@
 		letter-spacing: -0.063px;
 	}
 
+	:global(html.dark .product-price, html.dark .description strong) {
+		color: #d1d1cd;
+	}
+
 	.product-price-old {
 		color: #97979b;
 		font-size: 14px;
@@ -188,6 +207,10 @@
 		line-height: 28px;
 		letter-spacing: -0.063px;
 		text-decoration: line-through;
+	}
+
+	:global(html.dark .product-price-old) {
+		color: #6c6c70;
 	}
 
 	.product-price-discount {
@@ -201,5 +224,10 @@
 		line-height: 22px;
 		letter-spacing: -0.063px;
 		background-color: rgba(0, 0, 0, 0.06);
+	}
+
+	:global(html.dark .product-price-discount) {
+		color: #d1d1cd;
+		background-color: rgba(255, 255, 255, 0.08);
 	}
 </style>

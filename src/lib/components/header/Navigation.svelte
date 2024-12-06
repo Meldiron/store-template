@@ -31,6 +31,13 @@
 	$effect(() => {
 		if (container) observeSelection(container);
 	});
+
+	const generateLink = (category: string) => {
+		let url = new URL($page.url);
+		const params = url.searchParams;
+		params.set('category', category);
+		return `${url.pathname}?${params.toString()}`;
+	};
 </script>
 
 <div id="navigation" class="mt-[88px] w-full px-8">
@@ -42,8 +49,8 @@
 		{#each categories as category}
 			<a
 				data-sveltekit-noscroll
-				href={`?category=${category}`}
-				class="item cursor-pointer font-inter text-[14px] leading-[19.6px] tracking-[-0.063px] text-[#56565C]"
+				href={generateLink(category)}
+				class="item cursor-pointer font-inter text-[14px] leading-[19.6px] tracking-[-0.063px] text-[#56565C] dark:text-[#A3A3A0]"
 				class:is-selected={selectedCategory === category}
 			>
 				{category}
@@ -71,7 +78,7 @@
 		bottom: -4px;
 		left: 50%;
 		transform: translateX(-50%) scaleX(0);
-		height: 1.2px;
+		height: 1px;
 		background-color: transparent;
 		transform-origin: center;
 		transition:
@@ -84,9 +91,17 @@
 		color: var(--color-fgColor-neutral-primary, #2d2d31);
 	}
 
+	:global(html.dark .is-selected) {
+		color: var(--color-fgColor-neutral-primary, #d1d1cd);
+	}
+
 	.is-selected::after {
 		transform: translateX(-50%) scaleX(1);
 		background-color: var(--color-fgColor-neutral-primary, #2d2d31);
+	}
+
+	:global(html.dark .is-selected::after) {
+		background-color: var(--color-fgColor-neutral-primary, #d1d1cd);
 	}
 
 	.overflow-x-auto::-webkit-scrollbar {

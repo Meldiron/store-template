@@ -41,7 +41,9 @@
 </script>
 
 <div class="m-8 mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 sm:px-8 md:px-16 lg:px-16">
-	<h1 class="font-inter text-[40px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C]">
+	<h1
+		class="font-inter text-[40px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C] dark:text-[#e6e6e3]"
+	>
 		More products
 	</h1>
 

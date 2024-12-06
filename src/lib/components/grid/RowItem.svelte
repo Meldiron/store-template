@@ -65,7 +65,12 @@
 		flex-direction: column;
 		align-items: flex-start;
 		padding: var(--space-6, 12px);
-		border: 1px solid var(--neutral-40, #f4f4f7);
+		border: 1px solid #f4f4f7;
+	}
+
+	:global(html.dark .card) {
+		background: #1b1b1b;
+		border: 1px solid #2a2a2e;
 	}
 
 	.card:hover .card-image::before {
@@ -112,6 +117,10 @@
 		line-height: 28px;
 	}
 
+	:global(html.dark .product-name) {
+		color: #e6e6e3;
+	}
+
 	.product-price {
 		color: #56565c;
 		font-size: 14px;
@@ -119,6 +128,10 @@
 		font-weight: 400;
 		line-height: 22px;
 		letter-spacing: -0.063px;
+	}
+
+	:global(html.dark .product-price, html.dark .product-price-discount) {
+		color: #a3a3a0;
 	}
 
 	.product-price-discount {

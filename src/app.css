@@ -77,3 +77,9 @@ html.dark body {
 		}
 	}
 }
+
+/* This manages our product transitions. */
+/* noinspection CssInvalidPseudoSelector */
+::view-transition-group(*) {
+	animation-duration: 400ms;
+}

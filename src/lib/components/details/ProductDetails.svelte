@@ -73,13 +73,10 @@
 		<Carousel.Root>
 			<Carousel.Content>
 				{#each product.imageUrls as imageUrl, index (imageUrl)}
-					<Carousel.Item>
-						<img
-							alt={product.name}
-							src={imageUrl}
-							class="h-full w-full rounded-lg object-cover"
-							style={index === 0 ? `view-transition-name: product-image-${product.slug};` : ''}
-						/>
+					<Carousel.Item
+						style={index === 0 ? `view-transition-name: product-image-${product.slug};` : ''}
+					>
+						<img alt={product.name} src={imageUrl} class="h-full w-full rounded-lg object-cover" />
 					</Carousel.Item>
 				{/each}
 			</Carousel.Content>

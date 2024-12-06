@@ -304,3 +304,32 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 97
 	}
 ];
+
+/**
+ * Determines if the navigation is a valid product transition.
+ *
+ * Handles transitions between:
+ * - Grid ("/") → Product Details ("/product-[slug]")
+ * - Product Details → Grid
+ * - Product Details → Another Product Details
+ *
+ * @param {string | undefined} currentPath - The current page path.
+ * @param {string | undefined} targetPath - The target page path.
+ * @returns {boolean} `true` if the navigation matches a valid product transition, otherwise `false`.
+ */
+export const isProductTransition = (
+	currentPath: string | undefined,
+	targetPath: string | undefined
+): boolean => {
+	const productGridRegex = /^\/$/;
+	const productDetailsRegex = /^\/product-[\w-]+$/;
+
+	return (
+		// Grid → Details
+		(productGridRegex.test(currentPath ?? '') && productDetailsRegex.test(targetPath ?? '')) ||
+		// Details → Grid
+		(productDetailsRegex.test(currentPath ?? '') && productGridRegex.test(targetPath ?? '')) ||
+		// Details → Details
+		(productDetailsRegex.test(currentPath ?? '') && productDetailsRegex.test(targetPath ?? ''))
+	);
+};

@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { onNavigate } from '$app/navigation';
-	import type { Product } from '../../../utils/products';
+	import { isProductTransition, type Product } from '../../../utils/products';
 
 	const { vertical = false, product } = $props<{
 		vertical?: boolean;
 		product: Product;
 	}>();
+
 	let imgEl = $state<HTMLImageElement>();
 
 	$effect(() => {
@@ -29,6 +31,11 @@
 	onNavigate((navigation) => {
 		// let's just be safe...
 		if (!document.startViewTransition) return;
+
+		const currentPath = $page.url.pathname;
+		const targetPath = navigation.to?.url?.pathname;
+
+		if (!isProductTransition(currentPath, targetPath)) return;
 
 		return new Promise((resolve) =>
 			document.startViewTransition(async () => {

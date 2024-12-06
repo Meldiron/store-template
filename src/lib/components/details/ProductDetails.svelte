@@ -18,7 +18,6 @@
 	}
 
 	let imgEl = $state<HTMLImageElement>();
-	let imgBlurEl = $state<HTMLImageElement>();
 
 	let productPrice = $state(product.price);
 
@@ -42,7 +41,6 @@
 
 	$effect(() => {
 		const img = imgEl;
-		const blurImg = imgBlurEl;
 		if (!img) return;
 
 		// If image is already loaded, add class immediately
@@ -52,10 +50,7 @@
 		}
 
 		// Otherwise wait for load event
-		const handleLoad = () => {
-			img.classList.add('!opacity-100');
-			blurImg?.classList.add('!hidden');
-		};
+		const handleLoad = () => img.classList.add('!opacity-100');
 		img.addEventListener('load', handleLoad);
 
 		// Cleanup function
@@ -82,17 +77,16 @@
 								<!-- Blur image -->
 								<img
 									alt={product.name}
-									bind:this={imgBlurEl}
 									src={product.imageBlurhashUrl?.[0] || ''}
-									class="h-full w-full rounded-lg object-cover"
+									class="product-image absolute left-0 top-0 h-full w-full"
 								/>
 
 								<!-- Main image with binding -->
 								<img
+									bind:this={imgEl}
 									src={imageUrl}
 									alt={product.name}
-									bind:this={imgEl}
-									class="h-full w-full rounded-lg object-cover opacity-0"
+									class="product-image relative opacity-0"
 								/>
 							{:else}
 								<!-- Fallback image for non-first items -->
@@ -261,5 +255,15 @@
 	:global(html.dark .product-price-discount) {
 		color: #d1d1cd;
 		background-color: rgba(255, 255, 255, 0.08);
+	}
+
+	.product-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 8px;
+		background-size: cover;
+		background-position: center;
+		transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 	}
 </style>

@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
-import { type Product, products } from '../utils/products';
 import generateBlurHash from '../utils/blurhash';
+import { type Product, products } from '../utils/products';
 
 export const load = async ({ url, depends }) => {
 	depends('page:filters');

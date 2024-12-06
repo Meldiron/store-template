@@ -2,7 +2,7 @@
 	import { tick } from 'svelte';
 	import { type Product } from '../utils/products';
 	import * as Select from '$lib/components/ui/select';
-	import { currentPage, selectedCategory } from './store';
+	import { currentPage, filterOptions, selectedCategory } from './store';
 
 	import StaggeredGrid from '$lib/components/grid/StaggeredGrid.svelte';
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
@@ -36,14 +36,6 @@
 
 		await goto(`${currentUrl.pathname}?${currentUrl.searchParams.toString()}`);
 	}
-
-	const filterOptions = [
-		{ value: 'popular', label: 'Popular' },
-		{ value: 'discount', label: 'Highest discount' },
-		{ value: 'lth', label: 'Price Low to High' },
-		{ value: 'htl', label: 'Price High to Low' },
-		{ value: 'newest', label: 'Newest' }
-	];
 
 	let selectedFilter = $state({ value: filterOptions[0].value, label: filterOptions[0].label });
 

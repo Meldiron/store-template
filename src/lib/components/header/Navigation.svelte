@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-
-	const categories = ['All Products', 'Tops', 'Sweaters', 'Socks', 'Shoes', 'Accessories'];
+	import { categories } from '../../../routes/store';
 
 	let selectedCategory = $derived($page.url.searchParams.get('category') || 'All Products');
 

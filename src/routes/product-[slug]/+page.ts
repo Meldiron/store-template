@@ -12,6 +12,7 @@ export function load({ params, url }) {
 	}
 
 	generateBlurHash(product);
+	// TODO: generateBlurHash for related products too
 
 	return {
 		product,

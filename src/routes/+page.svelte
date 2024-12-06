@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import { type Product } from '../utils/products';
 	import * as Select from '$lib/components/ui/select';
 	import { currentPage, filterOptions, selectedCategory } from './store';
@@ -78,48 +79,52 @@
 	<meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
-<div
-	class="mx-auto mb-16 mt-[54px] flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-8 lg:mt-[72px] lg:px-16"
->
-	<div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-		<h1 class="text-[40px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C]">
-			{$selectedCategory}
-		</h1>
+{#key `${paginatedProducts.length} + ${$selectedCategory}`}
+	<div
+		out:fade={{ duration: 150 }}
+		in:fade={{ duration: 150, delay: 150 }}
+		class="mx-auto mb-16 mt-[54px] flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-8 lg:mt-[72px] lg:px-16"
+	>
+		<div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+			<h1 class="text-[40px] font-normal leading-[44px] tracking-[-0.4px] text-[#19191C]">
+				{$selectedCategory}
+			</h1>
 
-		<div class="filter-selection">
-			<Select.Root
-				selected={selectedFilter}
-				onSelectedChange={(filter) => filterProducts(filter?.value)}
-			>
-				<Select.Trigger class="w-full md:w-[240px]">
-					<Select.Value
-						placeholder="Sort via filters"
-						class="data-[placeholder]:font-inter data-[placeholder]:text-[16px] data-[placeholder]:font-medium data-[placeholder]:!text-[#2D2D31]"
-					/>
-				</Select.Trigger>
-				<Select.Content>
-					{#each filterOptions as filter}
-						<Select.Item value={filter.value} label={filter.label}>{filter.label}</Select.Item>
-					{/each}
-				</Select.Content>
-			</Select.Root>
+			<div class="filter-selection">
+				<Select.Root
+					selected={selectedFilter}
+					onSelectedChange={(filter) => filterProducts(filter?.value)}
+				>
+					<Select.Trigger class="w-full md:w-[240px]">
+						<Select.Value
+							placeholder="Sort via filters"
+							class="data-[placeholder]:font-inter data-[placeholder]:text-[16px] data-[placeholder]:font-medium data-[placeholder]:!text-[#2D2D31]"
+						/>
+					</Select.Trigger>
+					<Select.Content>
+						{#each filterOptions as filter}
+							<Select.Item value={filter.value} label={filter.label}>{filter.label}</Select.Item>
+						{/each}
+					</Select.Content>
+				</Select.Root>
+			</div>
 		</div>
-	</div>
 
-	{#if paginatedProducts.length > 0}
-		<StaggeredGrid products={paginatedProducts} />
+		{#if paginatedProducts.length > 0}
+			<StaggeredGrid products={paginatedProducts} />
 
-		{#if totalPages > 1}
-			<Pagination currentPage={$currentPage} {totalPages} />
+			{#if totalPages > 1}
+				<Pagination currentPage={$currentPage} {totalPages} />
+			{/if}
+
+			<ScrollToTop />
+		{:else}
+			<p class="mt-12 min-h-[125px] text-center text-gray-500">
+				No products found for this category.
+			</p>
 		{/if}
-
-		<ScrollToTop />
-	{:else}
-		<p class="mt-12 min-h-[125px] text-center text-gray-500">
-			No products found for this category.
-		</p>
-	{/if}
-</div>
+	</div>
+{/key}
 
 <style>
 	:global(.filter-selection svg) {

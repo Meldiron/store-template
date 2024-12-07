@@ -2,7 +2,14 @@ import {
 	PUBLIC_APPWRITE_SITE_API_ENDPOINT,
 	PUBLIC_APPWRITE_SITE_PROJECT_ID
 } from '$env/static/public';
-import { Client, Account, Databases, Functions, Storage } from 'appwrite';
+
+import { 
+    Client,
+    Account,
+    Databases,
+    Functions,
+    Storage
+} from 'appwrite';
 
 const client = new Client()
 	.setEndpoint(PUBLIC_APPWRITE_SITE_API_ENDPOINT)

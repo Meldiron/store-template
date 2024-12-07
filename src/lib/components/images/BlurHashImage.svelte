@@ -12,17 +12,20 @@
 
 	let imgEl = $state<HTMLImageElement>();
 
+	let loaded = $state(false);
+
 	$effect(() => {
 		const img = imgEl;
 		if (!img) return;
 
 		if (img.complete) {
-			img.classList.add('!opacity-100');
+			loaded = true;
 			return;
 		}
 
 		// Otherwise wait for load event
-		const handleLoad = () => img.classList.add('!opacity-100');
+		const handleLoad = () => (loaded = true);
+
 		img.addEventListener('load', handleLoad);
 
 		// Cleanup function
@@ -32,14 +35,16 @@
 
 <div class="relative h-full w-full overflow-hidden rounded-lg">
 	<!-- Blur image -->
-	<img alt={product.name} src={blurHashUrl} class="product-image absolute left-0 top-0" />
+	{#if !loaded}
+		<img alt={product.name} src={blurHashUrl} class="product-image absolute left-0 top-0" />
+	{/if}
 
 	<!-- Main image with binding -->
 	<img
 		src={imageUrl}
 		bind:this={imgEl}
 		alt={product.name}
-		class="product-image opacity-0"
+		class={`product-image ${loaded ? 'opacity-100' : 'opacity-'}`}
 		style={useViewTransition ? `view-transition-name: product-image-${product.slug};` : ''}
 	/>
 </div>

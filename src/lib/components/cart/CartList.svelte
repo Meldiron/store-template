@@ -94,11 +94,14 @@
 				<div class="flex w-full flex-1 flex-col justify-between gap-6 md:gap-10">
 					<!-- top meta -->
 					<div class="flex flex-col gap-2">
-						<div class="flex flex-wrap items-center justify-between">
-							<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+						<div class="flex w-full items-center justify-between">
+							<span
+								class="max-w-56 truncate font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd] md:max-w-36"
 								>{product.name}</span
 							>
-							<span class="product-price">${(cartItem.price * cartItem.quantity).toFixed(2)}</span>
+							<span class="product-price flex-shrink-0"
+								>${(cartItem.price * cartItem.quantity).toFixed(2)}</span
+							>
 						</div>
 
 						{#if product.features && product.features.length > 0}

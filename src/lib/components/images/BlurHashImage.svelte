@@ -3,12 +3,12 @@
 
 	interface Props {
 		imageUrl: string;
+		blurHashUrl: string;
 		product: Product;
-		showBlurhash: boolean;
 		useViewTransition: boolean;
 	}
 
-	let { imageUrl, product, showBlurhash = true, useViewTransition }: Props = $props();
+	let { imageUrl, product, blurHashUrl, useViewTransition }: Props = $props();
 
 	let imgEl = $state<HTMLImageElement>();
 
@@ -31,31 +31,17 @@
 </script>
 
 <div class="relative h-full w-full overflow-hidden rounded-lg">
-	{#if showBlurhash}
-		<!-- Blur image -->
-		<img
-			alt={product.name}
-			src={product.imageBlurhashUrl?.[0] || ''}
-			class="product-image absolute left-0 top-0"
-		/>
+	<!-- Blur image -->
+	<img alt={product.name} src={blurHashUrl} class="product-image absolute left-0 top-0" />
 
-		<!-- Main image with binding -->
-		<img
-			src={imageUrl}
-			bind:this={imgEl}
-			alt={product.name}
-			class="product-image opacity-0"
-			style={useViewTransition ? `view-transition-name: product-image-${product.slug};` : ''}
-		/>
-	{:else}
-		<!-- Fallback image for non-first items -->
-		<img
-			src={imageUrl}
-			alt={product.name}
-			class="product-image h-full w-full"
-			style={useViewTransition ? `view-transition-name: product-image-${product.slug};` : ''}
-		/>
-	{/if}
+	<!-- Main image with binding -->
+	<img
+		src={imageUrl}
+		bind:this={imgEl}
+		alt={product.name}
+		class="product-image opacity-0"
+		style={useViewTransition ? `view-transition-name: product-image-${product.slug};` : ''}
+	/>
 </div>
 
 <style>

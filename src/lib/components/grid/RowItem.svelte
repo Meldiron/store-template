@@ -36,8 +36,8 @@
 		<BlurHashImage
 			{product}
 			useViewTransition
-			showBlurhash={true}
-			imageUrl={product.imageUrls[0]}
+			blurHashUrl={product.imagesBlurHashes?.[0] || ''}
+			imageUrl={'/images/products/' + product.images[0]}
 		/>
 	</div>
 

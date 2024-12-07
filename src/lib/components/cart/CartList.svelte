@@ -87,7 +87,7 @@
 			>
 				<img
 					class="h-[124px] w-full flex-shrink-0 rounded-lg object-cover md:w-[199px]"
-					src={product.imageUrls[0]}
+					src={'/images/products/' + product.images[0]}
 					alt={product.name}
 				/>
 
@@ -242,7 +242,9 @@
 					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
 						>Total</span
 					>
-					<span class="product-price text-[#2D2D31] dark:text-[#d1d1cd]">${getTotal().toFixed(2)}</span>
+					<span class="product-price text-[#2D2D31] dark:text-[#d1d1cd]"
+						>${getTotal().toFixed(2)}</span
+					>
 				</div>
 			</div>
 

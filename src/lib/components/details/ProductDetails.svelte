@@ -68,20 +68,20 @@
 	>
 		<Carousel.Root>
 			<Carousel.Content>
-				{#each product.imageUrls as imageUrl, index (imageUrl)}
+				{#each product.images as image, index (image)}
 					{@const isFirstItem = index === 0}
 					<Carousel.Item>
 						<BlurHashImage
 							{product}
-							{imageUrl}
-							showBlurhash={isFirstItem}
+							imageUrl={'/images/products/' + image}
+							blurHashUrl={product.imagesBlurHashes?.[index] || ''}
 							useViewTransition={isFirstItem}
 						/>
 					</Carousel.Item>
 				{/each}
 			</Carousel.Content>
 
-			{#if product.imageUrls.length > 1}
+			{#if product.images.length > 1}
 				<div class="absolute bottom-10 left-1/2 gap-0">
 					<Carousel.Previous
 						class="-left-8 rounded-md rounded-r-none border border-[#D8D8DB] bg-white text-[#97979B]"
@@ -159,6 +159,26 @@
 			>
 				Add to cart
 			</Button>
+			<form method="POST" action="/api/checkout">
+				<input
+					type="hidden"
+					name="cart"
+					value={JSON.stringify([
+						{
+							slug: product.slug.split('_')[0],
+							quantity: 1,
+							features: selectedFeatures
+						}
+					])}
+				/>
+				<Button
+					type="submit"
+					variant="secondary"
+					class="ml-3 mt-4 rounded-lg p-6 font-inter text-[16px] font-medium md:w-fit md:px-[14px] md:py-[9px]"
+				>
+					Buy now
+				</Button>
+			</form>
 		</div>
 	</div>
 </div>

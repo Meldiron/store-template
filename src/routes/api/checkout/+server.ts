@@ -96,7 +96,7 @@ function convertToStripeLineItem(
 			product_data: {
 				name: product.name,
 				description: markdownToText(product.description),
-				images: product.imageUrls.map((url) => new URL(url, origin).href)
+				images: product.images.map((image) => new URL('/images/products/' + image, origin).href)
 			},
 			unit_amount: Math.round(unitAmount * 100)
 		},

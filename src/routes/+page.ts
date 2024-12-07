@@ -1,5 +1,4 @@
 import { redirect } from '@sveltejs/kit';
-import generateBlurHash from '../utils/blurhash';
 import { type Product, products } from '../utils/products';
 
 export const load = async ({ url, depends }) => {
@@ -49,10 +48,6 @@ export const load = async ({ url, depends }) => {
 	const startIndex = (page - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
 	const paginatedProducts: Product[] = sortedProducts.slice(startIndex, endIndex);
-
-	for (const product of paginatedProducts) {
-		generateBlurHash(product);
-	}
 
 	return {
 		filter,

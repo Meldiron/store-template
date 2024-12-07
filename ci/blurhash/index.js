@@ -3,11 +3,12 @@ import sharp from 'sharp';
 import { encode } from 'blurhash';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
+import { createPngDataUri } from 'unlazy/blurhash';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Generate BlurHash function
+// Generate hash from image
 async function generateBlurHash(imagePath) {
 	try {
 		const image = await sharp(imagePath).raw().ensureAlpha();
@@ -38,10 +39,15 @@ async function generateBlurHash(imagePath) {
 	}
 }
 
+// Render hash to blurred image
+export default function renderBlurHash(hash) {
+	return createPngDataUri(hash, { ratio: 4 / 3 });
+}
+
 (async () => {
 	console.log('Blurhash generation started');
 
-	const basePath = path.join(__dirname, '../../static/products');
+	const basePath = path.join(__dirname, '../../static/images/products');
 	const datasetPath = path.join(__dirname, '../../src/lib/blurhash.json');
 
 	// Check if dataset file exists; create it if it doesn't
@@ -54,7 +60,7 @@ async function generateBlurHash(imagePath) {
 		.readdirSync(basePath)
 		.filter((file) => !dataset[file])
 		.filter((file) => !file.endsWith('.blurhash.txt'))
-		.filter((file) => !file === '.DS_Store');
+		.filter((file) => file !== '.DS_Store');
 
 	console.log(`Found ${files.length} unprocessed files`);
 
@@ -66,7 +72,9 @@ async function generateBlurHash(imagePath) {
 	const tasks = files.map((file) => async () => {
 		const imagePath = path.join(basePath, file);
 		try {
-			dataset[file] = await generateBlurHash(imagePath);
+			const hash = await generateBlurHash(imagePath);
+			const blurredImage = renderBlurHash(hash);
+			dataset[file] = blurredImage;
 
 			fs.writeFileSync(datasetPath, JSON.stringify(dataset, null, 4));
 			console.log(`Blurhash generated for: ${file}`);

@@ -8,7 +8,6 @@
 	import StaggeredGrid from '$lib/components/grid/StaggeredGrid.svelte';
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
 	import ScrollToTop from '$lib/components/pagination/ScrollToTop.svelte';
-	import { goto } from '$app/navigation';
 
 	const itemsPerPage = 12;
 
@@ -29,15 +28,11 @@
 
 	let totalPages = $derived(Math.ceil(filteredProducts.length / itemsPerPage));
 
-	async function filterProducts(filter: unknown) {
-		if (!filter) return;
+	function generateFiltersLink(filter: unknown): string {
 		const currentUrl = new URL(window.location.href);
 		currentUrl.searchParams.delete('page');
 		currentUrl.searchParams.set('filter', filter as string);
-
-		await goto(`${currentUrl.pathname}?${currentUrl.searchParams.toString()}`, {
-			noScroll: true
-		});
+		return `${currentUrl.pathname}?${currentUrl.searchParams.toString()}`;
 	}
 
 	let selectedFilter = $state({ value: filterOptions[0].value, label: filterOptions[0].label });
@@ -94,10 +89,7 @@
 			</h1>
 
 			<div class="filter-selection">
-				<Select.Root
-					selected={selectedFilter}
-					onSelectedChange={(filter) => filterProducts(filter?.value)}
-				>
+				<Select.Root selected={selectedFilter}>
 					<Select.Trigger
 						class="w-full dark:border-[#2c2c2f] dark:bg-[#1b1b1b] dark:text-[#d1d1cd] md:w-[240px]"
 					>
@@ -108,13 +100,15 @@
 					</Select.Trigger>
 					<Select.Content class="border-[#f4f4f7] bg-white dark:border-[#2c2c2f] dark:bg-[#1b1b1b]">
 						{#each filterOptions as filter}
-							<Select.Item
-								class="cursor-pointer text-[#2D2D31] hover:bg-[#f9f9fa] data-[selected]:bg-[#f4f4f7] dark:text-[#d1d1cd] dark:hover:bg-[#2c2c2f] data-[selected]:dark:bg-[#3a3a3d]"
-								value={filter.value}
-								label={filter.label}
-							>
-								{filter.label}
-							</Select.Item>
+							<a href={generateFiltersLink(filter.value)}>
+								<Select.Item
+									class="cursor-pointer text-[#2D2D31] hover:bg-[#f9f9fa] data-[selected]:bg-[#f4f4f7] dark:text-[#d1d1cd] dark:hover:bg-[#2c2c2f] data-[selected]:dark:bg-[#3a3a3d]"
+									value={filter.value}
+									label={filter.label}
+								>
+									{filter.label}
+								</Select.Item>
+							</a>
 						{/each}
 					</Select.Content>
 				</Select.Root>

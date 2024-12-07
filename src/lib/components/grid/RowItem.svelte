@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onNavigate } from '$app/navigation';
-	import { isProductTransition, type Product } from '../../../utils/products';
+	import { type Product } from '../../../utils/products';
+	import BlurHashImage from '$lib/components/images/BlurHashImage.svelte';
 
 	const { vertical = false, product } = $props<{
 		vertical?: boolean;
@@ -27,23 +26,6 @@
 		// Cleanup function
 		return () => img.removeEventListener('load', handleLoad);
 	});
-
-	onNavigate((navigation) => {
-		// let's just be safe...
-		if (!document.startViewTransition) return;
-
-		const currentPath = $page.url.pathname;
-		const targetPath = navigation.to?.url?.pathname;
-
-		if (!isProductTransition(currentPath, targetPath)) return;
-
-		return new Promise((resolve) =>
-			document.startViewTransition(async () => {
-				resolve();
-				await navigation.complete;
-			})
-		);
-	});
 </script>
 
 <a
@@ -51,17 +33,11 @@
 	class={`card ${vertical ? 'vertical-card' : 'horizontal-card'}`}
 >
 	<div class="card-image relative">
-		<img
-			alt={product.name}
-			src={product.imageBlurhashUrl?.[0] || ''}
-			class="product-image absolute left-0 top-0 h-full w-full"
-		/>
-		<img
-			bind:this={imgEl}
-			src={product.imageUrls[0]}
-			alt={product.name}
-			class="product-image relative opacity-0"
-			style="view-transition-name: product-image-{product.slug};"
+		<BlurHashImage
+			{product}
+			useViewTransition
+			showBlurhash={true}
+			imageUrl={product.imageUrls[0]}
 		/>
 	</div>
 
@@ -129,7 +105,7 @@
 		transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 	}
 
-	.card:hover .product-image {
+	:global(.card:hover .product-image) {
 		transform: scale(1.1);
 	}
 

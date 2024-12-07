@@ -1,7 +1,9 @@
 import type { Models } from 'appwrite';
 import { account as appwriteAccount } from '../appwrite';
 
-let current = $state(undefined) as Models.User<Models.Preferences> | undefined;
+type UserState = Models.User<Models.Preferences> | undefined;
+
+let current = $state<UserState>(undefined);
 let prefs = $derived(current?.prefs);
 
 export const account = {

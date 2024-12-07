@@ -1,5 +1,5 @@
-// cart.svelte.ts
 import type { Product } from '../../utils/products';
+import { account } from './account.svelte';
 
 export type CartItem = {
 	slug: string;
@@ -11,15 +11,27 @@ export type CartItem = {
 
 export type Cart = CartItem[];
 
-function initializeCartFromLocalStorage(): Cart {
-	if (typeof window === 'undefined') return [];
-	const storedCart = localStorage.getItem('cartValue');
-	return storedCart ? JSON.parse(storedCart) : [];
-}
-
-let items = $state(initializeCartFromLocalStorage());
+let items = $state([] as Cart);
 let isOpen = $state(false);
+let isInitialized = $state(false);
 const totalItems = $derived(items.reduce((total, item) => total + item.quantity, 0));
+
+const debounceSave = (fn: Function, delay: number) => {
+	let timeoutId: ReturnType<typeof setTimeout>;
+	return (...args: any[]) => {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => fn(...args), delay);
+	};
+};
+
+const saveCartToPrefs = debounceSave(async (cartItems: Cart) => {
+	if (!isInitialized) return;
+	try {
+		await account.updatePrefs({ cart: cartItems });
+	} catch (error) {
+		console.error('Failed to save cart:', error);
+	}
+}, 1000);
 
 export const cart = {
 	// State getters
@@ -34,14 +46,9 @@ export const cart = {
 	toggleCart: () => (isOpen = !isOpen),
 
 	// Cart operations
-	initialize: (initialValue: Cart) => {
+	init: (initialValue: Cart) => {
 		items = initialValue;
-
-		$effect(() => {
-			if (typeof window !== 'undefined') {
-				localStorage.setItem('cartValue', JSON.stringify(items));
-			}
-		});
+		isInitialized = true;
 	},
 
 	add: (product: Product, features: Record<string, string>) => {
@@ -75,6 +82,7 @@ export const cart = {
 				}
 			];
 		}
+		saveCartToPrefs(items);
 	},
 
 	remove: (product: Product, features: Record<string, string>) => {
@@ -84,6 +92,7 @@ export const cart = {
 		const cartItemSlug = `${product.slug}_${featuresId}`;
 
 		items = items.filter((item) => item.slug !== cartItemSlug);
+		saveCartToPrefs(items);
 	},
 
 	updateQuantity: (product: Product, features: Record<string, string>, newQuantity: number) => {
@@ -94,15 +103,16 @@ export const cart = {
 
 		if (newQuantity <= 0) {
 			items = items.filter((item) => item.slug !== cartItemSlug);
-			return;
+		} else {
+			items = items.map((item) =>
+				item.slug === cartItemSlug ? { ...item, quantity: newQuantity } : item
+			);
 		}
-
-		items = items.map((item) =>
-			item.slug === cartItemSlug ? { ...item, quantity: newQuantity } : item
-		);
+		saveCartToPrefs(items);
 	},
 
 	clear: () => {
 		items = [];
+		saveCartToPrefs(items);
 	}
 };

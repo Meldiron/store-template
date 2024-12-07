@@ -33,7 +33,8 @@
 	});
 
 	const generateLink = (category: string) => {
-		let url = new URL($page.url);
+		// reset all filters, pagination.
+		let url = new URL($page.url.origin);
 		const params = url.searchParams;
 		params.set('category', category);
 		return `${url.pathname}?${params.toString()}`;

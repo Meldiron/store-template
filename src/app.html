@@ -27,27 +27,23 @@
 		/>
 		<link rel="shortcut icon" href="%sveltekit.assets%/favicons/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			(function () {
+				try {
+					let theme = localStorage.getItem('theme-preference');
+					if (theme === 'auto' || !theme) {
+						theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+					}
+					document.documentElement.classList.toggle('dark', theme === 'dark');
+				} catch (e) {
+					// If localStorage is not available, fallback to light theme
+					document.documentElement.classList.remove('dark');
+				}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<script>
-			let themeInUse = 'light';
-			let localPrefs = { theme: 'light' };
-			const storeTheme = localStorage.getItem('store');
-
-			if (storeTheme) {
-				try {
-					localPrefs = JSON.parse(storeTheme);
-					if (localPrefs) themeInUse = localPrefs.theme;
-				} catch (ignore) {}
-			}
-
-			const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			themeInUse = themeInUse === 'auto' ? (systemPrefersDark ? 'dark' : 'light') : themeInUse;
-			document.documentElement.classList.toggle('dark', themeInUse === 'dark');
-			localStorage.setItem('store', JSON.stringify({ theme: themeInUse }));
-		</script>
-
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

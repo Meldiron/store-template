@@ -12,11 +12,12 @@
 
 	let { children } = $props();
 
+	theme.init();
+
 	onMount(async () => {
 		await account.get();
 		const prefs = await account.prefs();
 
-		await theme.init();
 		cart.init(prefs?.cart ?? []);
 	});
 
@@ -24,7 +25,6 @@
 	 * This handles our element transitions.
 	 */
 	onNavigate((navigation) => {
-		// let's just be safe...
 		if (!document.startViewTransition) return;
 
 		const currentPath = $page.url.pathname;

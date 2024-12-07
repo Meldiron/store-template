@@ -4,6 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { Product } from '../../../utils/products';
 	import * as Carousel from '$lib/components/ui/carousel';
+	import BlurHashImage from '$lib/components/images/BlurHashImage.svelte';
 
 	interface Props {
 		product: Product;
@@ -69,34 +70,13 @@
 			<Carousel.Content>
 				{#each product.imageUrls as imageUrl, index (imageUrl)}
 					{@const isFirstItem = index === 0}
-					<Carousel.Item
-						style={isFirstItem ? `view-transition-name: product-image-${product.slug};` : ''}
-					>
-						<div class="h-full w-full">
-							{#if isFirstItem}
-								<!-- Blur image -->
-								<img
-									alt={product.name}
-									src={product.imageBlurhashUrl?.[0] || ''}
-									class="product-image absolute left-0 top-0 h-full w-full"
-								/>
-
-								<!-- Main image with binding -->
-								<img
-									bind:this={imgEl}
-									src={imageUrl}
-									alt={product.name}
-									class="product-image relative opacity-0"
-								/>
-							{:else}
-								<!-- Fallback image for non-first items -->
-								<img
-									src={imageUrl}
-									alt={product.name}
-									class="h-full w-full rounded-lg object-cover"
-								/>
-							{/if}
-						</div>
+					<Carousel.Item>
+						<BlurHashImage
+							{product}
+							{imageUrl}
+							showBlurhash={isFirstItem}
+							useViewTransition={isFirstItem}
+						/>
 					</Carousel.Item>
 				{/each}
 			</Carousel.Content>
@@ -255,15 +235,5 @@
 	:global(html.dark .product-price-discount) {
 		color: #d1d1cd;
 		background-color: rgba(255, 255, 255, 0.08);
-	}
-
-	.product-image {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 8px;
-		background-size: cover;
-		background-position: center;
-		transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 	}
 </style>

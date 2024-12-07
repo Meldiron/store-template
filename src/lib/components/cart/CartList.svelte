@@ -2,6 +2,7 @@
 	import { cart, type CartItem } from '$lib/stores/cart.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { theme } from '$lib/stores/theme.svelte';
+	import { onMount } from 'svelte';
 
 	function updateCart(cartItem: CartItem, action: 'add' | 'remove' | 'delete') {
 		switch (action) {
@@ -48,15 +49,32 @@
 	function getTotal(): number {
 		return cart
 			.getItems()
-			.reduce((total, cartItem) => total + cartItem.product.price * cartItem.quantity, 0);
+			.reduce(
+				(total, cartItem) =>
+					total +
+					(cartItem.product.price * cartItem.quantity) / (1 - (cartItem.product.discount || 0)),
+				0
+			);
 	}
 
 	let discounts = $derived(
 		cart.getItems().reduce((total, cartItem) => {
 			const discount = cartItem.product.discount || 0;
-			return total + cartItem.product.price * discount * cartItem.quantity;
+			const originalPrice = cartItem.product.price / (1 - discount);
+			return total + originalPrice * discount * cartItem.quantity;
 		}, 0)
 	);
+
+	onMount(() => {
+		// scroll to the last item if one exits,
+		// this makes the list appear not being cut off at the bottom, right above the cart details.
+		if (cart.getTotalItems() > 1) {
+			const lastCartItem = cart.getItems().at(-1);
+			if (lastCartItem) {
+				document.getElementById(lastCartItem.slug)?.scrollIntoView();
+			}
+		}
+	});
 </script>
 
 <div class="mt-4 flex min-h-1 w-full flex-grow flex-col">
@@ -64,6 +82,7 @@
 		{#each cart.getItems() as cartItem}
 			{@const product = cartItem.product}
 			<div
+				id={cartItem.slug}
 				class="flex h-fit flex-col items-start gap-6 rounded-lg bg-white p-3 dark:bg-[#2c2c2f] md:flex-row"
 			>
 				<img
@@ -192,10 +211,10 @@
 	</div>
 
 	{#if cart.getTotalItems() > 0}
-		<div class="flex w-full flex-col gap-6">
+		<div class="mt-4 flex w-full flex-col gap-6">
 			<div class="total-section flex flex-col gap-3">
 				<div class="flex flex-wrap items-center justify-between">
-					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+					<span class="font-inter text-[16px] font-medium text-[#97979B] dark:text-[#5F5F63]"
 						>Subtotal</span
 					>
 					<span class="product-price">${(getTotal() + getDiscount()).toFixed(2)}</span>
@@ -203,7 +222,7 @@
 
 				{#if discounts > 0}
 					<div class="flex flex-wrap items-center justify-between">
-						<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+						<span class="font-inter text-[16px] font-medium text-[#97979B] dark:text-[#5F5F63]"
 							>Discounts</span
 						>
 						<span class="product-price">-${getDiscount().toFixed(2)}</span>
@@ -211,7 +230,7 @@
 				{/if}
 
 				<div class="flex flex-wrap items-center justify-between">
-					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
+					<span class="font-inter text-[16px] font-medium text-[#97979B] dark:text-[#5F5F63]"
 						>Shipping</span
 					>
 					<span class="product-price">Calculated at next step</span>
@@ -223,7 +242,7 @@
 					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
 						>Total</span
 					>
-					<span class="product-price">${getTotal().toFixed(2)}</span>
+					<span class="product-price text-[#2D2D31] dark:text-[#d1d1cd]">${getTotal().toFixed(2)}</span>
 				</div>
 			</div>
 

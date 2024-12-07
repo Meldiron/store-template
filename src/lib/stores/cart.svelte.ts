@@ -16,15 +16,19 @@ let isOpen = $state(false);
 let isInitialized = $state(false);
 const totalItems = $derived(items.reduce((total, item) => total + item.quantity, 0));
 
-const debounceSave = (fn: Function, delay: number) => {
-	let timeoutId: ReturnType<typeof setTimeout>;
-	return (...args: any[]) => {
-		clearTimeout(timeoutId);
-		timeoutId = setTimeout(() => fn(...args), delay);
+const debounce = <T extends unknown[]>(callback: (...args: T) => void, delay: number) => {
+	let timeoutTimer: ReturnType<typeof setTimeout>;
+
+	return (...args: T) => {
+		clearTimeout(timeoutTimer);
+
+		timeoutTimer = setTimeout(() => {
+			callback(...args);
+		}, delay);
 	};
 };
 
-const saveCartToPrefs = debounceSave(async (cartItems: Cart) => {
+const saveCartToPrefs = debounce(async (cartItems: Cart) => {
 	if (!isInitialized) return;
 	try {
 		await account.updatePrefs({ cart: cartItems });

@@ -76,10 +76,10 @@
 		width: 90%;
 		content: '';
 		position: absolute;
-		bottom: -4px;
+		bottom: -8px;
 		left: 50%;
+		height: 1.2px;
 		transform: translateX(-50%) scaleX(0);
-		height: 1px;
 		background-color: transparent;
 		transform-origin: center;
 		transition:

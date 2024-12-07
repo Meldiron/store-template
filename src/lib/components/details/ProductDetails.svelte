@@ -4,6 +4,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { Product } from '../../../utils/products';
 	import * as Carousel from '$lib/components/ui/carousel';
+	import Photoswipe from '$lib/components/images/Photoswipe.svelte';
+	import { openGallery } from '$lib/components/images/Photoswipe.svelte';
 	import BlurHashImage from '$lib/components/images/BlurHashImage.svelte';
 
 	interface Props {
@@ -70,7 +72,7 @@
 			<Carousel.Content>
 				{#each product.images as image, index (image)}
 					{@const isFirstItem = index === 0}
-					<Carousel.Item>
+					<Carousel.Item onclick={() => openGallery(index)}>
 						<BlurHashImage
 							{product}
 							imageUrl={'/images/products/' + image}
@@ -182,6 +184,8 @@
 		</div>
 	</div>
 </div>
+
+<Photoswipe {product} />
 
 <style>
 	.product-card {

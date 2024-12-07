@@ -30,7 +30,22 @@
 		}
 	}
 
-	function getSubtotal(): number {
+	function getDiscount(): number {
+		return cart.getItems().reduce((total, cartItem) => {
+			const discount = cartItem.product.discount || 0;
+
+			if (!discount) {
+				return total;
+			}
+
+			const discountedPrice = cartItem.product.price || 0;
+			const originalPrice = discountedPrice / (1 - discount);
+
+			return total + (originalPrice - discountedPrice) * cartItem.quantity;
+		}, 0);
+	}
+
+	function getTotal(): number {
 		return cart
 			.getItems()
 			.reduce((total, cartItem) => total + cartItem.product.price * cartItem.quantity, 0);
@@ -183,7 +198,7 @@
 					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
 						>Subtotal</span
 					>
-					<span class="product-price">${getSubtotal().toFixed(2)}</span>
+					<span class="product-price">${(getTotal() + getDiscount()).toFixed(2)}</span>
 				</div>
 
 				{#if discounts > 0}
@@ -191,7 +206,7 @@
 						<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
 							>Discounts</span
 						>
-						<span class="product-price">-${discounts.toFixed(2)}</span>
+						<span class="product-price">-${getDiscount().toFixed(2)}</span>
 					</div>
 				{/if}
 
@@ -208,7 +223,7 @@
 					<span class="font-inter text-[16px] font-medium text-[#2D2D31] dark:text-[#d1d1cd]"
 						>Total</span
 					>
-					<span class="product-price">${(getSubtotal() - discounts).toFixed(2)}</span>
+					<span class="product-price">${getTotal().toFixed(2)}</span>
 				</div>
 			</div>
 

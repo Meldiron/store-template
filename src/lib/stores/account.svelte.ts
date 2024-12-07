@@ -24,6 +24,7 @@ export const account = {
 	async updatePrefs(prefs: Models.Preferences) {
 		if (!current) return;
 
+		prefs = { ...current.prefs, ...prefs };
 		current = { ...current, prefs };
 		await appwriteAccount.updatePrefs(prefs);
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { theme } from '$lib/stores/theme.svelte.js';
+	import { theme } from '$lib/stores/theme.svelte';
 	import type { Product } from '../../../utils/products';
 	import { cart, type CartItem } from '$lib/stores/cart.svelte';
 

@@ -88,13 +88,20 @@ function convertToStripeLineItem(
 	}
 
 	const unitAmount = calculateUnitAmountWithFeatures(product, item.features);
+	const productName =
+		product.name +
+		(item.features
+			? `, ${Object.entries(item.features)
+					.map(([k, v]) => `${k} ${v}`)
+					.join(', ')}`
+			: '');
 
 	return {
 		price_data: {
 			currency: 'usd',
 			tax_behavior: 'exclusive',
 			product_data: {
-				name: product.name,
+				name: productName,
 				description: markdownToText(product.description),
 				images: product.images.map((image) => new URL('/images/products/' + image, origin).href)
 			},

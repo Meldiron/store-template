@@ -175,8 +175,8 @@
 				/>
 				<Button
 					type="submit"
-					variant="secondary"
-					class="ml-3 mt-4 rounded-lg p-6 font-inter text-[16px] font-medium md:w-fit md:px-[14px] md:py-[9px]"
+					variant="outline"
+					class="ml-3 mt-4 rounded-lg border-[#EBEBEB] bg-transparent p-6 font-inter text-[16px] font-medium dark:border-[#2D2D2D] dark:text-white dark:hover:bg-white/5 md:w-fit md:px-[14px] md:py-[9px]"
 				>
 					Buy now
 				</Button>

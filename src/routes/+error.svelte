@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { Button } from '$lib/components/ui/button';
 	import { socials } from '../utils/socials';
+	import { Button } from '$lib/components/ui/button';
 
 	function getMessage(): string {
 		switch ($page.status) {
@@ -28,15 +27,25 @@
 		}
 	}
 
-	function handleButtonClick(): void {
+	function getButtonLink(): string {
 		switch ($page.status) {
 			case 500:
 			case 503: {
-				window.open(socials.find((item) => item.label === 'Discord')?.link ?? '', '_blank');
-				break;
+				return socials.find((item) => item.label === 'Discord')?.link ?? '';
 			}
 			default:
-				goto('/');
+				return '/';
+		}
+	}
+
+	function getButtonTarget(): string {
+		switch ($page.status) {
+			case 500:
+			case 503: {
+				return '_blank';
+			}
+			default:
+				return '_self';
 		}
 	}
 </script>
@@ -56,10 +65,9 @@
 		</h1>
 	</div>
 
-	<Button
-		on:click={handleButtonClick}
-		class="mt-5 font-inter text-[16px] font-medium leading-[137.5%] tracking-[-0.16px]"
-	>
-		{getButtonLabel()}
-	</Button>
+	<a href={getButtonLink()} target={getButtonTarget()}>
+		<Button class="mt-5 font-inter text-[16px] font-medium leading-[137.5%] tracking-[-0.16px]">
+			{getButtonLabel()}
+		</Button>
+	</a>
 </div>

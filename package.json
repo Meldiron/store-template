@@ -4,7 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node ./ci/blurhash/index.js && vite dev",
-		"build": "node ./ci/blurhash/index.js && vite build",
+		"build": "export PUBLIC_APPWRITE_SITE_PROJECT_ID=$APPWRITE_SITE_PROJECT_ID && export PUBLIC_APPWRITE_SITE_API_ENDPOINT=$APPWRITE_SITE_API_ENDPOINT && node ./ci/blurhash/index.js && vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",

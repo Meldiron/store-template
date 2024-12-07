@@ -8,14 +8,16 @@
 	import { isProductTransition } from '../utils/products';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import SiteHeader from '$lib/components/header/SiteHeader.svelte';
+	import { account } from '$lib/stores/account.svelte';
 
 	let { children } = $props();
 
-	onMount(() => {
-		theme.init();
+	onMount(async () => {
+		await account.get();
+		const prefs = await account.prefs();
 
-		const storedCart = localStorage.getItem('cartValue');
-		cart.initialize(JSON.parse(storedCart ?? '[]'));
+		await theme.init();
+		cart.init(prefs?.cart ?? []);
 	});
 
 	/**

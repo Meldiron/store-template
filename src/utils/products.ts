@@ -153,7 +153,7 @@ A premium heavy t-shirt, perfect for cooler weather.
 	},
 	{
 		slug: 'multiple-tshirts',
-		name: 'Multiple T-Shirts long title',
+		name: 'Multiple T-Shirts',
 		description: 'A set of colorful t-shirts, perfect for all seasons.',
 		images: ['multiple-tshirts.webp'],
 		categories: ['Tops'],

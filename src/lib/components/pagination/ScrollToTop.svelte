@@ -19,7 +19,7 @@
 	}}
 	class={`fixed bottom-4 right-4 flex h-12 w-12 transform cursor-pointer items-center justify-center rounded-full bg-[#19191c] text-white shadow-lg transition-all duration-300 dark:bg-[#e6e6e3] dark:text-black ${
 		isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
-	} sm:hidden`}
+	} md:hidden`}
 >
 	<svg
 		xmlns="http://www.w3.org/2000/svg"

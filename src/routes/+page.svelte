@@ -91,6 +91,7 @@
 			<div class="filter-selection">
 				<Select.Root selected={selectedFilter}>
 					<Select.Trigger
+						aria-label="Select filter option"
 						class="w-full dark:border-[#2c2c2f] dark:bg-[#1b1b1b] dark:text-[#d1d1cd] md:w-[240px]"
 					>
 						<Select.Value

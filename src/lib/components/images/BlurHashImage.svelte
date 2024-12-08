@@ -44,7 +44,7 @@
 		src={imageUrl}
 		bind:this={imgEl}
 		alt={product.name}
-		class={`product-image ${loaded ? 'opacity-100' : 'opacity-'}`}
+		class={`product-image main ${loaded ? 'opacity-100' : 'opacity-0'}`}
 		style={useViewTransition ? `view-transition-name: product-image-${product.slug};` : ''}
 	/>
 </div>
@@ -58,5 +58,9 @@
 		background-size: cover;
 		background-position: center;
 		transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+		&.main {
+			transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1);
+		}
 	}
 </style>

@@ -100,8 +100,16 @@
 		background: #f2f2f2;
 		min-width: 494px !important;
 
-		@media (max-width: 768px) {
-			min-width: calc(100vw - 3rem) !important;
+		@media (max-width: 460px) {
+			min-width: calc(85vw) !important;
+		}
+
+		@media (min-width: 460px) and (max-width: 640px) {
+			min-width: calc(80vw) !important;
+		}
+
+		@media (min-width: 640px) and (max-width: 768px) {
+			min-width: calc(70vw) !important;
 		}
 	}
 

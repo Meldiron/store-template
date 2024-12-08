@@ -14,6 +14,7 @@
 <svelte:window onscroll={handleScroll} />
 
 <Button
+	aria-label="Scroll to top"
 	on:click={() => {
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}}

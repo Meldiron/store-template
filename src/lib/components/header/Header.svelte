@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import CartSheet from '$lib/components/cart/CartSheet.svelte';
 
 	let isScrolled = $state(false);
 	let isLongerScrolled = $state(false);
+
+	const isMainPage = () => {
+		return $page.route.id === '/';
+	};
 
 	const handleScroll = () => {
 		isScrolled = window.scrollY > 25;
@@ -16,8 +21,8 @@
 <svelte:window onscroll={handleScroll} />
 
 <div
-	class:bg-white={!isLongerScrolled}
-	class:dark:bg-[#101010]={!isLongerScrolled}
+	class:bg-white={isMainPage() && !isLongerScrolled}
+	class:dark:bg-[#101010]={isMainPage() && !isLongerScrolled}
 	class="sticky top-0 z-50 pt-2 transition-all lg:pt-4"
 >
 	<div

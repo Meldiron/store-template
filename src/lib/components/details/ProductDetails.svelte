@@ -68,7 +68,7 @@
 	<div
 		class="product-card h-fit w-full max-w-[765px] overflow-hidden rounded-2xl border border-gray-200 bg-white"
 	>
-		<Carousel.Root>
+		<Carousel.Root class="w-full">
 			<Carousel.Content>
 				{#each product.images as image, index (image)}
 					{@const isFirstItem = index === 0}

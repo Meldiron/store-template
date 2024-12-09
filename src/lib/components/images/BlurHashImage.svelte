@@ -37,7 +37,6 @@
 	<!-- Blur image -->
 	{#if !loaded}
 		<img
-			loading="lazy"
 			alt={product.name}
 			src={blurHashUrl}
 			class="product-image absolute left-0 top-0"
@@ -46,7 +45,6 @@
 
 	<!-- Main image with binding -->
 	<img
-		loading="lazy"
 		src={imageUrl}
 		bind:this={imgEl}
 		alt={product.name}
@@ -64,9 +62,5 @@
 		background-size: cover;
 		background-position: center;
 		transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-		&.main {
-			transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1);
-		}
 	}
 </style>

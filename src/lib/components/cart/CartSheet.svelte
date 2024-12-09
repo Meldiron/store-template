@@ -3,6 +3,21 @@
 	import { Content, Header, Root, SheetClose, Title, Trigger } from '$lib/components/ui/sheet';
 	import CartList from '$lib/components/cart/CartList.svelte';
 	import { theme } from '$lib/stores/theme.svelte';
+
+	let previousCount = $state(0);
+	let isAnimating = $state(false);
+
+	$effect(() => {
+		const currentCount = cart.getTotalItems();
+		if (cart.getIsLoaded() && previousCount !== currentCount) {
+			isAnimating = true;
+			previousCount = currentCount;
+
+			setTimeout(() => {
+				isAnimating = false;
+			}, 300);
+		}
+	});
 </script>
 
 <div class="flex">
@@ -34,6 +49,7 @@
 				{#if cart.getTotalItems() > 0}
 					<div
 						class="cart-value flex items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-[#56565C] dark:border-[#3F3F46] dark:bg-[#262626] dark:text-[#A3A3A0]"
+						class:animate={isAnimating}
 					>
 						{cart.getTotalItems()}
 					</div>
@@ -76,8 +92,7 @@
 </div>
 
 <style>
-	.cart-text,
-	.cart-value {
+	.cart-value.animate {
 		transform: translateX(10px);
 		animation: slideIn 0.3s forwards;
 	}

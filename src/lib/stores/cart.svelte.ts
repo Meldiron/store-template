@@ -43,6 +43,7 @@ export const cart = {
 	getItems: () => items,
 	getIsOpen: () => isOpen,
 	getTotalItems: () => (isLoaded ? totalItems : optimisticTotal),
+	getIsLoaded: () => isLoaded,
 
 	// Sheet controls
 	setIsOpen: (value: boolean) => (isOpen = value),

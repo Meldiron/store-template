@@ -15,7 +15,7 @@ function getSystemTheme(): Theme {
 
 function getStoredTheme(): Theme {
 	if (!browser) return 'light';
-	return (localStorage.getItem(THEME_STORAGE_KEY) as Theme) ?? 'auto';
+	return (localStorage.getItem(THEME_STORAGE_KEY) as Theme) ?? 'light';
 }
 
 function storeTheme(theme: Theme) {

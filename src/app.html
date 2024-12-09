@@ -31,7 +31,9 @@
 			(function () {
 				try {
 					let theme = localStorage.getItem('theme-preference');
-					if (theme === 'auto' || !theme) {
+					if (!theme) {
+						theme = 'light';
+					} else if (theme === 'auto') {
 						theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 					}
 					document.documentElement.classList.toggle('dark', theme === 'dark');

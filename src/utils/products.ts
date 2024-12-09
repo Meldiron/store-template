@@ -223,10 +223,10 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 74
 	},
 	{
-		slug: 'yellow-shoes',
-		name: 'Yellow Shoes',
+		slug: 'gray-shoes-2',
+		name: 'Gray Shoes',
 		description: 'Comfortable casual shoes for everyday wear.',
-		images: ['yellow-shoes.webp'],
+		images: ['gray-shoes-2.webp'],
 		categories: ['Shoes'],
 		price: 85,
 		features: shoeFeatures,

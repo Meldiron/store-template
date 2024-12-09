@@ -1,7 +1,7 @@
 import { page } from '$app/stores';
 import { derived } from 'svelte/store';
 
-export const categories = ['All Products', 'Tops', 'Sweaters', 'Socks', 'Shoes', 'Accessories'];
+export const categories = ['All Products', 'Tops', 'Sweaters', 'Bottoms', 'Shoes', 'Accessories'];
 
 export const filterOptions = [
 	{ value: 'popular', label: 'Popular' },

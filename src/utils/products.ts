@@ -163,6 +163,74 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 92
 	},
 
+	{
+		slug: 'sleek-black-pants',
+		name: 'Sleek Black Pants',
+		description: 'Classic black pants that pair well with any outfit, offering comfort and style.',
+		images: ['black-pant.webp'],
+		categories: ['Bottoms'],
+		price: 45,
+		discount: 0.65,
+		date: '2024-11-01',
+		popularity: 92
+	},
+	{
+		slug: 'casual-blue-pants',
+		name: 'Casual Blue Pants',
+		description: 'A versatile shade of blue, perfect for casual days and easygoing comfort.',
+		images: ['blue-pant.webp'],
+		categories: ['Bottoms'],
+		price: 42,
+		discount: 0.7,
+		date: '2024-11-04',
+		popularity: 81
+	},
+	{
+		slug: 'modern-gray-pants',
+		name: 'Modern Gray Pants',
+		description: 'Elevate your look with these sharp gray pants, designed for both work and play.',
+		images: ['gray-pant.webp'],
+		categories: ['Bottoms'],
+		price: 75,
+		discount: 0.6,
+		date: '2024-11-14',
+		popularity: 88
+	},
+	{
+		slug: 'vibrant-green-pants',
+		name: 'Vibrant Green Pants',
+		description: 'Bold and stylish, these green pants bring a pop of color to your wardrobe.',
+		images: ['green-pant.webp'],
+		categories: ['Bottoms'],
+		price: 48,
+		discount: 0.68,
+		date: '2024-12-04',
+		popularity: 74
+	},
+	{
+		slug: 'chill-gray-joggers',
+		name: 'Chill Gray Joggers',
+		description:
+			'Comfort meets style in these laid-back gray joggers, perfect for lounging or casual outings.',
+		images: ['gray-jogger.webp'],
+		categories: ['Bottoms'],
+		price: 43,
+		discount: 0.72,
+		date: '2024-12-08',
+		popularity: 95
+	},
+	{
+		slug: 'pant-set-2-pack',
+		name: 'Pant Set of 2',
+		description: 'Get two pairs of versatile pants in one pack—ideal for mixing and matching.',
+		images: ['pack-of-2-pants.webp'],
+		categories: ['Bottoms'],
+		price: 85,
+		discount: 0.55,
+		date: '2024-12-08',
+		popularity: 90
+	},
+
 	// Sweaters
 	{
 		slug: 'sweatshirts',

@@ -23,9 +23,7 @@
 		return cart
 			.getItems()
 			.reduce(
-				(total, cartItem) =>
-					total +
-					(cartItem.product.price * cartItem.quantity) / (1 - (cartItem.product.discount || 0)),
+				(total, cartItem) => total + (cartItem.product.price * cartItem.quantity),
 				0
 			);
 	}

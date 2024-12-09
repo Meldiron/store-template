@@ -22,10 +22,7 @@
 	function getTotal(): number {
 		return cart
 			.getItems()
-			.reduce(
-				(total, cartItem) => total + (cartItem.product.price * cartItem.quantity),
-				0
-			);
+			.reduce((total, cartItem) => total + cartItem.product.price * cartItem.quantity, 0);
 	}
 
 	let discounts = $derived(

@@ -5,6 +5,10 @@ type Theme = 'auto' | 'dark' | 'light';
 const THEME_STORAGE_KEY = 'theme-preference';
 const SYSTEM_DARK_THEME_QUERY = '(prefers-color-scheme: dark)' as const;
 
+const THEME_COLOR_QUERY = 'meta[name="theme-color"]' as const;
+const APPLE_MOBILE_WEB_APP_STATUS_BAR_STYLE =
+	'meta[name="apple-mobile-web-app-status-bar-style"]' as const;
+
 let isDarkTheme = $state(false);
 let initialized = $state(false);
 
@@ -86,15 +90,15 @@ function applyTheme(isDark: boolean) {
 
 	const applyThemeChange = () => {
 		document.documentElement.classList.toggle('dark', isDark);
+
+		const metaThemeColor = document.querySelector(THEME_COLOR_QUERY);
+		const metaAppleStyle = document.querySelector(APPLE_MOBILE_WEB_APP_STATUS_BAR_STYLE);
+
+		let color = '#fafafb';
+		if (isDark) color = '#121212';
+		if (metaThemeColor) metaThemeColor.setAttribute('content', color);
+		if (metaAppleStyle) metaAppleStyle.setAttribute('content', color);
 	};
 
-	try {
-		if (document.startViewTransition) {
-			document.startViewTransition(applyThemeChange);
-		} else {
-			applyThemeChange();
-		}
-	} catch {
-		applyThemeChange();
-	}
+	applyThemeChange();
 }

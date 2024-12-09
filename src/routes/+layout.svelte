@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { onNavigate } from '$app/navigation';
 	import { cart } from '$lib/stores/cart.svelte';
@@ -9,21 +9,30 @@
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import SiteHeader from '$lib/components/header/SiteHeader.svelte';
 	import { account } from '$lib/stores/account.svelte';
+	import { setCookie } from '../utils/cookies';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
 	theme.init();
+	cart.init(data.cartTotal);
 
-	onMount(async () => {
-		await account.get();
-		const prefs = await account.prefs();
-
-		cart.init(prefs?.cart ?? []);
+	$effect(() => {
+		if (browser) {
+			setCookie('cart-total', cart.getTotalItems().toString(), {
+				path: '/',
+				maxAge: 60 * 60 * 24 * 365, // 1 year
+				sameSite: 'lax'
+			});
+		}
 	});
 
-	/**
-	 * This handles our element transitions.
-	 */
+	$effect.pre(() => {
+		account
+			.get()
+			.then(() => account.prefs())
+			.then((prefs) => cart.loadPrefs(prefs?.cart ?? []));
+	});
+
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
 

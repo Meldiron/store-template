@@ -13,7 +13,8 @@ export type Cart = CartItem[];
 
 let items = $state([] as Cart);
 let isOpen = $state(false);
-let isInitialized = $state(false);
+let isLoaded = $state(false);
+let optimisticTotal = $state(0);
 const totalItems = $derived(items.reduce((total, item) => total + item.quantity, 0));
 
 const debounce = <T extends unknown[]>(callback: (...args: T) => void, delay: number) => {
@@ -29,7 +30,7 @@ const debounce = <T extends unknown[]>(callback: (...args: T) => void, delay: nu
 };
 
 const saveCartToPrefs = debounce(async (cartItems: Cart) => {
-	if (!isInitialized) return;
+	if (!isLoaded) return;
 	try {
 		await account.updatePrefs({ cart: cartItems });
 	} catch (error) {
@@ -41,7 +42,7 @@ export const cart = {
 	// State getters
 	getItems: () => items,
 	getIsOpen: () => isOpen,
-	getTotalItems: () => totalItems,
+	getTotalItems: () => (isLoaded ? totalItems : optimisticTotal),
 
 	// Sheet controls
 	setIsOpen: (value: boolean) => (isOpen = value),
@@ -50,9 +51,15 @@ export const cart = {
 	toggleCart: () => (isOpen = !isOpen),
 
 	// Cart operations
-	init: (initialValue: Cart) => {
-		items = initialValue;
-		isInitialized = true;
+	init: (total?: number) => {
+		if (total !== undefined) {
+			optimisticTotal = total;
+		}
+	},
+
+	loadPrefs(prefsItems: Cart) {
+		items = prefsItems;
+		isLoaded = true;
 	},
 
 	add: (product: Product, features: Record<string, string>) => {

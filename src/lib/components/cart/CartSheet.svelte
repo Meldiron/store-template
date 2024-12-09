@@ -101,7 +101,7 @@
 		min-width: 494px !important;
 
 		@media (max-width: 460px) {
-			height: 80vh;
+			height: 90svh;
 			min-width: calc(85vw) !important;
 		}
 

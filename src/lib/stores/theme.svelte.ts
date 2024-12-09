@@ -75,7 +75,7 @@ export const theme = {
 		const newTheme = isDarkTheme ? 'light' : 'dark';
 		isDarkTheme = !isDarkTheme;
 		storeTheme(newTheme);
-		applyTheme(isDarkTheme);
+		applyTheme(isDarkTheme, true);
 
 		try {
 			await account.updatePrefs({ theme: newTheme });
@@ -85,7 +85,7 @@ export const theme = {
 	}
 };
 
-function applyTheme(isDark: boolean) {
+function applyTheme(isDark: boolean, applyTransition: boolean = false) {
 	if (!browser) return;
 
 	const applyThemeChange = () => {
@@ -100,5 +100,13 @@ function applyTheme(isDark: boolean) {
 		if (metaAppleStyle) metaAppleStyle.setAttribute('content', color);
 	};
 
-	applyThemeChange();
+	try {
+		if (applyTransition && document.startViewTransition) {
+			document.startViewTransition(applyThemeChange);
+		} else {
+			applyThemeChange();
+		}
+	} catch {
+		applyThemeChange();
+	}
 }

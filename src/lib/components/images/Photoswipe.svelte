@@ -67,4 +67,9 @@
 	:global(.pswp__container) {
 		transition: 0.5s ease all;
 	}
+
+	:global(.pswp__img) {
+		object-fit: contain;
+		background: transparent !important;
+	}
 </style>

@@ -36,11 +36,7 @@
 <div class="relative h-full w-full overflow-hidden rounded-lg">
 	<!-- Blur image -->
 	{#if !loaded}
-		<img
-			alt={product.name}
-			src={blurHashUrl}
-			class="product-image absolute left-0 top-0"
-		/>
+		<img alt={product.name} src={blurHashUrl} class="product-image absolute left-0 top-0" />
 	{/if}
 
 	<!-- Main image with binding -->

@@ -3,13 +3,14 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "node ./ci/blurhash/index.js && vite dev",
-		"build": "export PUBLIC_APPWRITE_SITE_PROJECT_ID=$APPWRITE_SITE_PROJECT_ID && export PUBLIC_APPWRITE_SITE_API_ENDPOINT=$APPWRITE_SITE_API_ENDPOINT && node ./ci/blurhash/index.js && vite build",
+		"dev": "npm run generate:blurhash && vite dev",
+		"build": "export PUBLIC_APPWRITE_SITE_PROJECT_ID=$APPWRITE_SITE_PROJECT_ID && export PUBLIC_APPWRITE_SITE_API_ENDPOINT=$APPWRITE_SITE_API_ENDPOINT && npm run generate:blurhash && vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"generate:blurhash": "cd ci/blurhash && npm i && node index.js && cd ../../"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",

@@ -3,6 +3,11 @@ import { derived } from 'svelte/store';
 
 export const categories = ['All Products', 'Tops', 'Sweaters', 'Bottoms', 'Shoes', 'Accessories'];
 
+export const title = 'Store template';
+export const description =
+	'A modern template designed for online stores with a mobile-friendly interface, customizable theme, and an integrated payments using Stripe.';
+export const name = 'Store';
+
 export const filterOptions = [
 	{ value: 'popular', label: 'Popular' },
 	{ value: 'discount', label: 'Highest discount' },

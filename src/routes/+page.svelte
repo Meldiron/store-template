@@ -3,7 +3,14 @@
 	import { fade } from 'svelte/transition';
 	import { type Product } from '../utils/products';
 	import * as Select from '$lib/components/ui/select';
-	import { currentPage, filterOptions, selectedCategory } from './store';
+	import {
+		currentPage,
+		description as storeDescription,
+		filterOptions,
+		name,
+		selectedCategory,
+		title as storeTitle
+	} from './store';
 
 	import StaggeredGrid from '$lib/components/grid/StaggeredGrid.svelte';
 	import Pagination from '$lib/components/pagination/Pagination.svelte';
@@ -52,9 +59,8 @@
 		}
 	});
 
-	const title = 'Store | E-commerce Template';
-	const description =
-		'A customizable e-commerce template for Appwrite Sites, built on Appwrite Cloud.';
+	const title = name + ' | ' + storeTitle;
+	const description = storeDescription;
 	const ogImage = `${data.origin}/thumbnail.png`;
 </script>
 

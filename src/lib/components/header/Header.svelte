@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import CartSheet from '$lib/components/cart/CartSheet.svelte';
+	import { name } from '../../../routes/store';
 
 	let isScrolled = $state(false);
 	let isLongerScrolled = $state(false);
@@ -31,19 +32,10 @@
 	>
 		<!-- Store Logo -->
 		<div class="flex items-center gap-4">
-			<a href="/" aria-label="Store">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="40"
-					height="40"
-					viewBox="0 0 40 40"
-					fill="none"
-				>
-					<rect width="40" height="40" rx="8" fill="black" />
-					<circle cx="19.5" cy="20" r="7" fill="white" />
-				</svg>
+			<a href="/" aria-label={name}>
+				<img src="/logo.svg" alt="Logo" />
 			</a>
-			<a class="text-xl text-[#19191C] dark:text-[#e6e6e3]" href="/">Store</a>
+			<a class="text-xl text-[#19191C] dark:text-[#e6e6e3]" href="/">{name}</a>
 		</div>
 
 		<!-- Cart Section -->

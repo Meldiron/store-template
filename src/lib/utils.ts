@@ -1,7 +1,7 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { cubicOut } from "svelte/easing";
-import type { TransitionConfig } from "svelte/transition";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { cubicOut } from 'svelte/easing';
+import type { TransitionConfig } from 'svelte/transition';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -19,13 +19,9 @@ export const flyAndScale = (
 	params: FlyAndScaleParams = { y: -8, x: 0, start: 0.95, duration: 150 }
 ): TransitionConfig => {
 	const style = getComputedStyle(node);
-	const transform = style.transform === "none" ? "" : style.transform;
+	const transform = style.transform === 'none' ? '' : style.transform;
 
-	const scaleConversion = (
-		valueA: number,
-		scaleA: [number, number],
-		scaleB: [number, number]
-	) => {
+	const scaleConversion = (valueA: number, scaleA: [number, number], scaleB: [number, number]) => {
 		const [minA, maxA] = scaleA;
 		const [minB, maxB] = scaleB;
 
@@ -35,13 +31,11 @@ export const flyAndScale = (
 		return valueB;
 	};
 
-	const styleToString = (
-		style: Record<string, number | string | undefined>
-	): string => {
+	const styleToString = (style: Record<string, number | string | undefined>): string => {
 		return Object.keys(style).reduce((str, key) => {
 			if (style[key] === undefined) return str;
 			return str + `${key}:${style[key]};`;
-		}, "");
+		}, '');
 	};
 
 	return {
@@ -60,3 +54,56 @@ export const flyAndScale = (
 		easing: cubicOut
 	};
 };
+
+export function markdownToText(markdown: string): string {
+	if (!markdown) return '';
+
+	return (
+		markdown
+			// Remove HTML tags
+			.replace(/<[^>]*>/g, '')
+
+			// Headers
+			.replace(/^#{1,6}\s+/gm, '')
+
+			// Bold/Italic
+			.replace(/[*_]{1,3}([^*_]+?)[*_]{1,3}/g, '$1')
+
+			// Code blocks
+			.replace(/```[\s\S]*?```/g, '')
+			.replace(/`([^`]+)`/g, '$1')
+
+			// Links
+			.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+
+			// Images
+			.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '$1')
+
+			// Lists: Add commas for continuing items and a full stop for the last item
+			.replace(/^([-*+])\s*(.+)$/gm, (_, __, content, offset, str) => {
+				// Check if the current list item is the last one
+				const isLastItem = str.substring(offset).match(/^([-*+]\s*.+$)/gm)?.length === 1;
+				return isLastItem ? `${content}.` : `${content},`;
+			})
+
+			// Blockquotes
+			.replace(/^>\s+/gm, '')
+
+			// Horizontal rules
+			.replace(/^[-*_]{3,}\s*$/gm, '')
+
+			// Tables
+			.replace(/\|.*?\|/g, '')
+
+			// Replace multiple newlines or Markdown-inducing breaks with a space
+			.replace(/(\s*\n\s*)+/g, ' ')
+
+			// Normalize punctuation spacing
+			.replace(/\s*,\s*/g, ', ')
+			.replace(/\s*\.\s*/g, '. ')
+
+			// Ensure clean trailing punctuation
+			.replace(/\s*\.$/, '.')
+			.trim()
+	);
+}

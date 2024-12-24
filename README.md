@@ -12,21 +12,21 @@ Paginated list of products with featured picture, name, price, and available dis
 
 Product gallery with detailed description and ability to configure and select variations. Product can be added to the cart, or purchased with 1 click.
 
-### 3. Cart and checkout
+### 3. Cart and checkout
 
 Slideover cart with overview of products, price summary, and ability to modify quantity of products in cart. Checkout button to continue to payment step.
 
-### 4. Payment and shipping
+### 4. Payment and shipping
 
 Stripe-managed page with all payment and delivery views. The receipt is sent by email automatically after a successful payment.
 
 ## Highlight
 
-### 1. Image optinization
+### 1. Image optimization
 
-BlurHash technology (commonly known from Wolt app) optimizes application experience and looks while images are still loading. A very useful improvement for use on mobile devices with limited internet access and speed.
+[BlurHash](https://github.com/woltapp/blurhash) technology (commonly known from Wolt app) optimizes application experience and looks while images are still loading. A very useful improvement for use on mobile devices with limited internet access and speed.
 
-### 2. Dark theme
+### 2. Dark theme
 
 Theme toggle in footer allows visitors to switch to dark theme when browsing during night. Developer can easily enforce a theme, set default theme, or remove the feature all-together.
 
@@ -37,7 +37,7 @@ Near-perfect Lighthouse score to ensure great accessability for people with disa
 ## Useful links
 
 - Site settings: [src/routes/store.ts](./src/routes/store.ts)
-- Products list: [src/utils.products.ts](./src/utils.products.ts)
+- Products list: [src/utils/products.ts](./src/utils.products.ts)
 - Products pictures: [static/images/products](./static/images/products)
 - Site footer: [src/lib/components/footer/Footer.svelte](./src/lib/components/footer/Footer.svelte)
 - Logo: [static/logo.svg](./static/logo.svg) and [static/favicon.ico](./static/favicon.ico)

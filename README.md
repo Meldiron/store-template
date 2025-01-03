@@ -30,14 +30,14 @@ Stripe-managed page with all payment and delivery views. The receipt is sent by 
 
 Theme toggle in footer allows visitors to switch to dark theme when browsing during night. Developer can easily enforce a theme, set default theme, or remove the feature all-together.
 
-### 3. Performance, accessability and SEO
+### 3. Performance, accessibility and SEO
 
-Near-perfect Lighthouse score to ensure great accessability for people with disabilities, and SEO optimizations to ensure search engines can scan the website with ease.
+Near-perfect Lighthouse score to ensure great accessibility for people with disabilities, and SEO optimizations to ensure search engines can scan the website with ease.
 
 ## Useful links
 
 - Site settings: [src/routes/store.ts](./src/routes/store.ts)
-- Products list: [src/utils/products.ts](./src/utils.products.ts)
+- Products list: [src/utils/products.ts](./src/utils/products.ts)
 - Products pictures: [static/images/products](./static/images/products)
 - Site footer: [src/lib/components/footer/Footer.svelte](./src/lib/components/footer/Footer.svelte)
 - Logo: [static/logo.svg](./static/logo.svg) and [static/favicon.ico](./static/favicon.ico)

@@ -60,7 +60,6 @@ All of backend needs such as saving the cart contents, or validating cart before
 - Never use images with resolution greater than 1080p
 - Before production use, connect to analytics tool such as [Plausible](https://plausible.io/) or [Google Analytics](https://marketingplatform.google.com/about/analytics/)
 
-
 ## Local development
 
 1. Install dependencies with `npm install` (or `pnpm install` or `yarn`)

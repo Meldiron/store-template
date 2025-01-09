@@ -15,3 +15,6 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .env
+
+*-lock.json
+*-lock.yaml

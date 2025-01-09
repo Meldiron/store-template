@@ -106,7 +106,7 @@ export const products: Product[] = [
 	// Tops
 	{
 		slug: 'heavy-tshirt',
-		name: 'Heavy T-Shirt',
+		name: 'Heavy Blouse',
 		description: `
 A premium heavy t-shirt, perfect for cooler weather.
 
@@ -186,8 +186,8 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 81
 	},
 	{
-		slug: 'modern-gray-pants',
-		name: 'Modern Gray Pants',
+		slug: 'gray-joggers',
+		name: 'Gray Joggers',
 		description: 'Elevate your look with these sharp gray pants, designed for both work and play.',
 		images: ['gray-pant.webp'],
 		categories: ['Bottoms'],
@@ -196,41 +196,6 @@ A premium heavy t-shirt, perfect for cooler weather.
 		date: '2024-11-14',
 		popularity: 88
 	},
-	{
-		slug: 'vibrant-green-pants',
-		name: 'Vibrant Green Pants',
-		description: 'Bold and stylish, these green pants bring a pop of color to your wardrobe.',
-		images: ['green-pant.webp'],
-		categories: ['Bottoms'],
-		price: 48,
-		discount: 0.68,
-		date: '2024-12-04',
-		popularity: 74
-	},
-	{
-		slug: 'chill-gray-joggers',
-		name: 'Chill Gray Joggers',
-		description:
-			'Comfort meets style in these laid-back gray joggers, perfect for lounging or casual outings.',
-		images: ['gray-jogger.webp'],
-		categories: ['Bottoms'],
-		price: 43,
-		discount: 0.72,
-		date: '2024-12-08',
-		popularity: 95
-	},
-	{
-		slug: 'pant-set-2-pack',
-		name: 'Pant Set of 2',
-		description: 'Get two pairs of versatile pants in one pack—ideal for mixing and matching.',
-		images: ['pack-of-2-pants.webp'],
-		categories: ['Bottoms'],
-		price: 85,
-		discount: 0.55,
-		date: '2024-12-08',
-		popularity: 90
-	},
-
 	// Sweaters
 	{
 		slug: 'sweatshirts',
@@ -258,19 +223,8 @@ A premium heavy t-shirt, perfect for cooler weather.
 		popularity: 95
 	},
 	{
-		slug: 'black-shoes',
-		name: 'Black Shoes',
-		description: 'Classic black shoes for both casual and formal occasions.',
-		images: ['shoes-black.webp'],
-		categories: ['Shoes'],
-		price: 75,
-		features: shoeFeatures,
-		date: '2024-11-16',
-		popularity: 82
-	},
-	{
-		slug: 'hanging-shoes',
-		name: 'Hanging Shoes',
+		slug: 'gray-sneakers',
+		name: 'Gray Sneakers',
 		description: 'Durable shoes for everyday adventures.',
 		images: ['hanging-shoes.webp'],
 		categories: ['Shoes'],
@@ -278,28 +232,6 @@ A premium heavy t-shirt, perfect for cooler weather.
 		features: shoeFeatures,
 		date: '2024-11-19',
 		popularity: 88
-	},
-	{
-		slug: 'casual-shoes',
-		name: 'Casual Shoes',
-		description: 'Comfortable casual shoes for everyday wear.',
-		images: ['shoes.webp'],
-		categories: ['Shoes'],
-		price: 55,
-		features: shoeFeatures,
-		date: '2024-11-22',
-		popularity: 74
-	},
-	{
-		slug: 'gray-shoes-2',
-		name: 'Gray Shoes',
-		description: 'Comfortable casual shoes for everyday wear.',
-		images: ['gray-shoes-2.webp'],
-		categories: ['Shoes'],
-		price: 85,
-		features: shoeFeatures,
-		date: '2024-11-22',
-		popularity: 74
 	},
 	{
 		slug: 'elegant-shoes',
@@ -311,17 +243,6 @@ A premium heavy t-shirt, perfect for cooler weather.
 		features: shoeFeatures,
 		date: '2024-11-22',
 		popularity: 74
-	},
-	{
-		slug: 'dark-shoes',
-		name: 'Dark Shoes',
-		description: 'Comfortable casual shoes for everyday wear.',
-		images: ['dark-shoes.webp'],
-		categories: ['Shoes'],
-		price: 85,
-		features: shoeFeatures,
-		date: '2024-11-22',
-		popularity: 30
 	},
 
 	// Accessories
